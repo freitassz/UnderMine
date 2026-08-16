@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dllu3a6gd40ow"]
+
+[ext_resource type="Script" uid="uid://bh61w744gmb5m" path="res://minerio.gd" id="1_nncgr"]
+[ext_resource type="Texture2D" uid="uid://1j5xxl35h7dy" path="res://assets/stone.png" id="2_qs2xm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmk2v"]
+size = Vector2(8, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gyfs4"]
+radius = 3.0
+
+[node name="Minerio" type="Area2D" unique_id=1944501177 groups=["minerio"]]
+script = ExtResource("1_nncgr")
+metadata/_custom_type_script = "uid://dnyr8078e7sjh"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1455241443 groups=["minerio"]]
+texture = ExtResource("2_qs2xm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=693685562]
+shape = SubResource("RectangleShape2D_cmk2v")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=549250602]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=868763445]
+visible = false
+shape = SubResource("CircleShape2D_gyfs4")

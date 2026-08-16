@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c6mtsn86f6vl6"]
+
+[ext_resource type="Script" uid="uid://cqr0myk3802n4" path="res://base_character.gd" id="1_75idt"]
+[ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tm8wl"]
+[ext_resource type="Script" uid="uid://c1iq8xhifk40p" path="res://HUD.gd" id="3_itnm7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d5x1h"]
+radius = 3.5
+
+[node name="BaseCharacter" type="CharacterBody2D" unique_id=741796805 groups=["player"]]
+script = ExtResource("1_75idt")
+speed = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=410069062]
+texture = ExtResource("2_tm8wl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1739927119]
+shape = SubResource("CircleShape2D_d5x1h")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1125982033]
+path_desired_distance = 25.0
+target_desired_distance = 3.0
+path_postprocessing = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=160419761]
+zoom = Vector2(6, 6)
+
+[node name="MiningTimer" type="Timer" parent="." unique_id=1860845113]
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=866381233]
+script = ExtResource("3_itnm7")
+
+[node name="MoneyLabel" type="Label" parent="HUD" unique_id=1444052207]
+offset_right = 40.0
+offset_bottom = 23.0
