@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://b5jc2k86nngoh"]
+
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="1_a6rvm"]
+[ext_resource type="Resource" uid="uid://cwbfgen0rs7m3" path="res://Data/Resource/OreSet/Rule_Level1.tres" id="1_w4thu"]
+
+[resource]
+script = ExtResource("1_a6rvm")
+ore_set = ExtResource("1_w4thu")
+metadata/_custom_type_script = "uid://b7k8mmmb20esy"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://cd132fqm7mfo5"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_mlg3i"]
+[ext_resource type="Texture2D" uid="uid://1j5xxl35h7dy" path="res://assets/stone.png" id="2_wecve"]
+
+[resource]
+script = ExtResource("1_mlg3i")
+name = "Coal"
+texture = ExtResource("2_wecve")
+metadata/_custom_type_script = "uid://7y24oediagu8"

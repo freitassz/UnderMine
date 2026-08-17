@@ -10,6 +10,7 @@ radius = 3.5
 [node name="BaseCharacter" type="CharacterBody2D" unique_id=741796805 groups=["player"]]
 script = ExtResource("1_75idt")
 speed = 100.0
+interact_distance = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=410069062]
 texture = ExtResource("2_tm8wl")
@@ -18,8 +19,8 @@ texture = ExtResource("2_tm8wl")
 shape = SubResource("CircleShape2D_d5x1h")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1125982033]
-path_desired_distance = 25.0
-target_desired_distance = 3.0
+path_desired_distance = 0.1
+target_desired_distance = 0.1
 path_postprocessing = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=160419761]

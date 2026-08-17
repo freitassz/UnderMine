@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://cwbfgen0rs7m3"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_ck6p5"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_ey4f0"]
+[ext_resource type="Resource" uid="uid://cd132fqm7mfo5" path="res://Data/Resource/Ores/Stone.tres" id="3_corey"]
+[ext_resource type="Resource" uid="uid://4dxtiwlscr50" path="res://Data/Resource/Ores/Iron.tres" id="4_50jlw"]
+[ext_resource type="Resource" uid="uid://cqbcogfupqi8q" path="res://Data/Resource/Ores/Gold.tres" id="5_kc2yi"]
+[ext_resource type="Resource" uid="uid://byytb0ktamykk" path="res://Data/Resource/Ores/Coal.tres" id="6_86j5b"]
+
+[sub_resource type="Resource" id="Resource_wecve"]
+script = ExtResource("2_ey4f0")
+ore = ExtResource("3_corey")
+exact_amount = 6
+spawn_chance = 50.0
+metadata/_custom_type_script = "uid://oyfwa2pgd5bn"
+
+[sub_resource type="Resource" id="Resource_uwks4"]
+script = ExtResource("2_ey4f0")
+ore = ExtResource("4_50jlw")
+metadata/_custom_type_script = "uid://oyfwa2pgd5bn"
+
+[sub_resource type="Resource" id="Resource_vj82y"]
+script = ExtResource("2_ey4f0")
+ore = ExtResource("5_kc2yi")
+metadata/_custom_type_script = "uid://oyfwa2pgd5bn"
+
+[sub_resource type="Resource" id="Resource_rlpgl"]
+script = ExtResource("2_ey4f0")
+ore = ExtResource("6_86j5b")
+spawn_chance = 30.0
+metadata/_custom_type_script = "uid://oyfwa2pgd5bn"
+
+[resource]
+script = ExtResource("1_ck6p5")
+spawn_rules = Array[ExtResource("2_ey4f0")]([SubResource("Resource_wecve"), SubResource("Resource_uwks4"), SubResource("Resource_vj82y"), SubResource("Resource_rlpgl")])
+metadata/_custom_type_script = "uid://btr3q8d58dnye"

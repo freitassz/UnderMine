@@ -35,14 +35,19 @@ func walk_to_point(target_point: Vector2) -> void:
 	current_state = State.MOVING
 	nav_agent.target_position = target_point
 	
-	# Para de minerar se estivesse batendo em algo
+	# Tolerância quase zero: obriga o personagem a ir EXATAMENTE onde você clicou
+	nav_agent.target_desired_distance = 2.0 
+	
 	if mining_timer and !mining_timer.is_stopped():
 		mining_timer.stop()
 
-func walk_to_interact(target_node: Area2D) -> void:
+func walk_to_interact(target_node: Node2D) -> void: 
 	interact_target = target_node
 	current_state = State.MOVING_TO_INTERACT
 	nav_agent.target_position = target_node.global_position
+	
+	# Tolerância maior: faz ele parar assim que chegar na distância de bater na pedra
+	nav_agent.target_desired_distance = interact_distance 
 	
 	if mining_timer and !mining_timer.is_stopped():
 		mining_timer.stop()
