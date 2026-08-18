@@ -8,7 +8,11 @@ extends Node2D
 @export var ore_layer: TileMapLayer
 
 func _ready() -> void:
-	# Quando a cena carrega, mandamos gerar o andar imediatamente
+	# Puxa os dados que o Portal enviou pelo Autoload
+	if Global.floor_data_to_load != null:
+		current_floor_data = Global.floor_data_to_load
+		
+	# Depois de pegar a data correta, gera o mapa
 	carregar_andar()
 
 func carregar_andar() -> void:
@@ -22,5 +26,8 @@ func carregar_andar() -> void:
 		
 	print("Gerando minérios para o andar: ", current_floor_data.floor_name)
 	
-	# Chama a função que criamos na etapa anterior
+	# Gera a mina
 	ore_layer.generate_floor(current_floor_data, ground_layer)
+	
+	# NOVO: Força o chão a ler nossa lista inicial e aplicar os buracos
+	ground_layer.notify_runtime_tile_data_update()

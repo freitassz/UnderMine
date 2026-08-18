@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" format=3 uid="uid://c2jxo2lqbdh06"]
 
-[ext_resource type="PackedScene" uid="uid://c0cbkdisdif2o" path="res://Stair.tscn" id="1_5t0oa"]
+[ext_resource type="PackedScene" uid="uid://c0cbkdisdif2o" path="res://Portal.tscn" id="1_5t0oa"]
 [ext_resource type="Texture2D" uid="uid://c73348a0w76t8" path="res://assets/path.png" id="1_237pd"]
-[ext_resource type="Texture2D" uid="uid://dx4ym420h6qcb" path="res://assets/grass.png" id="2_5t0oa"]
 [ext_resource type="PackedScene" uid="uid://dllu3a6gd40ow" path="res://Ore.tscn" id="2_s571x"]
+[ext_resource type="Texture2D" uid="uid://cggxoc8e3v44r" path="res://assets/Cobblestone.png" id="4_5t0oa"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_s571x"]
 resource_name = "Stair"
@@ -29,7 +29,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -4, 4, -4, 4, 4, -4
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ycvg"]
-texture = ExtResource("2_5t0oa")
+texture = ExtResource("4_5t0oa")
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_237pd")

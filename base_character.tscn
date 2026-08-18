@@ -3,17 +3,103 @@
 [ext_resource type="Script" uid="uid://cqr0myk3802n4" path="res://base_character.gd" id="1_75idt"]
 [ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tm8wl"]
 [ext_resource type="Script" uid="uid://c1iq8xhifk40p" path="res://HUD.gd" id="3_itnm7"]
+[ext_resource type="Script" uid="uid://cbnld7ip51je2" path="res://ore_life.gd" id="4_ubrwk"]
+
+[sub_resource type="Animation" id="Animation_itnm7"]
+resource_name = "IDLE"
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ubrwk"]
+resource_name = "MINING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_m4khw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_gdbp2"]
+resource_name = "WALK"
+length = 0.6
+loop_mode = 1
+step = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ym6p8"]
+_data = {
+&"IDLE": SubResource("Animation_itnm7"),
+&"MINING": SubResource("Animation_ubrwk"),
+&"RESET": SubResource("Animation_m4khw"),
+&"WALK": SubResource("Animation_gdbp2")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d5x1h"]
 radius = 3.5
 
-[node name="BaseCharacter" type="CharacterBody2D" unique_id=741796805 groups=["player"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4khw"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdbp2"]
+bg_color = Color(0.99601907, 0, 0.16720009, 1)
+
+[node name="BaseCharacter" type="CharacterBody2D" unique_id=741796805 node_paths=PackedStringArray("animated_player") groups=["player"]]
 script = ExtResource("1_75idt")
 speed = 100.0
-interact_distance = null
+animated_player = NodePath("AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=410069062]
 texture = ExtResource("2_tm8wl")
+hframes = 2
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=902184316]
+libraries/ = SubResource("AnimationLibrary_ym6p8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1739927119]
 shape = SubResource("CircleShape2D_d5x1h")
@@ -23,10 +109,13 @@ path_desired_distance = 0.1
 target_desired_distance = 0.1
 path_postprocessing = 1
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=160419761]
-zoom = Vector2(6, 6)
-
 [node name="MiningTimer" type="Timer" parent="." unique_id=1860845113]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1448247797]
+rotation = -1.5707964
+scale = Vector2(2.5, 2.5)
+shadow_enabled = true
+texture = ExtResource("2_tm8wl")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=866381233]
 script = ExtResource("3_itnm7")
@@ -34,3 +123,53 @@ script = ExtResource("3_itnm7")
 [node name="MoneyLabel" type="Label" parent="HUD" unique_id=1444052207]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD" unique_id=542528184]
+process_mode = 4
+offset_right = 613.0
+offset_bottom = 1036.0
+color = Color(0.07058824, 0.07058824, 0.07058824, 0.45490196)
+
+[node name="OreLife" type="CanvasLayer" parent="." unique_id=1939930280 node_paths=PackedStringArray("container", "name_label", "health_bar", "lives_label")]
+script = ExtResource("4_ubrwk")
+container = NodePath("MarginContainer")
+name_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Name")
+health_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
+lives_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Lifes")
+
+[node name="MarginContainer" type="MarginContainer" parent="OreLife" unique_id=272496817]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OreLife/MarginContainer" unique_id=1542581369]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="OreLife/MarginContainer/VBoxContainer" unique_id=1858152941]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Name" type="Label" parent="OreLife/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1748498442]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Basic Ore"
+
+[node name="Lifes" type="Label" parent="OreLife/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=771766025]
+layout_mode = 2
+text = "x 103"
+
+[node name="ProgressBar" type="ProgressBar" parent="OreLife/MarginContainer/VBoxContainer" unique_id=1697565241]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_m4khw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gdbp2")
+value = 80.0

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c0cbkdisdif2o"]
 
-[ext_resource type="Script" uid="uid://70stigdyg4mk" path="res://stair.gd" id="1_3k7cn"]
-[ext_resource type="Texture2D" uid="uid://fk7y0s4oxfyu" path="res://assets/Stair.png" id="1_4bexh"]
+[ext_resource type="Script" uid="uid://70stigdyg4mk" path="res://Portal.gd" id="1_bagdj"]
+[ext_resource type="Texture2D" uid="uid://fk7y0s4oxfyu" path="res://assets/Stair.png" id="2_aamt4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i210l"]
 size = Vector2(8, 8)
@@ -14,14 +14,16 @@ parsed_geometry_type = 1
 cell_size = 8.0
 agent_radius = 0.0
 
-[node name="Stair" type="Area2D" unique_id=754405333]
-script = ExtResource("1_3k7cn")
+[node name="Portal" type="Area2D" unique_id=754405333]
+script = ExtResource("1_bagdj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1922350586]
-texture = ExtResource("1_4bexh")
+texture = ExtResource("2_aamt4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=396242941]
 shape = SubResource("RectangleShape2D_i210l")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=277193634]
 navigation_polygon = SubResource("NavigationPolygon_i210l")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

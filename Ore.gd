@@ -26,39 +26,48 @@ func setup(data: OreData) -> void:
 		sprite.texture = my_data.texture
 
 # O Player chegou perto e começou a bater
-func interact() -> void:
-	# Proteção: se a pedra não tiver dados, ignora o clique
-	if my_data == null: 
-		print("Erro: Esta pedra não recebeu um OreData!")
-		return 
+# O Player chegou perto e começou a bater (Agora recebe os status do jogador!)
+func take_damage(damage: int, multiplier: float) -> void:
+	if my_data == null: return 
 		
-	current_hp -= 1
-	print("Bateu! HP: ", current_hp, " | Vidas restantes: ", current_lives)
+	current_hp -= damage
+	Global.ore_damaged.emit(current_hp, current_lives) # <-- NOVO: Atualiza a barra de vida
 	
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(0.8, 0.8), 0.1)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 	
 	if current_hp <= 0:
-		_quebrar()
+		_quebrar(multiplier)
 
-func _quebrar() -> void:
-	# Economia Direta: Dá o dinheiro instantaneamente ao quebrar uma vida[cite: 1]
-	Global.add_money(my_data.money_drop)
+func _quebrar(multiplier: float) -> void:
+	var total_money: int = int(my_data.money_drop * multiplier)
+	Global.add_money(total_money)
 	
 	if current_lives > 0:
-		# Mecânica Gold Mountain: Perde uma vida, reseta o HP e continua vivo
 		current_lives -= 1
 		current_hp = my_data.max_hp
-		print("Minério quebrou, mas tem vidas extras! Vidas: ", current_lives)
+		Global.ore_damaged.emit(current_hp, current_lives) # <-- NOVO: Atualiza barra após resetar HP
 	else:
-		# Sem vidas extras, o minério é destruído permanentemente (sem respawn)[cite: 1]
+		Global.ore_deselected.emit()
 		var ground_layer = get_tree().get_first_node_in_group("ground_layer")
 		var ore_layer = get_tree().get_first_node_in_group("ore_layer")
 		
 		if ground_layer and ore_layer:
 			var tile_coords = ground_layer.local_to_map(global_position)
-			ore_layer.set_cell(tile_coords, -1)
+			
+			# NOVO: Remove da lista de buracos bloqueados
+			ore_layer.active_ore_cells.erase(tile_coords) 
+			
+			# Isso força o chão a recriar o polígono de navegação onde estava a pedra
 			ground_layer.notify_runtime_tile_data_update()
 			
+		# Sem Respawn: O minério some da tela
 		queue_free()
+
+# Adicione esta função no seu Ore.gd para avisar a UI que a pedra foi clicada
+func select_ore() -> void:
+	if my_data:
+		Global.ore_selected.emit(my_data.name, my_data.max_hp, current_hp, current_lives)
+	else:
+		print("ERRO: my_data está vazio e não pode ser enviado para a HUD.")

@@ -4,13 +4,14 @@ extends TileMapLayer
 @export_range(0.0, 1.0) var spawn_density: float = 0.4 # 40% de chance de nascer minério em um tile de chão
 
 @export var max_ores: int = 500 # LIMITE DE SEGURANÇA: Nunca vai gerar mais que 50 minérios!
+var active_ore_cells: Array[Vector2i] = [] # Nova variável!
 
 func generate_floor(floor_data: MineFloorData, ground_layer: TileMapLayer) -> void:
-	# 1. Trava inicial de dados
 	if floor_data == null or floor_data.ore_set == null:
 		return
 	
-	# Limpa qualquer minério existente antes de gerar novos
+	active_ore_cells.clear() # Limpa as posições antigas
+	
 	for child in get_children():
 		child.queue_free()
 		
@@ -35,11 +36,11 @@ func _spawn_ore_at(cell_pos: Vector2i, ore_data: OreData) -> void:
 	var new_ore = base_ore_scene.instantiate()
 	add_child(new_ore)
 	
-	# map_to_local centraliza a cena exatamente no meio do tile
 	new_ore.global_position = map_to_local(cell_pos)
-	
-	# Chama a sua função setup que criamos antes!
 	new_ore.setup(ore_data)
+	
+	# Salva a posição exata como "bloqueada" na nossa lista
+	active_ore_cells.append(cell_pos)
 
 # Sistema de "Roleta" para escolher o minério baseado nas chances (spawn_chance)
 func _pick_random_ore(ore_set: OreSetData) -> OreData:

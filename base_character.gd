@@ -4,51 +4,87 @@ extends CharacterBody2D
 enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING }
 var current_state: State = State.IDLE
 
+# --- STATUS DE MINERAÇÃO (UPGRADES) ---
+var mining_power: int = 1         # Dano causado à pedra por cada batida
+var mining_speed_level: float = 1.0 # Nível de velocidade (usado na fórmula do Timer)
+var ore_multiplier: float = 1.0   # Multiplicador do dinheiro final (Ex: 1.0, 1.2, 2.5)
+
+const BASE_MINE_TIME: float = 1.0 # Tempo base (1 segundo por batida)
+const MIN_MINE_TIME: float = 0.1  # Limite máximo de velocidade (10 batidas por segundo)
+
 @export var speed: float = 200.0
 @export var interact_distance: float = 60.0 # Distância para parar antes de bater
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var mining_timer: Timer = $MiningTimer 
 
-var interact_target: Area2D = null
+@export var animated_player: AnimationPlayer
+
+# Alterado de Area2D para Node2D para ser mais genérico na hora de receber o alvo
+var interact_target: Node2D = null
 
 func _ready() -> void:
-	# Evita que o personagem fique tremendo ao chegar no destino
 	nav_agent.path_desired_distance = 10.0
 	nav_agent.target_desired_distance = 10.0
 	
-	# Configura o Timer de mineração via código
 	if mining_timer:
 		mining_timer.one_shot = false
-		mining_timer.wait_time = 0.5 # Dá dano a cada 0.5 segundos
+		update_stats() # <-- Substitui a definição manual de wait_time
 		mining_timer.timeout.connect(_on_mining_timer_timeout)
+		
+	change_state(State.IDLE)
 
-# --- DETECÇÃO DE CLIQUES NO CHÃO ---
+
+
+func update_stats() -> void:
+	# Fórmula: Tempo Base dividido pelo Nível de Velocidade
+	# Se o level for 1, bate a cada 1s. Se for 2, bate a cada 0.5s. Se for 4, bate a cada 0.25s.
+	var new_wait_time = BASE_MINE_TIME / mining_speed_level
+	
+	# max() garante que a velocidade nunca seja menor que o limite (0.1s), evitando quebrar o jogo
+	mining_timer.wait_time = max(MIN_MINE_TIME, new_wait_time)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		# Se clicou no chão livre, anda até o ponto
+		
+		# Cria uma verificação física exatamente onde o mouse clicou
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsPointQueryParameters2D.new()
+		query.position = get_global_mouse_position()
+		query.collide_with_areas = true  # Queremos detectar Area2D (O Minério)
+		query.collide_with_bodies = false
+		
+		# Pega uma lista de tudo que estava embaixo do mouse
+		var results = space_state.intersect_point(query)
+		
+		# Se o clique acertou qualquer Area2D, paramos o código por aqui e deixamos
+		# a função _on_input_event da pedra assumir o controle!
+		if results.size() > 0:
+			return
+			
+		# Se chegou aqui embaixo, significa que bateu no chão livre de verdade
 		walk_to_point(get_global_mouse_position())
 
 # --- FUNÇÕES DE DEFINIÇÃO DE ALVO ---
 func walk_to_point(target_point: Vector2) -> void:
+	Global.ore_deselected.emit() # <-- Esconde o HUD pois clicou no chão
 	interact_target = null
-	current_state = State.MOVING
+	change_state(State.MOVING)
 	nav_agent.target_position = target_point
-	
-	# Tolerância quase zero: obriga o personagem a ir EXATAMENTE onde você clicou
 	nav_agent.target_desired_distance = 2.0 
-	
 	if mining_timer and !mining_timer.is_stopped():
 		mining_timer.stop()
 
 func walk_to_interact(target_node: Node2D) -> void: 
 	interact_target = target_node
-	current_state = State.MOVING_TO_INTERACT
+	
+	# <-- Pede para o minério enviar as informações dele para a tela
+	if is_instance_valid(target_node) and target_node.has_method("select_ore"):
+		target_node.select_ore()
+		
+	change_state(State.MOVING_TO_INTERACT)
 	nav_agent.target_position = target_node.global_position
-	
-	# Tolerância maior: faz ele parar assim que chegar na distância de bater na pedra
 	nav_agent.target_desired_distance = interact_distance 
-	
 	if mining_timer and !mining_timer.is_stopped():
 		mining_timer.stop()
 
@@ -61,19 +97,19 @@ func _physics_process(_delta: float) -> void:
 			
 		State.MOVING:
 			if nav_agent.is_navigation_finished():
-				current_state = State.IDLE
+				change_state(State.IDLE)
 				velocity = Vector2.ZERO
 				return
 			_process_movement()
 			
 		State.MOVING_TO_INTERACT:
-			# Verifica se o minério ainda existe (pode ter sido quebrado sem respawn)[cite: 1]
+			# Verifica se o minério ainda existe (pode ter sido quebrado e deletado com queue_free)[cite: 1]
 			if is_instance_valid(interact_target):
 				var distance = global_position.distance_to(interact_target.global_position)
 				
-				# Se chegou perto o suficiente, para e começa a minerar[cite: 1]
+				# Se chegou perto o suficiente, para e começa a minerar
 				if distance <= interact_distance:
-					current_state = State.MINING
+					change_state(State.MINING)
 					velocity = Vector2.ZERO
 					if mining_timer:
 						mining_timer.start()
@@ -83,14 +119,19 @@ func _physics_process(_delta: float) -> void:
 					# Continua andando até a pedra
 					_process_movement()
 			else:
-				# O minério foi destruído usando queue_free() antes do jogador chegar[cite: 1]
-				current_state = State.IDLE
+				# O minério foi destruído antes do jogador chegar[cite: 1]
+				change_state(State.IDLE)
 				velocity = Vector2.ZERO
 
 func _process_movement() -> void:
 	var current_agent_position: Vector2 = global_position
 	var next_path_position: Vector2 = nav_agent.get_next_path_position()
 	var new_velocity: Vector2 = current_agent_position.direction_to(next_path_position) * speed
+	
+	# Opcional: Se quiser espelhar a sprite ao andar para a esquerda/direita, descomente o código abaixo:
+	# if has_node("Sprite2D"): # Mude para o nome exato da sua Sprite
+	#     if new_velocity.x != 0:
+	#         $Sprite2D.flip_h = new_velocity.x < 0
 	
 	# Usa o sistema de Avoidance se ativado
 	if nav_agent.avoidance_enabled:
@@ -107,10 +148,26 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:
-	# Checa se o alvo existe e se possui o método de interação
-	if is_instance_valid(interact_target) and interact_target.has_method("interact"):
-		interact_target.interact()
+	# Mudamos de "interact" para "take_damage" para fazer sentido com os status
+	if is_instance_valid(interact_target) and interact_target.has_method("take_damage"):
+		# Passamos o dano (poder) e o multiplicador de moedas para o minério
+		interact_target.take_damage(mining_power, ore_multiplier)
 	else:
-		# Se a pedra foi destruída permanentemente, o jogador volta ao estado IDLE[cite: 1]
 		mining_timer.stop()
-		current_state = State.IDLE
+		change_state(State.IDLE)
+
+# --- GERENCIADOR DE ESTADOS E ANIMAÇÕES ---
+func change_state(new_state: State) -> void:
+	if current_state == new_state:
+		return # Evita reiniciar a animação se já estiver no estado correto
+		
+	current_state = new_state
+	
+	if animated_player:
+		match current_state:
+			State.IDLE:
+				animated_player.play("IDLE")
+			State.MOVING, State.MOVING_TO_INTERACT:
+				animated_player.play("WALK")
+			State.MINING:
+				animated_player.play("MINING")

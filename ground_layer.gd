@@ -4,13 +4,13 @@ extends TileMapLayer
 @export var ore_layer: TileMapLayer
 
 # 1. Avisa QUAIS quadrados do chão precisam ser alterados
+# Substitua o _use_tile_data_runtime_update inteiro por este:
 func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
-	# Se existe um tile desenhado na camada de minérios exatamente nesta mesma coordenada...
-	if ore_layer.get_cell_source_id(coords) != -1:
-		return true # ...avisamos que o chão debaixo dele precisa ser modificado
+	# Se a coordenada atual estiver na lista de minérios, precisa ser modificada!
+	if coords in ore_layer.active_ore_cells:
+		return true 
 	return false
 
-# 2. Executa a alteração no quadrado de chão
+# Esta função continua igualzinha a sua:
 func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
-	# Desliga completamente a navegação deste quadrado específico
 	tile_data.set_navigation_polygon(0, null)
