@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://cag6ygsot6rtt"]
+
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="2_set"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="3_floor"]
+[ext_resource type="Resource" path="res://Data/Resource/Diamond.tres" id="4_diamond"]
+[ext_resource type="Resource" path="res://Data/Resource/Mithril.tres" id="5_mithril"]
+[ext_resource type="Resource" path="res://Data/Resource/Adamantium.tres" id="6_adamantium"]
+[ext_resource type="Resource" path="res://Data/Resource/Orichalcum.tres" id="7_orichalcum"]
+[ext_resource type="Resource" path="res://Data/Resource/Starcrystal.tres" id="8_starcrystal"]
+
+[sub_resource type="Resource" id="Resource_rule1"]
+script = ExtResource("1_rule")
+ore = ExtResource("4_diamond")
+spawn_chance = 25.0
+
+[sub_resource type="Resource" id="Resource_rule2"]
+script = ExtResource("1_rule")
+ore = ExtResource("5_mithril")
+spawn_chance = 40.0
+
+[sub_resource type="Resource" id="Resource_rule3"]
+script = ExtResource("1_rule")
+ore = ExtResource("6_adamantium")
+spawn_chance = 20.0
+
+[sub_resource type="Resource" id="Resource_rule4"]
+script = ExtResource("1_rule")
+ore = ExtResource("7_orichalcum")
+
+[sub_resource type="Resource" id="Resource_rule5"]
+script = ExtResource("1_rule")
+ore = ExtResource("8_starcrystal")
+spawn_chance = 5.0
+
+[sub_resource type="Resource" id="Resource_set"]
+script = ExtResource("2_set")
+spawn_rules = Array[ExtResource("1_rule")]([SubResource("Resource_rule1"), SubResource("Resource_rule2"), SubResource("Resource_rule3"), SubResource("Resource_rule4"), SubResource("Resource_rule5")])
+
+[resource]
+script = ExtResource("3_floor")
+floor_name = "Manto Fantástico"
+ore_set = SubResource("Resource_set")

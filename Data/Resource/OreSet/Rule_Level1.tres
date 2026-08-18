@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_ck6p5"]
 [ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_ey4f0"]
-[ext_resource type="Resource" uid="uid://cd132fqm7mfo5" path="res://Data/Resource/Ores/Stone.tres" id="3_corey"]
-[ext_resource type="Resource" uid="uid://4dxtiwlscr50" path="res://Data/Resource/Ores/Iron.tres" id="4_50jlw"]
-[ext_resource type="Resource" uid="uid://cqbcogfupqi8q" path="res://Data/Resource/Ores/Gold.tres" id="5_kc2yi"]
-[ext_resource type="Resource" uid="uid://byytb0ktamykk" path="res://Data/Resource/Ores/Coal.tres" id="6_86j5b"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Stone.tres" id="3_corey"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Iron.tres" id="4_50jlw"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Gold.tres" id="5_kc2yi"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Coal.tres" id="6_86j5b"]
 
 [sub_resource type="Resource" id="Resource_wecve"]
 script = ExtResource("2_ey4f0")

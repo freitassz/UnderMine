@@ -3,7 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://c6mtsn86f6vl6" path="res://base_character.tscn" id="1_0f027"]
 [ext_resource type="TileSet" uid="uid://c2jxo2lqbdh06" path="res://GameTileset.tres" id="2_gyfs4"]
 [ext_resource type="PackedScene" uid="uid://c0cbkdisdif2o" path="res://Portal.tscn" id="3_gyfs4"]
-[ext_resource type="Resource" uid="uid://b5jc2k86nngoh" path="res://Data/Resource/Levels/Level1.tres" id="4_d5x1h"]
+[ext_resource type="Resource" uid="uid://ku5gbgdwu77j" path="res://Data/Resource/Levels/Level1_MinaInicial.tres" id="4_66tet"]
+[ext_resource type="Resource" path="res://Data/Resource/Levels/Level2_CavernasFrias.tres" id="5_7ycvg"]
+[ext_resource type="Resource" path="res://Data/Resource/Levels/Level3_ProfundezasPreciosas.tres" id="6_wr18j"]
+[ext_resource type="Resource" path="res://Data/Resource/Levels/Level4_MantoFantastico.tres" id="7_qwutr"]
+[ext_resource type="Resource" path="res://Data/Resource/Levels/Level5_ONucleoDoVazio.tres" id="8_671wp"]
 
 [node name="MainScene" type="Node2D" unique_id=464339740]
 
@@ -27,4 +31,20 @@ limit_bottom = 256
 
 [node name="Portal" parent="." unique_id=754405333 instance=ExtResource("3_gyfs4")]
 position = Vector2(26, 0)
-portal_floor_data = ExtResource("4_d5x1h")
+portal_floor_data = ExtResource("4_66tet")
+
+[node name="Portal2" parent="." unique_id=1118308366 instance=ExtResource("3_gyfs4")]
+position = Vector2(45, 0)
+portal_floor_data = ExtResource("5_7ycvg")
+
+[node name="Portal3" parent="." unique_id=1796270136 instance=ExtResource("3_gyfs4")]
+position = Vector2(64, 0)
+portal_floor_data = ExtResource("6_wr18j")
+
+[node name="Portal4" parent="." unique_id=1977329676 instance=ExtResource("3_gyfs4")]
+position = Vector2(83, 0)
+portal_floor_data = ExtResource("7_qwutr")
+
+[node name="Portal5" parent="." unique_id=2043943460 instance=ExtResource("3_gyfs4")]
+position = Vector2(102, 0)
+portal_floor_data = ExtResource("8_671wp")

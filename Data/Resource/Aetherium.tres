@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
 
 [ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/coal.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://assets/aetherium.png" id="2_tex"]
 
 [resource]
 script = ExtResource("1_script")
-name = "Coal"
+name = "Aetherium"
 texture = ExtResource("2_tex")
-money_drop = 5
-hardness = 0.8
-max_hp = 2
-extra_lives = 0
+money_drop = 2500000
+hardness = 15.0
+max_hp = 50
+extra_lives = 15
