@@ -101,6 +101,22 @@ offset_right = 45.0
 offset_bottom = 80.0
 texture = ExtResource("2_m4khw")
 
+[node name="ColorRect2" type="ColorRect" parent="TextureRect" unique_id=1222130378]
+layout_mode = 0
+offset_top = 160.0
+offset_right = 90.0
+offset_bottom = 261.0
+color = Color(0.011087579, 0.011087578, 0.01108758, 1)
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect" unique_id=137188852]
+layout_mode = 0
+offset_left = -1.093399
+offset_top = -0.02083583
+offset_right = 122.86493
+offset_bottom = 90.94881
+rotation = -1.5707964
+color = Color(0.011087579, 0.011087578, 0.01108758, 1)
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=410069062]
 texture = ExtResource("2_tm8wl")
 hframes = 2

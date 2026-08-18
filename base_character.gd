@@ -4,6 +4,9 @@ extends CharacterBody2D
 enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING }
 var current_state: State = State.IDLE
 
+signal multiplier_changed(mult: float)
+
+
 # --- STATUS DE MINERAÇÃO (UPGRADES) ---
 var mining_power: int = 1         # Dano causado à pedra por cada batida
 var mining_speed_level: float = 1.0 # Nível de velocidade (usado na fórmula do Timer)
@@ -23,6 +26,11 @@ const MIN_MINE_TIME: float = 0.1  # Limite máximo de velocidade (10 batidas por
 # Alterado de Area2D para Node2D para ser mais genérico na hora de receber o alvo
 var interact_target: Node2D = null
 
+var last_hit_time: int = 0
+var click_multiplier: float = 1.0
+const MAX_CLICK_MULTIPLIER: float = 1.5
+const CLICK_MULTIPLIER_STEP: float = 0.01
+
 func _ready() -> void:
 	nav_agent.path_desired_distance = 10.0
 	nav_agent.target_desired_distance = 10.0
@@ -37,9 +45,8 @@ func _ready() -> void:
 
 
 func update_stats() -> void:
-	# Fórmula: Tempo Base dividido pelo Nível de Velocidade
-	# Se o level for 1, bate a cada 1s. Se for 2, bate a cada 0.5s. Se for 4, bate a cada 0.25s.
-	var new_wait_time = BASE_MINE_TIME / mining_speed_level
+	# Fórmula: Tempo Base dividido pelo Nível de Velocidade e pelo multiplicador de clique manual
+	var new_wait_time = (BASE_MINE_TIME / mining_speed_level) / click_multiplier
 	
 	# max() garante que a velocidade nunca seja menor que o limite (0.1s), evitando quebrar o jogo
 	mining_timer.wait_time = max(MIN_MINE_TIME, new_wait_time)
@@ -68,6 +75,12 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- FUNÇÕES DE DEFINIÇÃO DE ALVO ---
 func walk_to_point(target_point: Vector2) -> void:
 	Global.ore_deselected.emit() # <-- Esconde o HUD pois clicou no chão
+	
+	# Reseta o multiplicador ao andar para outro lugar
+	click_multiplier = 1.0
+	multiplier_changed.emit(click_multiplier)
+	update_stats()
+	
 	interact_target = null
 	change_state(State.MOVING)
 	nav_agent.target_position = target_point
@@ -76,6 +89,26 @@ func walk_to_point(target_point: Vector2) -> void:
 		mining_timer.stop()
 
 func walk_to_interact(target_node: Node2D) -> void: 
+	if interact_target == target_node and current_state == State.MINING:
+		# Aumenta o multiplicador de velocidade com base no clique, até o limite
+		click_multiplier = min(click_multiplier + CLICK_MULTIPLIER_STEP, MAX_CLICK_MULTIPLIER)
+		multiplier_changed.emit(click_multiplier)
+		update_stats() # Aplica o novo multiplicador ao timer
+		
+		# Tenta bater manualmente se o (novo) cooldown já passou
+		var current_time = Time.get_ticks_msec()
+		var cooldown_ms = int(mining_timer.wait_time * 1000)
+		
+		if current_time - last_hit_time >= cooldown_ms:
+			if mining_timer:
+				mining_timer.start() # Reseta o timer para não bater auto em seguida
+			_on_mining_timer_timeout()
+		return
+
+	# Se clicou num alvo NOVO, reseta o multiplicador
+	click_multiplier = 1.0
+	multiplier_changed.emit(click_multiplier)
+	update_stats()
 	interact_target = target_node
 	
 	# <-- Pede para o minério enviar as informações dele para a tela
@@ -113,7 +146,11 @@ func _physics_process(_delta: float) -> void:
 					velocity = Vector2.ZERO
 					if mining_timer:
 						mining_timer.start()
-						_on_mining_timer_timeout() # Aplica o primeiro dano imediatamente
+						# Ao invés de bater cego, checamos o cooldown para evitar spam exploit
+						var current_time = Time.get_ticks_msec()
+						var cooldown_ms = int(mining_timer.wait_time * 1000)
+						if current_time - last_hit_time >= cooldown_ms:
+							_on_mining_timer_timeout()
 					return
 				else:
 					# Continua andando até a pedra
@@ -148,12 +185,20 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:
+	last_hit_time = Time.get_ticks_msec()
+	
 	# Mudamos de "interact" para "take_damage" para fazer sentido com os status
 	if is_instance_valid(interact_target) and interact_target.has_method("take_damage"):
 		# Passamos o dano (poder) e o multiplicador de moedas para o minério
 		interact_target.take_damage(mining_power, ore_multiplier)
+		
+		# Reinicia a animação para dar feedback visual do hit manual/automático
+		if animated_player and current_state == State.MINING:
+			animated_player.stop()
+			animated_player.play("MINING")
 	else:
-		mining_timer.stop()
+		if mining_timer:
+			mining_timer.stop()
 		change_state(State.IDLE)
 
 # --- GERENCIADOR DE ESTADOS E ANIMAÇÕES ---
@@ -162,6 +207,11 @@ func change_state(new_state: State) -> void:
 		return # Evita reiniciar a animação se já estiver no estado correto
 		
 	current_state = new_state
+	
+	if current_state == State.IDLE:
+		click_multiplier = 1.0
+		multiplier_changed.emit(click_multiplier)
+		update_stats()
 	
 	if animated_player:
 		match current_state:

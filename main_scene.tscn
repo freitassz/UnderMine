@@ -4,10 +4,10 @@
 [ext_resource type="TileSet" uid="uid://c2jxo2lqbdh06" path="res://GameTileset.tres" id="2_gyfs4"]
 [ext_resource type="PackedScene" uid="uid://c0cbkdisdif2o" path="res://Portal.tscn" id="3_gyfs4"]
 [ext_resource type="Resource" uid="uid://ku5gbgdwu77j" path="res://Data/Resource/Levels/Level1_MinaInicial.tres" id="4_66tet"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level2_CavernasFrias.tres" id="5_7ycvg"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level3_ProfundezasPreciosas.tres" id="6_wr18j"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level4_MantoFantastico.tres" id="7_qwutr"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level5_ONucleoDoVazio.tres" id="8_671wp"]
+[ext_resource type="Resource" uid="uid://bwkgjw3p4dod3" path="res://Data/Resource/Levels/Level2_CavernasFrias.tres" id="5_7ycvg"]
+[ext_resource type="Resource" uid="uid://tr58gjalk0cp" path="res://Data/Resource/Levels/Level3_ProfundezasPreciosas.tres" id="6_wr18j"]
+[ext_resource type="Resource" uid="uid://cag6ygsot6rtt" path="res://Data/Resource/Levels/Level4_MantoFantastico.tres" id="7_qwutr"]
+[ext_resource type="Resource" uid="uid://bkc7ivsur77k1" path="res://Data/Resource/Levels/Level5_ONucleoDoVazio.tres" id="8_671wp"]
 
 [node name="MainScene" type="Node2D" unique_id=464339740]
 
