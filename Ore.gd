@@ -11,6 +11,7 @@ var current_lives: int # Para a mecânica estilo Gold Mountain
 
 func _ready() -> void:
 	super._ready() 
+	add_to_group("ores") 
 	
 	# Se tiver um dado de teste no Inspector, ele se auto-configura para você testar
 	if test_data != null:

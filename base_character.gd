@@ -31,6 +31,11 @@ var click_multiplier: float = 1.0
 const MAX_CLICK_MULTIPLIER: float = 1.5
 const CLICK_MULTIPLIER_STEP: float = 0.01
 
+var stair_arrow: Sprite2D
+var ore_arrow: Sprite2D
+var target_stair: Node2D
+var target_ore: Node2D
+
 func _ready() -> void:
 	nav_agent.path_desired_distance = 10.0
 	nav_agent.target_desired_distance = 10.0
@@ -40,9 +45,64 @@ func _ready() -> void:
 		update_stats() # <-- Substitui a definição manual de wait_time
 		mining_timer.timeout.connect(_on_mining_timer_timeout)
 		
+	stair_arrow = Sprite2D.new()
+	var g_arrow = load("res://assets/Green_Arrow.png")
+	if g_arrow: stair_arrow.texture = g_arrow
+	stair_arrow.hide()
+	stair_arrow.scale = Vector2(1, 1)
+	add_child(stair_arrow)
+	
+	ore_arrow = Sprite2D.new()
+	var r_arrow = load("res://assets/Red_arrow.png")
+	if r_arrow: ore_arrow.texture = r_arrow
+	ore_arrow.hide()
+	ore_arrow.scale = Vector2(1, 1)
+	add_child(ore_arrow)
+		
 	change_state(State.IDLE)
 
 
+
+func _process(_delta: float) -> void:
+	if "has_stair_compass" in Global and Global.has_stair_compass:
+		if not is_instance_valid(target_stair):
+			var stairs = get_tree().get_nodes_in_group("stairs")
+			if stairs.size() > 0:
+				target_stair = stairs[0]
+		
+		if is_instance_valid(target_stair):
+			stair_arrow.show()
+			stair_arrow.rotation = global_position.direction_to(target_stair.global_position).angle()
+			stair_arrow.position = Vector2.RIGHT.rotated(stair_arrow.rotation) * 7.0
+		else:
+			stair_arrow.hide()
+	else:
+		if stair_arrow: stair_arrow.hide()
+		
+	if "has_ore_compass" in Global and Global.has_ore_compass:
+		if not is_instance_valid(target_ore):
+			_find_best_ore()
+			
+		if is_instance_valid(target_ore):
+			ore_arrow.show()
+			ore_arrow.rotation = global_position.direction_to(target_ore.global_position).angle()
+			ore_arrow.position = Vector2.RIGHT.rotated(ore_arrow.rotation) * 9.0
+		else:
+			ore_arrow.hide()
+	else:
+		if ore_arrow: ore_arrow.hide()
+
+func _find_best_ore() -> void:
+	var ores = get_tree().get_nodes_in_group("ores")
+	var best_ore = null
+	var best_value = -1
+	for o in ores:
+		if "my_data" in o and o.my_data != null:
+			var value = o.my_data.money_drop
+			if value > best_value:
+				best_value = value
+				best_ore = o
+	target_ore = best_ore
 
 func update_stats() -> void:
 	# Fórmula: Tempo Base dividido pelo Nível de Velocidade e pelo multiplicador de clique manual
