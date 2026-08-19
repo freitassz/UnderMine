@@ -7,7 +7,7 @@
 size = Vector2(8, 8)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_i210l"]
-vertices = PackedVector2Array(4, 4, -4, 4, -4, -4, 4, -4)
+vertices = PackedVector2Array(5, 5, -5, 5, -5, -5, 5, -5)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)])
 parsed_geometry_type = 1
@@ -17,13 +17,12 @@ agent_radius = 0.0
 [node name="Portal" type="Area2D" unique_id=754405333]
 script = ExtResource("1_bagdj")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1922350586]
-texture = ExtResource("2_aamt4")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=396242941]
 shape = SubResource("RectangleShape2D_i210l")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=277193634]
 navigation_polygon = SubResource("NavigationPolygon_i210l")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1922350586]
+texture = ExtResource("2_aamt4")
+

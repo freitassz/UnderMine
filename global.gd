@@ -8,6 +8,7 @@ signal ore_deselected()
 
 var money: int = 0
 var floor_data_to_load: MineFloorData = null
+var current_floor_index: int = 1
 
 # Usar uma função ajuda a organizar e disparar o sinal automaticamente
 func add_money(amount: int) -> void:

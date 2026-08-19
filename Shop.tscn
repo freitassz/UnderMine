@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dj8ya2nd82nxm"]
+
+[ext_resource type="Script" uid="uid://ql66rheyt07s" path="res://Shop.gd" id="1_shop"]
+[ext_resource type="Texture2D" uid="uid://h7q48kux78oo" path="res://assets/Shop.png" id="2_f511j"]
+[ext_resource type="PackedScene" uid="uid://cxab1234568aa" path="res://shop_ui.tscn" id="3_shopui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shop"]
+size = Vector2(16, 16)
+
+[node name="Shop" type="Area2D" unique_id=1426373206]
+script = ExtResource("1_shop")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1760072596]
+texture = ExtResource("2_f511j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=367721525]
+shape = SubResource("RectangleShape2D_shop")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1551128295]
+layer = 20
+
+[node name="ShopUI" parent="CanvasLayer" unique_id=616337340 instance=ExtResource("3_shopui")]

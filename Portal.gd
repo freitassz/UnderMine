@@ -5,13 +5,14 @@ class_name Portal
 @export var mine_scene_path: String = "res://Data/Resource/Levels/mine_scene.tscn"
 
 func _ready() -> void:
-	pass
+	super._ready() # Conecta o clique do Interactable
 
-# Supondo que você use o sinal "body_entered" do Area2D para detectar o jogador
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"): # Verifica se quem entrou foi o jogador
-		# Passa a data do portal para o Autoload
-		Global.floor_data_to_load = portal_floor_data
-		
-		# Muda para a cena da mina
-		get_tree().change_scene_to_file(mine_scene_path)
+# O player clica no portal, anda até ele e tenta "bater". 
+# Quando isso acontece, ele é teletransportado!
+func take_damage(_power: int, _mult: float) -> void:
+	# Passa a data do portal para o Autoload e zera os andares
+	Global.floor_data_to_load = portal_floor_data
+	Global.current_floor_index = 1
+	
+	# Muda para a cena da mina
+	get_tree().change_scene_to_file(mine_scene_path)

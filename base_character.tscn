@@ -95,6 +95,7 @@ speed = 100.0
 animated_player = NodePath("AnimationPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1896275381]
+visible = false
 offset_left = -45.0
 offset_top = -80.0
 offset_right = 45.0

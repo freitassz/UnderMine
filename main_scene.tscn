@@ -4,10 +4,12 @@
 [ext_resource type="TileSet" uid="uid://c2jxo2lqbdh06" path="res://GameTileset.tres" id="2_gyfs4"]
 [ext_resource type="PackedScene" uid="uid://c0cbkdisdif2o" path="res://Portal.tscn" id="3_gyfs4"]
 [ext_resource type="Resource" uid="uid://ku5gbgdwu77j" path="res://Data/Resource/Levels/Level1_MinaInicial.tres" id="4_66tet"]
+[ext_resource type="PackedScene" uid="uid://b0oepe80tsa55" path="res://door.tscn" id="4_d5x1h"]
 [ext_resource type="Resource" uid="uid://bwkgjw3p4dod3" path="res://Data/Resource/Levels/Level2_CavernasFrias.tres" id="5_7ycvg"]
 [ext_resource type="Resource" uid="uid://tr58gjalk0cp" path="res://Data/Resource/Levels/Level3_ProfundezasPreciosas.tres" id="6_wr18j"]
 [ext_resource type="Resource" uid="uid://cag6ygsot6rtt" path="res://Data/Resource/Levels/Level4_MantoFantastico.tres" id="7_qwutr"]
 [ext_resource type="Resource" uid="uid://bkc7ivsur77k1" path="res://Data/Resource/Levels/Level5_ONucleoDoVazio.tres" id="8_671wp"]
+[ext_resource type="PackedScene" uid="uid://dj8ya2nd82nxm" path="res://Shop.tscn" id="9_shop"]
 
 [node name="MainScene" type="Node2D" unique_id=464339740]
 
@@ -48,3 +50,15 @@ portal_floor_data = ExtResource("7_qwutr")
 [node name="Portal5" parent="." unique_id=2043943460 instance=ExtResource("3_gyfs4")]
 position = Vector2(102, 0)
 portal_floor_data = ExtResource("8_671wp")
+
+[node name="Door" parent="." unique_id=209015668 instance=ExtResource("4_d5x1h")]
+position = Vector2(-15, -30)
+
+[node name="Shop" parent="." unique_id=764884441 instance=ExtResource("9_shop")]
+position = Vector2(25, -50)
+
+[connection signal="body_entered" from="Portal" to="Portal" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal2" to="Portal2" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal3" to="Portal3" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal4" to="Portal4" method="_on_body_entered"]
+[connection signal="body_entered" from="Portal5" to="Portal5" method="_on_body_entered"]

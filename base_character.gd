@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # --- VARIÁVEIS DE ESTADO E NAVEGAÇÃO ---
-enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING }
+enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING, LEAPING }
 var current_state: State = State.IDLE
 
 signal multiplier_changed(mult: float)
@@ -115,16 +115,49 @@ func walk_to_interact(target_node: Node2D) -> void:
 	if is_instance_valid(target_node) and target_node.has_method("select_ore"):
 		target_node.select_ore()
 		
-	change_state(State.MOVING_TO_INTERACT)
-	nav_agent.target_position = target_node.global_position
-	nav_agent.target_desired_distance = interact_distance 
-	if mining_timer and !mining_timer.is_stopped():
-		mining_timer.stop()
+	# CHECAGEM DE ONE-HIT DASH
+	var will_destroy = false
+	if "current_hp" in target_node and "current_lives" in target_node:
+		var total_health = target_node.current_hp
+		if "my_data" in target_node and target_node.my_data != null:
+			total_health += (target_node.current_lives * target_node.my_data.max_hp)
+			
+		if mining_power >= total_health:
+			will_destroy = true
+			
+	if will_destroy:
+		change_state(State.LEAPING)
+		velocity = Vector2.ZERO
+		nav_agent.target_position = global_position # Para a navegação
+		if mining_timer:
+			mining_timer.stop()
+			
+		var dir = global_position.direction_to(target_node.global_position)
+		# Pousa um pouquinho antes da pedra (80% da interact_distance)
+		var land_pos = target_node.global_position - (dir * (interact_distance * 0.8))
+		
+		# Dash muito rápido
+		var tween = create_tween()
+		tween.tween_property(self, "global_position", land_pos, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_callback(func():
+			# Chegou! Pode bater
+			if current_state == State.LEAPING:
+				change_state(State.MINING)
+				if mining_timer: mining_timer.start()
+				_on_mining_timer_timeout()
+		)
+	else:
+		# Comportamento normal
+		change_state(State.MOVING_TO_INTERACT)
+		nav_agent.target_position = target_node.global_position
+		nav_agent.target_desired_distance = interact_distance 
+		if mining_timer and !mining_timer.is_stopped():
+			mining_timer.stop()
 
 # --- MÁQUINA DE ESTADOS E MOVIMENTAÇÃO ---
 func _physics_process(_delta: float) -> void:
 	match current_state:
-		State.IDLE, State.MINING:
+		State.IDLE, State.MINING, State.LEAPING:
 			velocity = Vector2.ZERO
 			return
 			
@@ -150,7 +183,12 @@ func _physics_process(_delta: float) -> void:
 						var current_time = Time.get_ticks_msec()
 						var cooldown_ms = int(mining_timer.wait_time * 1000)
 						if current_time - last_hit_time >= cooldown_ms:
+							mining_timer.start()
 							_on_mining_timer_timeout()
+						else:
+							# Aguarda apenas o tempo que falta para o próximo hit!
+							var remaining = (cooldown_ms - (current_time - last_hit_time)) / 1000.0
+							mining_timer.start(max(0.01, remaining))
 					return
 				else:
 					# Continua andando até a pedra
@@ -186,6 +224,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:
 	last_hit_time = Time.get_ticks_msec()
+	
+	# Restaura o tempo normal do timer caso tenha sido alterado pelo tempo restante (remaining)
+	update_stats()
 	
 	# Mudamos de "interact" para "take_damage" para fazer sentido com os status
 	if is_instance_valid(interact_target) and interact_target.has_method("take_damage"):
