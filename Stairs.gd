@@ -10,6 +10,6 @@ func _ready() -> void:
 func setup(mine: Node2D) -> void:
 	mine_scene = mine
 
-func take_damage(_power: int, _mult: float) -> void:
+func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
 	if mine_scene:
 		mine_scene.descend_floor()

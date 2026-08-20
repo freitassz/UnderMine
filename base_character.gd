@@ -42,7 +42,7 @@ func _ready() -> void:
 	nav_agent.target_desired_distance = 10.0
 	
 	if mining_timer:
-		mining_timer.one_shot = false
+		mining_timer.one_shot = true
 		update_stats() # <-- Substitui a definição manual de wait_time
 		mining_timer.timeout.connect(_on_mining_timer_timeout)
 		
@@ -311,7 +311,17 @@ func _on_mining_timer_timeout() -> void:
 		# Reinicia a animação para dar feedback visual do hit manual/automático
 		if animated_player and current_state == State.MINING:
 			animated_player.stop()
+			
+			# Sincroniza a velocidade da animação com o cooldown atual!
+			if animated_player.has_animation("MINING"):
+				var anim_length = animated_player.get_animation("MINING").length
+				animated_player.speed_scale = anim_length / mining_timer.wait_time
+			
 			animated_player.play("MINING")
+			
+		# Reinicia o timer manualmente (já que agora é one_shot = true)
+		if mining_timer:
+			mining_timer.start()
 	else:
 		if mining_timer:
 			mining_timer.stop()
@@ -330,10 +340,12 @@ func change_state(new_state: State) -> void:
 		update_stats()
 	
 	if animated_player:
+		animated_player.speed_scale = 1.0 # Reseta a velocidade para outras animações
 		match current_state:
 			State.IDLE:
 				animated_player.play("IDLE")
 			State.MOVING, State.MOVING_TO_INTERACT:
 				animated_player.play("WALK")
 			State.MINING:
+				# A velocidade é ajustada lá no timeout
 				animated_player.play("MINING")

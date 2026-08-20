@@ -7,7 +7,7 @@ class_name Shop
 func _ready() -> void:
 	super._ready()
 
-func take_damage(_power: int, _mult: float) -> void:
+func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
 	shop_ui.open()
 	
 	# Faz o player parar de interagir

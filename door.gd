@@ -17,7 +17,7 @@ func _ready() -> void:
 	cost_label.text = "Abrir por " + str(cost) + " moedas?"
  
 # Quando o player chega e dá o primeiro "hit", a gente abre a interface
-func take_damage(_power: int, _mult: float) -> void:
+func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
 	if is_ui_open: return
 	
 	open_ui()
