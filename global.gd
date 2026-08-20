@@ -20,6 +20,8 @@ var has_automatic: bool = false
 var has_alchemical: bool = false
 var is_afk_active: bool = false
 
+var unlocked_levels: Dictionary = {}
+
 # --- PLAYER STATS (Moved to Global for persistence) ---
 var mining_power: int = 1
 var mining_speed_level: float = 1.0

@@ -12,6 +12,7 @@ config_version=5
 
 config/name="UnderMine"
 config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/bg_color=Color(0.07450981, 0.07450981, 0.07450981, 1)
 config/icon="res://icon.svg"
 
 [autoload]
@@ -39,3 +40,4 @@ window/stretch/aspect="expand"
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.07450981, 0.07450981, 0.07450981, 1)

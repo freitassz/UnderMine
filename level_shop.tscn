@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://cxabdega8765"]
+
+[ext_resource type="Script" uid="uid://dhktgxox44rar" path="res://level_shop.gd" id="1_door"]
+[ext_resource type="Texture2D" uid="uid://b3tq0jpx1s7vj" path="res://assets/Demon.png" id="2_453q1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door1"]
+size = Vector2(24, 25)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_door"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.6, 0.1, 1)
+
+[node name="LevelShop" type="Area2D" unique_id=1637030134]
+script = ExtResource("1_door")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1091170570]
+texture = ExtResource("2_453q1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=883627371]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_door1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=6774468]
+layer = 10
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=568102164]
+custom_minimum_size = Vector2(400, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_door")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=908952572]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=276556307]
+layout_mode = 2
+text = "Comprar Acesso aos Leveis"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Panel/VBoxContainer" unique_id=752436210]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DoorsList" type="VBoxContainer" parent="CanvasLayer/Panel/VBoxContainer/ScrollContainer" unique_id=1438053955]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CloseBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer" unique_id=613503133]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Fechar"

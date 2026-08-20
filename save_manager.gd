@@ -16,6 +16,7 @@ func save_game() -> void:
 		"has_chain_reaction": Global.has_chain_reaction,
 		"has_automatic": Global.has_automatic,
 		"has_alchemical": Global.has_alchemical,
+		"unlocked_levels": Global.unlocked_levels,
 		
 		"mining_power": Global.mining_power,
 		"mining_speed_level": Global.mining_speed_level,
@@ -53,6 +54,7 @@ func load_game() -> void:
 			if data.has("has_chain_reaction"): Global.has_chain_reaction = data["has_chain_reaction"]
 			if data.has("has_automatic"): Global.has_automatic = data["has_automatic"]
 			if data.has("has_alchemical"): Global.has_alchemical = data["has_alchemical"]
+			if data.has("unlocked_levels"): Global.unlocked_levels = data["unlocked_levels"]
 			
 			if data.has("mining_power"): Global.mining_power = int(data["mining_power"])
 			if data.has("mining_speed_level"): Global.mining_speed_level = float(data["mining_speed_level"])
@@ -79,6 +81,7 @@ func reset_save() -> void:
 	Global.has_chain_reaction = false
 	Global.has_automatic = false
 	Global.has_alchemical = false
+	Global.unlocked_levels.clear()
 	
 	Global.mining_power = 1
 	Global.mining_speed_level = 1.0

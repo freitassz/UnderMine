@@ -1,7 +1,9 @@
 extends Interactable
  
 @export var cost: int = 100
- 
+@export var is_level_door: bool = false
+@export var level_name: String = "Mina Oculta"
+
 @onready var ui_layer: CanvasLayer = $CanvasLayer
 @onready var cost_label: Label = $CanvasLayer/Panel/VBoxContainer/CostLabel
 @onready var yes_btn: Button = $CanvasLayer/Panel/VBoxContainer/HBoxContainer/YesBtn
@@ -11,6 +13,11 @@ var is_ui_open: bool = false
  
 func _ready() -> void:
 	super._ready() # Chama o _ready de Interactable para conectar o clique
+	
+	if is_level_door and Global.unlocked_levels.has(name):
+		queue_free()
+		return
+		
 	ui_layer.hide()
 	yes_btn.pressed.connect(_on_yes_pressed)
 	no_btn.pressed.connect(_on_no_pressed)
@@ -18,16 +25,19 @@ func _ready() -> void:
  
 # Quando o player chega e dá o primeiro "hit", a gente abre a interface
 func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
-	if is_ui_open: return
-	
-	open_ui()
-	
 	# Faz o player parar de bater na porta
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		var p = players[0]
 		p.change_state(p.State.IDLE)
 		p.interact_target = null
+
+	if is_level_door:
+		# Portas de level só são abertas pelo LevelShop, então não faz nada ao bater nelas
+		return
+		
+	if is_ui_open: return
+	open_ui()
  
 func open_ui() -> void:
 	is_ui_open = true

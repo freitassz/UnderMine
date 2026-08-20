@@ -135,6 +135,8 @@ speed = 100.0
 animated_player = NodePath("AnimationPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1896275381]
+visible = false
+z_index = 100
 offset_left = -45.0
 offset_top = -80.0
 offset_right = 45.0
@@ -148,6 +150,21 @@ offset_right = 90.0
 offset_bottom = 261.0
 color = Color(0.011087579, 0.011087578, 0.01108758, 1)
 
+[node name="ColorRect3" type="ColorRect" parent="TextureRect" unique_id=1794345953]
+layout_mode = 0
+offset_left = -90.0
+offset_top = -129.0
+offset_bottom = 261.0
+color = Color(0.011087579, 0.011087578, 0.01108758, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="TextureRect" unique_id=393898756]
+layout_mode = 0
+offset_left = 90.0
+offset_top = -125.0
+offset_right = 180.0
+offset_bottom = 265.0
+color = Color(0.011087579, 0.011087578, 0.01108758, 1)
+
 [node name="ColorRect" type="ColorRect" parent="TextureRect" unique_id=137188852]
 layout_mode = 0
 offset_left = -1.093399
@@ -158,6 +175,9 @@ rotation = -1.5707964
 color = Color(0.011087579, 0.011087578, 0.01108758, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=410069062]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -2)
 texture = ExtResource("2_tm8wl")
 hframes = 2
 vframes = 3

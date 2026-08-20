@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cxbbedef98765"]
+
+[ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="1_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door1"]
+size = Vector2(8, 8)
+
+[node name="LevelDoor" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.8, 0.2, 0.2, 1)
+scale = Vector2(1, 2)
+texture = ExtResource("1_tex")
+hframes = 2
+vframes = 3
+frame = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_door1")
