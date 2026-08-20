@@ -6,6 +6,7 @@ extends Interactable # Herda a lógica de clique que criamos antes!
 var my_data: OreData
 var current_hp: int
 var current_lives: int # Para a mecânica estilo Gold Mountain
+var has_been_transmuted: bool = false
 
 @onready var sprite: Sprite2D = $Sprite2D 
 

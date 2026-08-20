@@ -10,7 +10,11 @@ func save_game() -> void:
 		"money": Global.money,
 		"has_stair_compass": Global.has_stair_compass,
 		"has_ore_compass": Global.has_ore_compass,
+		"has_mining_dash": Global.has_mining_dash,
 		"has_shockwave": Global.has_shockwave,
+		"has_chain_reaction": Global.has_chain_reaction,
+		"has_automatic": Global.has_automatic,
+		"has_alchemical": Global.has_alchemical,
 		
 		"mining_power": Global.mining_power,
 		"mining_speed_level": Global.mining_speed_level,
@@ -42,7 +46,11 @@ func load_game() -> void:
 			if data.has("money"): Global.money = data["money"]
 			if data.has("has_stair_compass"): Global.has_stair_compass = data["has_stair_compass"]
 			if data.has("has_ore_compass"): Global.has_ore_compass = data["has_ore_compass"]
+			if data.has("has_mining_dash"): Global.has_mining_dash = data["has_mining_dash"]
 			if data.has("has_shockwave"): Global.has_shockwave = data["has_shockwave"]
+			if data.has("has_chain_reaction"): Global.has_chain_reaction = data["has_chain_reaction"]
+			if data.has("has_automatic"): Global.has_automatic = data["has_automatic"]
+			if data.has("has_alchemical"): Global.has_alchemical = data["has_alchemical"]
 			
 			if data.has("mining_power"): Global.mining_power = int(data["mining_power"])
 			if data.has("mining_speed_level"): Global.mining_speed_level = float(data["mining_speed_level"])
@@ -63,7 +71,11 @@ func reset_save() -> void:
 	Global.money = 10000
 	Global.has_stair_compass = false
 	Global.has_ore_compass = false
+	Global.has_mining_dash = false
 	Global.has_shockwave = false
+	Global.has_chain_reaction = false
+	Global.has_automatic = false
+	Global.has_alchemical = false
 	
 	Global.mining_power = 1
 	Global.mining_speed_level = 1.0

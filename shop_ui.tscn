@@ -67,6 +67,10 @@ text = "Item de Placeholder 1 (Em breve)"
 layout_mode = 2
 text = "Item de Placeholder 2 (Em breve)"
 
+[node name="DashBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Dash de Mineração"
+
 [node name="Itens 2" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
@@ -85,6 +89,18 @@ text = "Picareta Normal"
 [node name="ShockwaveBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 2/VBoxContainer"]
 layout_mode = 2
 text = "Ativar Shockwave"
+
+[node name="ChainReactionBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 2/VBoxContainer"]
+layout_mode = 2
+text = "Ativar Chain Reaction"
+
+[node name="AutomaticBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 2/VBoxContainer"]
+layout_mode = 2
+text = "Ativar Automatic"
+
+[node name="AlchemicalBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 2/VBoxContainer"]
+layout_mode = 2
+text = "Ativar Alchemical"
 
 [node name="Itens 3" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false

@@ -4,8 +4,9 @@ extends CharacterBody2D
 enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING, LEAPING }
 var current_state: State = State.IDLE
 
-enum MiningMode { ORIGINAL, SHOCKWAVE }
+enum MiningMode { ORIGINAL, SHOCKWAVE, CHAIN_REACTION, AUTOMATIC, ALCHEMICAL }
 @export var shockwave_radius: float = 20.0
+@export var chain_reaction_radius: float = 12.0
 
 signal multiplier_changed(mult: float)
 
@@ -92,6 +93,10 @@ func _process(_delta: float) -> void:
 			ore_arrow.hide()
 	else:
 		if ore_arrow: ore_arrow.hide()
+		
+	# MODO AUTOMÁTICO (AFK MINING)
+	if Global.current_mining_mode == MiningMode.AUTOMATIC and Global.is_afk_active and current_state == State.IDLE:
+		_find_nearest_ore_and_mine()
 
 func _find_best_ore() -> void:
 	var ores = get_tree().get_nodes_in_group("ores")
@@ -104,6 +109,19 @@ func _find_best_ore() -> void:
 				best_value = value
 				best_ore = o
 	target_ore = best_ore
+
+func _find_nearest_ore_and_mine() -> void:
+	var ores = get_tree().get_nodes_in_group("ores")
+	var nearest_ore = null
+	var min_dist = 999999.0
+	for o in ores:
+		var d = global_position.distance_to(o.global_position)
+		if d < min_dist:
+			min_dist = d
+			nearest_ore = o
+			
+	if nearest_ore != null:
+		walk_to_interact(nearest_ore)
 
 func update_stats() -> void:
 	# Fórmula: Tempo Base dividido pelo Nível de Velocidade e pelo multiplicador de clique manual
@@ -176,14 +194,10 @@ func walk_to_interact(target_node: Node2D) -> void:
 	if is_instance_valid(target_node) and target_node.has_method("select_ore"):
 		target_node.select_ore()
 		
-	# CHECAGEM DE ONE-HIT DASH
+	# CHECAGEM DE ONE-HIT DASH (Apenas se o player comprou a habilidade)
 	var will_destroy = false
-	if "current_hp" in target_node and "current_lives" in target_node:
-		var total_health = target_node.current_hp
-		if "my_data" in target_node and target_node.my_data != null:
-			total_health += (target_node.current_lives * target_node.my_data.max_hp)
-			
-		if Global.mining_power >= total_health:
+	if Global.has_mining_dash and "my_data" in target_node and target_node.my_data != null:
+		if Global.mining_power >= target_node.my_data.max_hp:
 			will_destroy = true
 			
 	if will_destroy:
@@ -282,6 +296,65 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 		velocity = safe_velocity
 		move_and_slide()
 
+# --- HABILIDADE ATIVA: ALQUIMIA ---
+func use_alchemical() -> void:
+	var ores = get_tree().get_nodes_in_group("ores")
+	var nearest_ore = null
+	var min_dist = 999999.0
+	for o in ores:
+		var d = global_position.distance_to(o.global_position)
+		if d < min_dist:
+			min_dist = d
+			nearest_ore = o
+			
+	if is_instance_valid(nearest_ore):
+		var ore_layer = get_tree().get_first_node_in_group("ore_layer")
+		if ore_layer:
+			var mine_scene = ore_layer.get_parent()
+			if mine_scene and "current_floor_data" in mine_scene:
+				var floor_data = mine_scene.current_floor_data
+				if floor_data and floor_data.ore_set:
+					var new_ore_data = ore_layer._pick_random_ore(floor_data.ore_set)
+					if new_ore_data and nearest_ore.has_method("setup"):
+						nearest_ore.setup(new_ore_data)
+						nearest_ore.has_been_transmuted = true
+						
+						# Efeito visual de Flash Branco NA PEDRA
+						if nearest_ore.has_node("Sprite2D"):
+							var sprite = nearest_ore.get_node("Sprite2D")
+							var tween = create_tween()
+							sprite.modulate = Color(2, 2, 2, 1) # Modulate branco estourado
+							tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.3)
+
+# --- CHAIN REACTION LOGIC ---
+func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
+	if not is_instance_valid(start_ore): return
+	
+	# Se o alvo principal não morreu ainda, não espalha! 
+	# (A descrição diz: "When an ore is broken, the destruction automatically spreads")
+	if "current_hp" in start_ore and start_ore.current_hp > 0:
+		return
+		
+	var tree = get_tree()
+	if not tree: return
+	
+	var all_ores = tree.get_nodes_in_group("ores")
+	var to_process = [start_ore]
+	var processed = []
+	
+	while to_process.size() > 0:
+		var current = to_process.pop_front()
+		processed.append(current)
+		
+		for other in all_ores:
+			if is_instance_valid(other) and not processed.has(other) and not to_process.has(other):
+				# Checa se estão muito próximos (chain_reaction_radius)
+				if current.global_position.distance_to(other.global_position) <= chain_reaction_radius:
+					if other.has_method("take_damage"):
+						# Destrói instantaneamente passando um dano absurdo
+						other.take_damage(999999, multiplier, false)
+						to_process.append(other)
+
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:
 	last_hit_time = Time.get_ticks_msec()
@@ -292,8 +365,12 @@ func _on_mining_timer_timeout() -> void:
 	# Mudamos de "interact" para "take_damage" para fazer sentido com os status
 	if is_instance_valid(interact_target) and interact_target.has_method("take_damage"):
 		
+		var final_multiplier = Global.ore_multiplier
+		if Global.current_mining_mode == MiningMode.AUTOMATIC and Global.is_afk_active:
+			final_multiplier *= 0.5
+		
 		# Bate no alvo principal (ORIGINAL behavior)
-		interact_target.take_damage(Global.mining_power, Global.ore_multiplier, true)
+		interact_target.take_damage(Global.mining_power, final_multiplier, true)
 		
 		# Comportamento SHOCKWAVE
 		if Global.current_mining_mode == MiningMode.SHOCKWAVE:
@@ -306,7 +383,11 @@ func _on_mining_timer_timeout() -> void:
 						if global_position.distance_to(ore.global_position) <= shockwave_radius:
 							if ore.has_method("take_damage"):
 								# Causamos dano no minério dentro do raio
-								ore.take_damage(Global.mining_power, Global.ore_multiplier, false)
+								ore.take_damage(Global.mining_power, final_multiplier, false)
+								
+		# Comportamento CHAIN REACTION
+		if Global.current_mining_mode == MiningMode.CHAIN_REACTION:
+			_process_chain_reaction(interact_target, final_multiplier)
 		
 		# Reinicia a animação para dar feedback visual do hit manual/automático
 		if animated_player and current_state == State.MINING:

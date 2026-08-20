@@ -12,13 +12,18 @@ var current_floor_index: int = 1
 
 var has_stair_compass: bool = false
 var has_ore_compass: bool = false
+var has_mining_dash: bool = false
 var has_shockwave: bool = false
+var has_chain_reaction: bool = false
+var has_automatic: bool = false
+var has_alchemical: bool = false
+var is_afk_active: bool = false
 
 # --- PLAYER STATS (Moved to Global for persistence) ---
 var mining_power: int = 1
 var mining_speed_level: float = 1.0
 var ore_multiplier: float = 1.0
-var current_mining_mode: int = 0 # 0 = ORIGINAL, 1 = SHOCKWAVE
+var current_mining_mode: int = 0 # 0=ORIGINAL, 1=SHOCKWAVE, 2=CHAIN_REACTION, 3=AUTOMATIC, 4=ALCHEMICAL
 
 var power_cost: int = 10
 var speed_cost: int = 20
