@@ -4,6 +4,8 @@ extends Panel
 @onready var compass_stair_btn = $"VBoxContainer/TabContainer/Itens 1/VBoxContainer/ItemPlaceholder1"
 @onready var compass_ore_btn = $"VBoxContainer/TabContainer/Itens 1/VBoxContainer/ItemPlaceholder2"
 @onready var dash_btn = $"VBoxContainer/TabContainer/Itens 1/VBoxContainer/DashBtn"
+@onready var midas_btn = $"VBoxContainer/TabContainer/Itens 1/VBoxContainer/MidasBtn"
+
 @onready var normal_pickaxe_btn = $"VBoxContainer/TabContainer/Itens 2/VBoxContainer/NormalPickaxeBtn"
 @onready var shockwave_btn = $"VBoxContainer/TabContainer/Itens 2/VBoxContainer/ShockwaveBtn"
 @onready var chain_reaction_btn = $"VBoxContainer/TabContainer/Itens 2/VBoxContainer/ChainReactionBtn"
@@ -13,6 +15,7 @@ extends Panel
 var cost_stair: int = 500
 var cost_ore: int = 1000
 var cost_dash: int = 600
+var cost_midas: int = 1500
 var cost_shockwave: int = 200
 var cost_chain_reaction: int = 400
 var cost_automatic: int = 500
@@ -28,6 +31,7 @@ func _ready() -> void:
 	compass_stair_btn.pressed.connect(_buy_stair_compass)
 	compass_ore_btn.pressed.connect(_buy_ore_compass)
 	dash_btn.pressed.connect(_buy_mining_dash)
+	midas_btn.pressed.connect(_buy_midas_luck)
 	normal_pickaxe_btn.pressed.connect(_on_normal_pickaxe_pressed)
 	shockwave_btn.pressed.connect(_on_shockwave_pressed)
 	chain_reaction_btn.pressed.connect(_on_chain_reaction_pressed)
@@ -68,6 +72,13 @@ func update_ui() -> void:
 	else:
 		dash_btn.text = "Dash de Mineração (" + str(cost_dash) + " moedas)"
 		dash_btn.disabled = Global.money < cost_dash
+
+	if Global.has_midas_luck:
+		midas_btn.text = "Sorte de Midas (Comprado)"
+		midas_btn.disabled = true
+	else:
+		midas_btn.text = "Sorte de Midas 15% Crit (" + str(cost_midas) + " moedas)"
+		midas_btn.disabled = Global.money < cost_midas
 
 	if not Global.has_shockwave:
 		shockwave_btn.text = "Comprar Shockwave (" + str(cost_shockwave) + " moedas)"
@@ -138,6 +149,13 @@ func _buy_mining_dash() -> void:
 	if Global.money >= cost_dash and not Global.has_mining_dash:
 		Global.add_money(-cost_dash)
 		Global.has_mining_dash = true
+		SaveManager.save_game()
+		update_ui()
+
+func _buy_midas_luck() -> void:
+	if Global.money >= cost_midas and not Global.has_midas_luck:
+		Global.add_money(-cost_midas)
+		Global.has_midas_luck = true
 		SaveManager.save_game()
 		update_ui()
 

@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://tjkypybi43o1" path="res://assets/Oclusion.png" id="2_m4khw"]
 [ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tm8wl"]
 [ext_resource type="Script" uid="uid://c1iq8xhifk40p" path="res://HUD.gd" id="3_itnm7"]
+[ext_resource type="Texture2D" uid="uid://dpew45lrtilrx" path="res://assets/ShockWave.png" id="4_gdbp2"]
 [ext_resource type="Script" uid="uid://cbnld7ip51je2" path="res://ore_life.gd" id="4_ubrwk"]
+[ext_resource type="Texture2D" uid="uid://bk6du5tyr00ka" path="res://assets/Chain.png" id="5_ym6p8"]
 
 [sub_resource type="Animation" id="Animation_itnm7"]
 resource_name = "IDLE"
@@ -80,6 +82,44 @@ _data = {
 &"WALK": SubResource("Animation_gdbp2")
 }
 
+[sub_resource type="Animation" id="Animation_ym6p8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Powers_Sprite/ShockWave:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i6hok"]
+resource_name = "ShockWave"
+length = 0.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Powers_Sprite/ShockWave:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xppmd"]
+_data = {
+&"RESET": SubResource("Animation_ym6p8"),
+&"ShockWave": SubResource("Animation_i6hok")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_d5x1h"]
 radius = 3.5
 
@@ -124,6 +164,22 @@ vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=902184316]
 libraries/ = SubResource("AnimationLibrary_ym6p8")
+
+[node name="Powers_Sprite" type="Node2D" parent="." unique_id=1335126224]
+
+[node name="ShockWave" type="Sprite2D" parent="Powers_Sprite" unique_id=1992579646]
+visible = false
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("4_gdbp2")
+hframes = 5
+
+[node name="Chain" type="Sprite2D" parent="Powers_Sprite" unique_id=349445209]
+visible = false
+texture = ExtResource("5_ym6p8")
+
+[node name="PowerAnimation" type="AnimationPlayer" parent="Powers_Sprite" unique_id=1323828060]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_xppmd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1739927119]
 shape = SubResource("CircleShape2D_d5x1h")

@@ -71,6 +71,10 @@ text = "Item de Placeholder 2 (Em breve)"
 layout_mode = 2
 text = "Dash de Mineração"
 
+[node name="MidasBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Sorte de Midas"
+
 [node name="Itens 2" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2

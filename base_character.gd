@@ -22,6 +22,9 @@ const MIN_MINE_TIME: float = 0.1  # Limite máximo de velocidade (10 batidas por
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var mining_timer: Timer = $MiningTimer 
+@onready var powers_anim: AnimationPlayer = $Powers_Sprite/PowerAnimation
+@onready var shockwave_sprite: Sprite2D = $Powers_Sprite/ShockWave
+@onready var chain_sprite_base: Sprite2D = $Powers_Sprite/Chain
 
 @export var animated_player: AnimationPlayer
 
@@ -330,11 +333,6 @@ func use_alchemical() -> void:
 func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
 	if not is_instance_valid(start_ore): return
 	
-	# Se o alvo principal não morreu ainda, não espalha! 
-	# (A descrição diz: "When an ore is broken, the destruction automatically spreads")
-	if "current_hp" in start_ore and start_ore.current_hp > 0:
-		return
-		
 	var tree = get_tree()
 	if not tree: return
 	
@@ -351,9 +349,28 @@ func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
 				# Checa se estão muito próximos (chain_reaction_radius)
 				if current.global_position.distance_to(other.global_position) <= chain_reaction_radius:
 					if other.has_method("take_damage"):
-						# Destrói instantaneamente passando um dano absurdo
-						other.take_damage(999999, multiplier, false)
+						# Causa o dano normal da picareta, espalhando pela veia inteira!
+						other.take_damage(Global.mining_power, multiplier, false)
 						to_process.append(other)
+						
+						# Efeito visual da Corrente (Cria um rastro de sprites)
+						if chain_sprite_base:
+							var new_chain = chain_sprite_base.duplicate()
+							var root = get_tree().current_scene
+							if not root: root = get_tree().root
+							root.add_child(new_chain)
+							
+							new_chain.show()
+							
+							# Coloca no meio entre a pedra atual e a próxima
+							new_chain.global_position = current.global_position.lerp(other.global_position, 0.5)
+							# Aponta a corrente na direção do percurso
+							new_chain.rotation = current.global_position.direction_to(other.global_position).angle()
+							
+							# Dá um efeito de sumiço rápido
+							var tween = new_chain.create_tween()
+							tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
+							tween.tween_callback(new_chain.queue_free)
 
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:
@@ -377,6 +394,18 @@ func _on_mining_timer_timeout() -> void:
 			var tree = get_tree()
 			if tree:
 				var ores = tree.get_nodes_in_group("ores")
+				
+				# Toca a animação do Shockwave
+				if powers_anim and shockwave_sprite:
+					shockwave_sprite.show()
+					powers_anim.stop()
+					powers_anim.play("ShockWave")
+					# Opcional: Esconder no final da animação pode ser feito via Tween ou AnimationPlayer, 
+					# mas vamos garantir que ele apague pelo script se a animação não o fizer:
+					var hide_tween = create_tween()
+					hide_tween.tween_interval(0.6) # Tempo da animação
+					hide_tween.tween_callback(shockwave_sprite.hide)
+				
 				for ore in ores:
 					# Evitar bater no alvo principal novamente e garantir que ele é válido
 					if is_instance_valid(ore) and ore != interact_target:
@@ -387,6 +416,21 @@ func _on_mining_timer_timeout() -> void:
 								
 		# Comportamento CHAIN REACTION
 		if Global.current_mining_mode == MiningMode.CHAIN_REACTION:
+			var tree = get_tree()
+			if tree:
+				# Efeito do player até a primeira pedra
+				if chain_sprite_base:
+					var new_chain = chain_sprite_base.duplicate()
+					var root = tree.current_scene
+					if not root: root = tree.root
+					root.add_child(new_chain)
+					new_chain.show()
+					new_chain.global_position = global_position.lerp(interact_target.global_position, 0.5)
+					new_chain.rotation = global_position.direction_to(interact_target.global_position).angle()
+					var chain_tween = new_chain.create_tween()
+					chain_tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
+					chain_tween.tween_callback(new_chain.queue_free)
+					
 			_process_chain_reaction(interact_target, final_multiplier)
 		
 		# Reinicia a animação para dar feedback visual do hit manual/automático

@@ -13,6 +13,7 @@ var current_floor_index: int = 1
 var has_stair_compass: bool = false
 var has_ore_compass: bool = false
 var has_mining_dash: bool = false
+var has_midas_luck: bool = false
 var has_shockwave: bool = false
 var has_chain_reaction: bool = false
 var has_automatic: bool = false

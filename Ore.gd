@@ -45,7 +45,14 @@ func take_damage(damage: int, multiplier: float, is_main_target: bool = true) ->
 
 func _quebrar(multiplier: float, is_main_target: bool) -> void:
 	var total_money: int = int(my_data.money_drop * multiplier)
+	
+	var is_crit = false
+	if Global.has_midas_luck and randf() <= 0.15:
+		is_crit = true
+		total_money *= 2
+		
 	Global.add_money(total_money)
+	_spawn_floating_text(total_money, is_crit)
 	
 	if current_lives > 0:
 		current_lives -= 1
@@ -69,6 +76,42 @@ func _quebrar(multiplier: float, is_main_target: bool) -> void:
 			
 		# Sem Respawn: O minério some da tela
 		queue_free()
+
+func _spawn_floating_text(amount: int, is_crit: bool) -> void:
+	var label = Label.new()
+	
+	if is_crit:
+		label.text = "CRIT! +" + str(amount)
+		label.add_theme_color_override("font_color", Color(1, 0.84, 0, 1)) # Dourado brilhante
+		label.add_theme_font_size_override("font_size", 10)
+	else:
+		label.text = "+" + str(amount)
+		label.add_theme_color_override("font_color", Color(1, 1, 0, 1)) # Amarelo normal
+		label.add_theme_font_size_override("font_size", 8)
+		
+	# Adiciona contorno fino para visibilidade em 8-bit
+	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	label.add_theme_constant_override("outline_size", 2)
+	
+	# Precisamos adicionar a label no pai (ou root) porque este Ore vai ser deletado
+	var tree = get_tree()
+	if not tree: return
+	
+	var root = tree.current_scene
+	if root == null: root = tree.root
+	
+	root.add_child(label)
+	
+	# Ajusta posição inicial (mais perto da pedra para estética 8-bit)
+	label.global_position = global_position - Vector2(label.size.x / 2.0, 8)
+	
+	# Cria a animação vinculada à própria label (assim o tween não morre quando a pedra for apagada)
+	var tween = label.create_tween()
+	var target_pos = label.global_position - Vector2(0, 16) # Sobe 16 pixels (2 blocos)
+	
+	tween.tween_property(label, "global_position", target_pos, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.8).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(label.queue_free)
 
 # Adicione esta função no seu Ore.gd para avisar a UI que a pedra foi clicada
 func select_ore() -> void:

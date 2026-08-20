@@ -11,6 +11,7 @@ func save_game() -> void:
 		"has_stair_compass": Global.has_stair_compass,
 		"has_ore_compass": Global.has_ore_compass,
 		"has_mining_dash": Global.has_mining_dash,
+		"has_midas_luck": Global.has_midas_luck,
 		"has_shockwave": Global.has_shockwave,
 		"has_chain_reaction": Global.has_chain_reaction,
 		"has_automatic": Global.has_automatic,
@@ -47,6 +48,7 @@ func load_game() -> void:
 			if data.has("has_stair_compass"): Global.has_stair_compass = data["has_stair_compass"]
 			if data.has("has_ore_compass"): Global.has_ore_compass = data["has_ore_compass"]
 			if data.has("has_mining_dash"): Global.has_mining_dash = data["has_mining_dash"]
+			if data.has("has_midas_luck"): Global.has_midas_luck = data["has_midas_luck"]
 			if data.has("has_shockwave"): Global.has_shockwave = data["has_shockwave"]
 			if data.has("has_chain_reaction"): Global.has_chain_reaction = data["has_chain_reaction"]
 			if data.has("has_automatic"): Global.has_automatic = data["has_automatic"]
@@ -72,6 +74,7 @@ func reset_save() -> void:
 	Global.has_stair_compass = false
 	Global.has_ore_compass = false
 	Global.has_mining_dash = false
+	Global.has_midas_luck = false
 	Global.has_shockwave = false
 	Global.has_chain_reaction = false
 	Global.has_automatic = false
