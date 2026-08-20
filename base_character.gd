@@ -4,13 +4,14 @@ extends CharacterBody2D
 enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING, LEAPING }
 var current_state: State = State.IDLE
 
+enum MiningMode { ORIGINAL, SHOCKWAVE }
+@export var shockwave_radius: float = 20.0
+
 signal multiplier_changed(mult: float)
 
 
 # --- STATUS DE MINERAÇÃO (UPGRADES) ---
-var mining_power: int = 1         # Dano causado à pedra por cada batida
-var mining_speed_level: float = 1.0 # Nível de velocidade (usado na fórmula do Timer)
-var ore_multiplier: float = 1.0   # Multiplicador do dinheiro final (Ex: 1.0, 1.2, 2.5)
+# Usamos o Global para persistência
 
 const BASE_MINE_TIME: float = 1.0 # Tempo base (1 segundo por batida)
 const MIN_MINE_TIME: float = 0.1  # Limite máximo de velocidade (10 batidas por segundo)
@@ -106,7 +107,7 @@ func _find_best_ore() -> void:
 
 func update_stats() -> void:
 	# Fórmula: Tempo Base dividido pelo Nível de Velocidade e pelo multiplicador de clique manual
-	var new_wait_time = (BASE_MINE_TIME / mining_speed_level) / click_multiplier
+	var new_wait_time = (BASE_MINE_TIME / Global.mining_speed_level) / click_multiplier
 	
 	# max() garante que a velocidade nunca seja menor que o limite (0.1s), evitando quebrar o jogo
 	mining_timer.wait_time = max(MIN_MINE_TIME, new_wait_time)
@@ -182,7 +183,7 @@ func walk_to_interact(target_node: Node2D) -> void:
 		if "my_data" in target_node and target_node.my_data != null:
 			total_health += (target_node.current_lives * target_node.my_data.max_hp)
 			
-		if mining_power >= total_health:
+		if Global.mining_power >= total_health:
 			will_destroy = true
 			
 	if will_destroy:
@@ -290,8 +291,22 @@ func _on_mining_timer_timeout() -> void:
 	
 	# Mudamos de "interact" para "take_damage" para fazer sentido com os status
 	if is_instance_valid(interact_target) and interact_target.has_method("take_damage"):
-		# Passamos o dano (poder) e o multiplicador de moedas para o minério
-		interact_target.take_damage(mining_power, ore_multiplier)
+		
+		# Bate no alvo principal (ORIGINAL behavior)
+		interact_target.take_damage(Global.mining_power, Global.ore_multiplier, true)
+		
+		# Comportamento SHOCKWAVE
+		if Global.current_mining_mode == MiningMode.SHOCKWAVE:
+			var tree = get_tree()
+			if tree:
+				var ores = tree.get_nodes_in_group("ores")
+				for ore in ores:
+					# Evitar bater no alvo principal novamente e garantir que ele é válido
+					if is_instance_valid(ore) and ore != interact_target:
+						if global_position.distance_to(ore.global_position) <= shockwave_radius:
+							if ore.has_method("take_damage"):
+								# Causamos dano no minério dentro do raio
+								ore.take_damage(Global.mining_power, Global.ore_multiplier, false)
 		
 		# Reinicia a animação para dar feedback visual do hit manual/automático
 		if animated_player and current_state == State.MINING:

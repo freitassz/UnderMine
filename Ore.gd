@@ -28,29 +28,32 @@ func setup(data: OreData) -> void:
 
 # O Player chegou perto e começou a bater
 # O Player chegou perto e começou a bater (Agora recebe os status do jogador!)
-func take_damage(damage: int, multiplier: float) -> void:
+func take_damage(damage: int, multiplier: float, is_main_target: bool = true) -> void:
 	if my_data == null: return 
 		
 	current_hp -= damage
-	Global.ore_damaged.emit(current_hp, current_lives) # <-- NOVO: Atualiza a barra de vida
+	if is_main_target:
+		Global.ore_damaged.emit(current_hp, current_lives) # <-- Atualiza a barra de vida apenas do alvo principal
 	
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(0.8, 0.8), 0.1)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 	
 	if current_hp <= 0:
-		_quebrar(multiplier)
+		_quebrar(multiplier, is_main_target)
 
-func _quebrar(multiplier: float) -> void:
+func _quebrar(multiplier: float, is_main_target: bool) -> void:
 	var total_money: int = int(my_data.money_drop * multiplier)
 	Global.add_money(total_money)
 	
 	if current_lives > 0:
 		current_lives -= 1
 		current_hp = my_data.max_hp
-		Global.ore_damaged.emit(current_hp, current_lives) # <-- NOVO: Atualiza barra após resetar HP
+		if is_main_target:
+			Global.ore_damaged.emit(current_hp, current_lives) # <-- Atualiza barra apenas do principal
 	else:
-		Global.ore_deselected.emit()
+		if is_main_target:
+			Global.ore_deselected.emit()
 		var ground_layer = get_tree().get_first_node_in_group("ground_layer")
 		var ore_layer = get_tree().get_first_node_in_group("ore_layer")
 		

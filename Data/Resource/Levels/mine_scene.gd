@@ -64,6 +64,7 @@ func _spawn_stairs() -> void:
 	stairs.setup(self)
 
 func descend_floor() -> void:
+	SaveManager.save_game()
 	if current_floor_index < current_floor_data.total_floors:
 		Global.current_floor_index += 1
 		get_tree().reload_current_scene()

@@ -12,6 +12,17 @@ var current_floor_index: int = 1
 
 var has_stair_compass: bool = false
 var has_ore_compass: bool = false
+var has_shockwave: bool = false
+
+# --- PLAYER STATS (Moved to Global for persistence) ---
+var mining_power: int = 1
+var mining_speed_level: float = 1.0
+var ore_multiplier: float = 1.0
+var current_mining_mode: int = 0 # 0 = ORIGINAL, 1 = SHOCKWAVE
+
+var power_cost: int = 10
+var speed_cost: int = 20
+var mult_cost: int = 50
 
 # Usar uma função ajuda a organizar e disparar o sinal automaticamente
 func add_money(amount: int) -> void:
