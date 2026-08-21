@@ -21,7 +21,7 @@ func _ready() -> void:
 	ui_layer.hide()
 	yes_btn.pressed.connect(_on_yes_pressed)
 	no_btn.pressed.connect(_on_no_pressed)
-	cost_label.text = "Abrir por " + str(cost) + " moedas?"
+	cost_label.text = "Abrir por " + Global.format_num(cost) + " moedas?"
  
 # Quando o player chega e dá o primeiro "hit", a gente abre a interface
 func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:

@@ -17,7 +17,11 @@ func save_game() -> void:
 		"has_chain_reaction": Global.has_chain_reaction,
 		"has_automatic": Global.has_automatic,
 		"has_alchemical": Global.has_alchemical,
+		"is_auto_upgrade_active": Global.is_auto_upgrade_active,
 		"unlocked_levels": Global.unlocked_levels,
+		
+		"music_volume": Global.music_volume,
+		"sfx_volume": Global.sfx_volume,
 		
 		"village_spawn_pos_x": Global.village_spawn_pos_x,
 		"village_spawn_pos_y": Global.village_spawn_pos_y,
@@ -50,7 +54,9 @@ func load_game() -> void:
 		
 		if typeof(parse_result) == TYPE_DICTIONARY:
 			var data = parse_result
-			if data.has("money"): Global.money = data["money"]
+			if data.has("money"): 
+				Global.money = data["money"]
+				Global.visual_money = Global.money
 			if data.has("ascension_coins"): Global.ascension_coins = data["ascension_coins"]
 			if data.has("has_stair_compass"): Global.has_stair_compass = data["has_stair_compass"]
 			if data.has("has_ore_compass"): Global.has_ore_compass = data["has_ore_compass"]
@@ -60,7 +66,11 @@ func load_game() -> void:
 			if data.has("has_chain_reaction"): Global.has_chain_reaction = data["has_chain_reaction"]
 			if data.has("has_automatic"): Global.has_automatic = data["has_automatic"]
 			if data.has("has_alchemical"): Global.has_alchemical = data["has_alchemical"]
+			if data.has("is_auto_upgrade_active"): Global.is_auto_upgrade_active = data["is_auto_upgrade_active"]
 			if data.has("unlocked_levels"): Global.unlocked_levels = data["unlocked_levels"]
+			
+			if data.has("music_volume"): Global.music_volume = float(data["music_volume"])
+			if data.has("sfx_volume"): Global.sfx_volume = float(data["sfx_volume"])
 			
 			if data.has("village_spawn_pos_x"): Global.village_spawn_pos_x = float(data["village_spawn_pos_x"])
 			if data.has("village_spawn_pos_y"): Global.village_spawn_pos_y = float(data["village_spawn_pos_y"])
@@ -82,7 +92,8 @@ func reset_save() -> void:
 			dir.remove("save_data.json")
 	
 	# Restaura valores padrões
-	Global.money = 10000
+	Global.money = 0
+	Global.visual_money = 0
 	Global.ascension_coins = 0
 	Global.has_stair_compass = false
 	Global.has_ore_compass = false
@@ -92,10 +103,14 @@ func reset_save() -> void:
 	Global.has_chain_reaction = false
 	Global.has_automatic = false
 	Global.has_alchemical = false
+	Global.is_auto_upgrade_active = false
 	Global.unlocked_levels.clear()
 	Global.has_village_spawn = false
 	Global.village_spawn_pos_x = 0.0
 	Global.village_spawn_pos_y = 0.0
+	
+	Global.music_volume = 0.5
+	Global.sfx_volume = 0.5
 	
 	Global.mining_power = 1
 	Global.mining_speed_level = 1.0
@@ -103,8 +118,8 @@ func reset_save() -> void:
 	Global.current_mining_mode = 0
 	
 	Global.power_cost = 10
-	Global.speed_cost = 20
-	Global.mult_cost = 50
+	Global.speed_cost = 10
+	Global.mult_cost = 10
 	
 	get_tree().change_scene_to_file("res://main_scene.tscn")
 

@@ -364,8 +364,8 @@ func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
 						# Efeito visual da Corrente (Cria um rastro de sprites)
 						if chain_sprite_base:
 							var new_chain = chain_sprite_base.duplicate()
-							var root = get_tree().current_scene
-							if not root: root = get_tree().root
+							var root = tree.current_scene
+							if not root: root = tree.root
 							root.add_child(new_chain)
 							
 							new_chain.show()
@@ -376,9 +376,62 @@ func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
 							new_chain.rotation = current.global_position.direction_to(other.global_position).angle()
 							
 							# Dá um efeito de sumiço rápido
-							var tween = new_chain.create_tween()
-							tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
-							tween.tween_callback(new_chain.queue_free)
+							var chain_tween = new_chain.create_tween()
+							chain_tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
+							chain_tween.tween_callback(new_chain.queue_free)
+
+var last_levelup_effect_time: float = 0.0
+
+# --- EFEITO DE LEVEL UP ---
+func play_level_up_effect() -> void:
+	var current_time = Time.get_ticks_msec() / 1000.0
+	if current_time - last_levelup_effect_time < 0.1:
+		return # Previne overload de partículas se o auto-upgrade estiver comprando 60 levels por segundo
+	last_levelup_effect_time = current_time
+	
+	var particles = CPUParticles2D.new()
+	particles.emitting = false
+	particles.amount = 30
+	particles.one_shot = true
+	particles.explosiveness = 0.9
+	particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
+	particles.emission_sphere_radius = 5.0
+	particles.direction = Vector2(0, -1)
+	particles.spread = 180.0
+	particles.gravity = Vector2(0, -100) # Sobe igual fogos de artifício
+	particles.initial_velocity_min = 30.0
+	particles.initial_velocity_max = 60.0
+	particles.scale_amount_min = 2.0
+	particles.scale_amount_max = 4.0
+	
+	# Arco-íris!
+	var gradient = Gradient.new()
+	gradient.add_point(0.0, Color(1, 0, 0)) # Vermelho
+	gradient.add_point(0.16, Color(1, 0.5, 0)) # Laranja
+	gradient.add_point(0.33, Color(1, 1, 0)) # Amarelo
+	gradient.add_point(0.5, Color(0, 1, 0)) # Verde
+	gradient.add_point(0.66, Color(0, 0, 1)) # Azul
+	gradient.add_point(0.83, Color(0.3, 0, 0.5)) # Indigo
+	gradient.add_point(1.0, Color(0.5, 0, 1)) # Violeta
+	
+	particles.color_ramp = gradient
+	
+	add_child(particles)
+	particles.emitting = true
+	
+	# Som de level up suave?
+	var sfx = AudioStreamPlayer2D.new()
+	sfx.stream = preload("res://powerUp (1).wav")
+	if sfx.stream:
+		sfx.bus = "SFX"
+		sfx.pitch_scale = randf_range(1.0, 1.5)
+		add_child(sfx)
+		sfx.play()
+		sfx.finished.connect(sfx.queue_free)
+	
+	var tw = create_tween()
+	tw.tween_interval(1.5)
+	tw.tween_callback(particles.queue_free)
 
 # --- LOOP DE MINERAÇÃO ---
 func _on_mining_timer_timeout() -> void:

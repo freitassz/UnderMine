@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://templeos.otf" id="1_e5frr"]
+
+[resource]
+base_font = ExtResource("1_e5frr")
+spacing_glyph = -1
+spacing_space = -1

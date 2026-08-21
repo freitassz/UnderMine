@@ -56,32 +56,32 @@ func update_ui() -> void:
 		compass_stair_btn.text = "Bússola de Escada (Comprado)"
 		compass_stair_btn.disabled = true
 	else:
-		compass_stair_btn.text = "Bússola de Escada (" + str(cost_stair) + " moedas)"
+		compass_stair_btn.text = "Bússola de Escada (" + Global.format_num(cost_stair) + " moedas)"
 		compass_stair_btn.disabled = Global.money < cost_stair
 		
 	if Global.has_ore_compass:
 		compass_ore_btn.text = "Bússola de Minério Raro (Comprado)"
 		compass_ore_btn.disabled = true
 	else:
-		compass_ore_btn.text = "Bússola de Minério Raro (" + str(cost_ore) + " moedas)"
+		compass_ore_btn.text = "Bússola de Minério Raro (" + Global.format_num(cost_ore) + " moedas)"
 		compass_ore_btn.disabled = Global.money < cost_ore
 
 	if Global.has_mining_dash:
 		dash_btn.text = "Dash de Mineração (Comprado)"
 		dash_btn.disabled = true
 	else:
-		dash_btn.text = "Dash de Mineração (" + str(cost_dash) + " moedas)"
+		dash_btn.text = "Dash de Mineração (" + Global.format_num(cost_dash) + " moedas)"
 		dash_btn.disabled = Global.money < cost_dash
 
 	if Global.has_midas_luck:
 		midas_btn.text = "Sorte de Midas (Comprado)"
 		midas_btn.disabled = true
 	else:
-		midas_btn.text = "Sorte de Midas 15% Crit (" + str(cost_midas) + " moedas)"
+		midas_btn.text = "Sorte de Midas 15% Crit (" + Global.format_num(cost_midas) + " moedas)"
 		midas_btn.disabled = Global.money < cost_midas
 
 	if not Global.has_shockwave:
-		shockwave_btn.text = "Comprar Shockwave (" + str(cost_shockwave) + " Ascensão)"
+		shockwave_btn.text = "Comprar Shockwave (" + Global.format_num(cost_shockwave) + " Ascensão)"
 		shockwave_btn.disabled = Global.ascension_coins < cost_shockwave
 	else:
 		if Global.current_mining_mode == 1:
@@ -92,7 +92,7 @@ func update_ui() -> void:
 			shockwave_btn.disabled = false
 			
 	if not Global.has_chain_reaction:
-		chain_reaction_btn.text = "Comprar Chain Reaction (" + str(cost_chain_reaction) + " Ascensão)"
+		chain_reaction_btn.text = "Comprar Chain Reaction (" + Global.format_num(cost_chain_reaction) + " Ascensão)"
 		chain_reaction_btn.disabled = Global.ascension_coins < cost_chain_reaction
 	else:
 		if Global.current_mining_mode == 2:
@@ -103,7 +103,7 @@ func update_ui() -> void:
 			chain_reaction_btn.disabled = false
 
 	if not Global.has_automatic:
-		automatic_btn.text = "Comprar Modo Automático (" + str(cost_automatic) + " Ascensão)"
+		automatic_btn.text = "Comprar Modo Automático (" + Global.format_num(cost_automatic) + " Ascensão)"
 		automatic_btn.disabled = Global.ascension_coins < cost_automatic
 	else:
 		if Global.current_mining_mode == 3:
@@ -114,7 +114,7 @@ func update_ui() -> void:
 			automatic_btn.disabled = false
 
 	if not Global.has_alchemical:
-		alchemical_btn.text = "Comprar Transmutação (" + str(cost_alchemical) + " Ascensão)"
+		alchemical_btn.text = "Comprar Transmutação (" + Global.format_num(cost_alchemical) + " Ascensão)"
 		alchemical_btn.disabled = Global.ascension_coins < cost_alchemical
 	else:
 		if Global.current_mining_mode == 4:

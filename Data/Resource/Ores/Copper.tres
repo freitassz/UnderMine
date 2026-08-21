@@ -7,4 +7,5 @@
 script = ExtResource("1_vf4gb")
 name = "Copper"
 texture = ExtResource("2_vf4gb")
-money_drop = 8
+money_drop = 5
+extra_lives = 10

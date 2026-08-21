@@ -49,6 +49,31 @@ text = " X "
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="MusicLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Volume da Música"
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="SFXLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Volume dos Efeitos (SFX)"
+
+[node name="SFXSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="AutoUpgradeBtn" type="CheckButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Auto-Upgrades Harmônico"
+
 [node name="ResetButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2

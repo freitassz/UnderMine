@@ -27,6 +27,10 @@ window/size/viewport_height=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[gui]
+
+theme/custom="res://default_theme.tres"
+
 [layer_names]
 
 2d_navigation/layer_5="NavigationLayer"

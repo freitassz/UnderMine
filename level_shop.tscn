@@ -26,7 +26,6 @@ shape = SubResource("RectangleShape2D_door1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=6774468]
 layer = 10
-visible = false
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=568102164]
 custom_minimum_size = Vector2(400, 300)

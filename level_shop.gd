@@ -48,7 +48,7 @@ func build_doors_list() -> void:
 			var lbl = Label.new()
 			var d_name = door.level_name if "level_name" in door else "Porta"
 			var d_cost = door.cost if "cost" in door else 100
-			lbl.text = d_name + " (" + str(d_cost) + " moedas)"
+			lbl.text = d_name + " (" + Global.format_num(d_cost) + " moedas)"
 			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			hbox.add_child(lbl)
 			

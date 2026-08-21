@@ -31,6 +31,21 @@ func setup(data: OreData) -> void:
 # O Player chegou perto e começou a bater (Agora recebe os status do jogador!)
 func take_damage(damage: int, multiplier: float, is_main_target: bool = true) -> void:
 	if my_data == null: return 
+	
+	# SFX de batida (pitch aleatório para não ser repetitivo)
+	var hit_sfx = AudioStreamPlayer2D.new()
+	hit_sfx.stream = preload("res://stonehit.wav")
+	if hit_sfx.stream:
+		hit_sfx.volume_db = -12.0 # Abaixa o volume
+		hit_sfx.pitch_scale = randf_range(0.8, 1.2)
+		hit_sfx.global_position = global_position
+		var tree = get_tree()
+		if tree:
+			var root = tree.current_scene
+			if not root: root = tree.root
+			root.add_child(hit_sfx)
+			hit_sfx.play()
+			hit_sfx.finished.connect(hit_sfx.queue_free)
 		
 	current_hp -= damage
 	if is_main_target:
@@ -74,44 +89,89 @@ func _quebrar(multiplier: float, is_main_target: bool) -> void:
 			# Isso força o chão a recriar o polígono de navegação onde estava a pedra
 			ground_layer.notify_runtime_tile_data_update()
 			
+		# Som de pedra totalmente minerada (sem vidas restantes)
+		var mined_sfx = AudioStreamPlayer2D.new()
+		mined_sfx.stream = preload("res://stonemined.wav")
+		if mined_sfx.stream:
+			mined_sfx.volume_db = -10.0 # Abaixa o volume
+			mined_sfx.global_position = global_position
+			var tree = get_tree()
+			if tree:
+				var root = tree.current_scene
+				if not root: root = tree.root
+				root.add_child(mined_sfx)
+				mined_sfx.play()
+				mined_sfx.finished.connect(mined_sfx.queue_free)
+			
+		_create_shatter_effect()
 		# Sem Respawn: O minério some da tela
 		queue_free()
 
+func _create_shatter_effect() -> void:
+	if not sprite or not sprite.texture: return
+	
+	var tex = sprite.texture
+	var w = tex.get_width() / 2.0
+	var h = tex.get_height() / 2.0
+	
+	var tree = get_tree()
+	if not tree: return
+	var root = tree.current_scene
+	if not root: root = tree.root
+	
+	for x in range(2):
+		for y in range(2):
+			var piece = Sprite2D.new()
+			piece.texture = tex
+			piece.region_enabled = true
+			piece.region_rect = Rect2(x * w, y * h, w, h)
+			
+			var offset_pos = Vector2(x * w, y * h) - Vector2(w/2.0, h/2.0)
+			piece.global_position = global_position + offset_pos
+			
+			# Copia o modulate caso a pedra original tenha cor aplicada via editor
+			piece.modulate = sprite.modulate
+			
+			root.add_child(piece)
+			
+			var dir = offset_pos.normalized()
+			if dir == Vector2.ZERO:
+				dir = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+				
+			var target_pos = piece.global_position + dir * randf_range(15.0, 30.0)
+			var target_rot = randf_range(-PI, PI) * 2.0
+			
+			var tween = piece.create_tween()
+			tween.tween_property(piece, "global_position", target_pos, 0.4).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+			tween.parallel().tween_property(piece, "rotation", target_rot, 0.4)
+			tween.parallel().tween_property(piece, "modulate:a", 0.0, 0.4)
+			tween.tween_callback(piece.queue_free)
+
 func _spawn_floating_text(amount: int, is_crit: bool) -> void:
-	var label = Label.new()
-	
-	if is_crit:
-		label.text = "CRIT! +" + str(amount)
-		label.add_theme_color_override("font_color", Color(1, 0.84, 0, 1)) # Dourado brilhante
-		label.add_theme_font_size_override("font_size", 10)
-	else:
-		label.text = "+" + str(amount)
-		label.add_theme_color_override("font_color", Color(1, 1, 0, 1)) # Amarelo normal
-		label.add_theme_font_size_override("font_size", 8)
-		
-	# Adiciona contorno fino para visibilidade em 8-bit
-	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
-	label.add_theme_constant_override("outline_size", 2)
-	
-	# Precisamos adicionar a label no pai (ou root) porque este Ore vai ser deletado
 	var tree = get_tree()
 	if not tree: return
 	
-	var root = tree.current_scene
-	if root == null: root = tree.root
-	
-	root.add_child(label)
-	
-	# Ajusta posição inicial (mais perto da pedra para estética 8-bit)
-	label.global_position = global_position - Vector2(label.size.x / 2.0, 8)
-	
-	# Cria a animação vinculada à própria label (assim o tween não morre quando a pedra for apagada)
-	var tween = label.create_tween()
-	var target_pos = label.global_position - Vector2(0, 16) # Sobe 16 pixels (2 blocos)
-	
-	tween.tween_property(label, "global_position", target_pos, 0.8).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.8).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
-	tween.tween_callback(label.queue_free)
+	var texts = tree.get_nodes_in_group("floating_texts")
+	var my_text = null
+	for t in texts:
+		# Se a label pertencer a esta pedra e não tiver voado ainda
+		if "ore_instance_id" in t and t.ore_instance_id == get_instance_id() and not t.flying:
+			my_text = t
+			break
+			
+	if my_text:
+		my_text.add_amount(amount, is_crit)
+	else:
+		my_text = Label.new()
+		my_text.set_script(preload("res://floating_money.gd"))
+		my_text.add_to_group("floating_texts")
+		
+		var root = tree.current_scene
+		if not root: root = tree.root
+		root.add_child(my_text)
+		
+		my_text.setup(global_position, get_instance_id())
+		my_text.add_amount(amount, is_crit)
 
 # Adicione esta função no seu Ore.gd para avisar a UI que a pedra foi clicada
 func select_ore() -> void:

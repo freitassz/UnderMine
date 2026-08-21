@@ -7,5 +7,6 @@
 script = ExtResource("1_3oy2k")
 name = "Iron"
 texture = ExtResource("2_3oy2k")
-money_drop = 15
-max_hp = 5
+money_drop = 7
+max_hp = 7
+extra_lives = 5

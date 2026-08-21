@@ -7,5 +7,5 @@
 script = ExtResource("1_a5wjd")
 name = "Coal"
 texture = ExtResource("2_a5wjd")
-money_drop = 3
+money_drop = 4
 max_hp = 2

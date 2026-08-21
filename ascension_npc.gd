@@ -14,6 +14,7 @@ func _ready() -> void:
 	ui_layer.hide()
 	yes_btn.pressed.connect(_on_yes_pressed)
 	no_btn.pressed.connect(_on_no_pressed)
+	cost_label.text = "Renacer por " + Global.format_num(cost) + " moedas?\nVocê receberá 1 Moeda de Ascensão\ne perderá seus status atuais."
 
 func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -42,8 +43,8 @@ func _on_yes_pressed() -> void:
 		Global.current_mining_mode = 0
 		
 		Global.power_cost = 10
-		Global.speed_cost = 20
-		Global.mult_cost = 50
+		Global.speed_cost = 10
+		Global.mult_cost = 10
 		
 		Global.has_stair_compass = false
 		Global.has_ore_compass = false

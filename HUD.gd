@@ -103,11 +103,11 @@ func _update_multiplier(mult: float) -> void:
 
 # Função que formata e exibe o texto na tela
 func _update_money_text(new_amount: int) -> void:
-	money_label.text = "Moedas: " + str(new_amount)
+	money_label.text = "Moedas: " + Global.format_num(new_amount)
 
 func _update_ascension_text(new_amount: int) -> void:
 	if new_amount > 0:
 		ascension_label.show()
-		ascension_label.text = "Moedas de Ascensão: " + str(new_amount)
+		ascension_label.text = "Moedas de Ascensão: " + Global.format_num(new_amount)
 	else:
 		ascension_label.hide()
