@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b0oepe80tsa55"]
 
 [ext_resource type="Script" uid="uid://dgujeilnm67p6" path="res://door.gd" id="1_door"]
-[ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tex"]
+[ext_resource type="Texture2D" uid="uid://b6q5jqvj86wdk" path="res://assets/Sword.png" id="2_v6xrn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door1"]
-size = Vector2(8, 17)
+size = Vector2(16, 16)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_door"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -18,12 +18,8 @@ border_color = Color(0.8, 0.6, 0.1, 1)
 script = ExtResource("1_door")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=222808129]
-modulate = Color(0.5, 0.2, 0.1, 1)
-scale = Vector2(1, 2)
-texture = ExtResource("2_tex")
-hframes = 2
-vframes = 3
-frame = 1
+position = Vector2(0, 2)
+texture = ExtResource("2_v6xrn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1670291075]
 shape = SubResource("RectangleShape2D_door1")
@@ -31,7 +27,6 @@ shape = SubResource("RectangleShape2D_door1")
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=743332600]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1686383299]
-position = Vector2(0, -4.5)
 shape = SubResource("RectangleShape2D_door1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=932831876]

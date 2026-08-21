@@ -75,10 +75,13 @@ func _on_buy_door_pressed(door: Node2D, cost: int) -> void:
 		if is_instance_valid(door):
 			Global.unlocked_levels[door.name] = true
 			SaveManager.save_game()
-			door.queue_free()
+			if door.has_method("play_unlock_animation"):
+				door.play_unlock_animation()
+			else:
+				door.queue_free()
 			
-		# Atualiza a lista na hora para refletir a compra e o novo saldo
-		build_doors_list()
+		# Fecha a loja pra ver a animação
+		_on_close_pressed()
 
 func _on_close_pressed() -> void:
 	is_ui_open = false
