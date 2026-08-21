@@ -8,6 +8,7 @@ func _ready() -> void:
 func save_game() -> void:
 	var save_data = {
 		"money": Global.money,
+		"ascension_coins": Global.ascension_coins,
 		"has_stair_compass": Global.has_stair_compass,
 		"has_ore_compass": Global.has_ore_compass,
 		"has_mining_dash": Global.has_mining_dash,
@@ -46,6 +47,7 @@ func load_game() -> void:
 		if typeof(parse_result) == TYPE_DICTIONARY:
 			var data = parse_result
 			if data.has("money"): Global.money = data["money"]
+			if data.has("ascension_coins"): Global.ascension_coins = data["ascension_coins"]
 			if data.has("has_stair_compass"): Global.has_stair_compass = data["has_stair_compass"]
 			if data.has("has_ore_compass"): Global.has_ore_compass = data["has_ore_compass"]
 			if data.has("has_mining_dash"): Global.has_mining_dash = data["has_mining_dash"]
@@ -73,6 +75,7 @@ func reset_save() -> void:
 	
 	# Restaura valores padrões
 	Global.money = 10000
+	Global.ascension_coins = 0
 	Global.has_stair_compass = false
 	Global.has_ore_compass = false
 	Global.has_mining_dash = false

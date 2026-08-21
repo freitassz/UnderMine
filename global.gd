@@ -2,11 +2,13 @@ extends Node
 
 # Sinal para avisar a tela/UI sempre que o dinheiro mudar
 signal money_changed(new_amount: int)
+signal ascension_coins_changed(new_amount: int)
 signal ore_selected(ore_name: String, max_hp: int, current_hp: int, lives: int)
 signal ore_damaged(current_hp: int, lives: int)
 signal ore_deselected()
 
 var money: int = 10000
+var ascension_coins: int = 0
 var floor_data_to_load: MineFloorData = null
 var current_floor_index: int = 1
 
@@ -37,3 +39,7 @@ func add_money(amount: int) -> void:
 	money += amount
 	money_changed.emit(money)
 	print("Dinheiro total na conta: ", money)
+
+func add_ascension_coins(amount: int) -> void:
+	ascension_coins += amount
+	ascension_coins_changed.emit(ascension_coins)

@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://cxabdef12121"]
+
+[ext_resource type="Script" uid="uid://nte5krcopeor" path="res://ascension_npc.gd" id="1_asc"]
+[ext_resource type="Texture2D" uid="uid://b3tq0jpx1s7vj" path="res://assets/Demon.png" id="2_453q1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asc"]
+size = Vector2(26, 26)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_asc"]
+bg_color = Color(0.2, 0.1, 0.3, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.2, 0.8, 1)
+
+[node name="AscensionNPC" type="Area2D" unique_id=210894790]
+script = ExtResource("1_asc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=623588361]
+modulate = Color(0.8, 0.4, 1, 1)
+texture = ExtResource("2_453q1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083354614]
+shape = SubResource("RectangleShape2D_asc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=379033187]
+layer = 10
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=788612421]
+custom_minimum_size = Vector2(250, 150)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -75.0
+offset_right = 125.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_asc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1891711096]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=505417640]
+layout_mode = 2
+text = "Ascensão"
+horizontal_alignment = 1
+
+[node name="CostLabel" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=923044145]
+layout_mode = 2
+text = "Renacer por 50000 moedas?
+Você receberá 1 Moeda de Ascensão
+e perderá seus status atuais."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer" unique_id=785056508]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="NoBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer" unique_id=221745168]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Cancelar"
+
+[node name="YesBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer" unique_id=964561492]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Ascender"

@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var money_label: Label = $MoneyLabel
+var ascension_label: Label
 
 var upgrades_ui_scene = preload("res://upgrades_ui.tscn")
 var upgrades_ui: Control
@@ -17,18 +18,25 @@ func _ready() -> void:
 	# Atualiza o texto logo que o jogo começa com o valor inicial
 	_update_money_text(Global.money)
 	
+	ascension_label = Label.new()
+	ascension_label.position = Vector2(0, 20)
+	ascension_label.add_theme_color_override("font_color", Color(0.8, 0.4, 1.0))
+	add_child(ascension_label)
+	_update_ascension_text(Global.ascension_coins)
+	
 	# Conecta o sinal do Autoload para atualizar automaticamente sempre que ganhar dinheiro
 	Global.money_changed.connect(_update_money_text)
+	Global.ascension_coins_changed.connect(_update_ascension_text)
 
 	# Cria o botão de Melhorias
 	upgrades_btn = Button.new()
 	upgrades_btn.text = "Melhorias"
-	upgrades_btn.position = Vector2(0, 30) # Abaixo do dinheiro
+	upgrades_btn.position = Vector2(0, 45) # Abaixo do dinheiro
 	add_child(upgrades_btn)
 	
 	# Cria o botão de Habilidade Ativa
 	active_ability_btn = Button.new()
-	active_ability_btn.position = Vector2(0, 100)
+	active_ability_btn.position = Vector2(0, 120)
 	active_ability_btn.pressed.connect(_on_active_ability_pressed)
 	add_child(active_ability_btn)
 	
@@ -40,7 +48,7 @@ func _ready() -> void:
 	# Cria o Label do multiplicador
 	mult_label = Label.new()
 	mult_label.text = "Velocidade: 1.0x"
-	mult_label.position = Vector2(0, 70)
+	mult_label.position = Vector2(0, 85)
 	add_child(mult_label)
 
 	# Cria o botão de Configurações
@@ -96,3 +104,10 @@ func _update_multiplier(mult: float) -> void:
 # Função que formata e exibe o texto na tela
 func _update_money_text(new_amount: int) -> void:
 	money_label.text = "Moedas: " + str(new_amount)
+
+func _update_ascension_text(new_amount: int) -> void:
+	if new_amount > 0:
+		ascension_label.show()
+		ascension_label.text = "Moedas de Ascensão: " + str(new_amount)
+	else:
+		ascension_label.hide()

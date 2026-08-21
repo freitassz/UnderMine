@@ -1,0 +1,63 @@
+extends Interactable
+
+@export var cost: int = 50000
+
+@onready var ui_layer: CanvasLayer = $CanvasLayer
+@onready var cost_label: Label = $CanvasLayer/Panel/VBoxContainer/CostLabel
+@onready var yes_btn: Button = $CanvasLayer/Panel/VBoxContainer/HBoxContainer/YesBtn
+@onready var no_btn: Button = $CanvasLayer/Panel/VBoxContainer/HBoxContainer/NoBtn
+
+var is_ui_open: bool = false
+
+func _ready() -> void:
+	super._ready()
+	ui_layer.hide()
+	yes_btn.pressed.connect(_on_yes_pressed)
+	no_btn.pressed.connect(_on_no_pressed)
+
+func take_damage(_power: int, _mult: float, _is_main_target: bool = true) -> void:
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		var p = players[0]
+		p.change_state(p.State.IDLE)
+		p.interact_target = null
+		
+	if is_ui_open: return
+	open_ui()
+
+func open_ui() -> void:
+	is_ui_open = true
+	ui_layer.show()
+	yes_btn.disabled = Global.money < cost
+
+func _on_yes_pressed() -> void:
+	if Global.money >= cost:
+		Global.add_money(-cost) # Tira o custo (ou reseta, mas tirar é melhor)
+		Global.add_ascension_coins(1)
+		
+		# Resetando os upgrades da pessoa:
+		Global.mining_power = 1
+		Global.mining_speed_level = 1.0
+		Global.ore_multiplier = 1.0
+		Global.current_mining_mode = 0
+		
+		Global.power_cost = 10
+		Global.speed_cost = 20
+		Global.mult_cost = 50
+		
+		Global.has_stair_compass = false
+		Global.has_ore_compass = false
+		Global.has_mining_dash = false
+		Global.has_midas_luck = false
+		
+		SaveManager.save_game()
+		
+		is_ui_open = false
+		ui_layer.hide()
+		
+		# Teleporta de volta ou só atualiza a cena
+		get_tree().change_scene_to_file("res://main_scene.tscn")
+
+func _on_no_pressed() -> void:
+	is_ui_open = false
+	ui_layer.hide()

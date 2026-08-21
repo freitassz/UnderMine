@@ -16,10 +16,10 @@ var cost_stair: int = 500
 var cost_ore: int = 1000
 var cost_dash: int = 600
 var cost_midas: int = 1500
-var cost_shockwave: int = 200
-var cost_chain_reaction: int = 400
-var cost_automatic: int = 500
-var cost_alchemical: int = 800
+var cost_shockwave: int = 1
+var cost_chain_reaction: int = 2
+var cost_automatic: int = 3
+var cost_alchemical: int = 4
 
 var player: Node = null
 
@@ -81,8 +81,8 @@ func update_ui() -> void:
 		midas_btn.disabled = Global.money < cost_midas
 
 	if not Global.has_shockwave:
-		shockwave_btn.text = "Comprar Shockwave (" + str(cost_shockwave) + " moedas)"
-		shockwave_btn.disabled = Global.money < cost_shockwave
+		shockwave_btn.text = "Comprar Shockwave (" + str(cost_shockwave) + " Ascensão)"
+		shockwave_btn.disabled = Global.ascension_coins < cost_shockwave
 	else:
 		if Global.current_mining_mode == 1:
 			shockwave_btn.text = "Shockwave (Equipado)"
@@ -92,8 +92,8 @@ func update_ui() -> void:
 			shockwave_btn.disabled = false
 			
 	if not Global.has_chain_reaction:
-		chain_reaction_btn.text = "Comprar Chain Reaction (" + str(cost_chain_reaction) + " moedas)"
-		chain_reaction_btn.disabled = Global.money < cost_chain_reaction
+		chain_reaction_btn.text = "Comprar Chain Reaction (" + str(cost_chain_reaction) + " Ascensão)"
+		chain_reaction_btn.disabled = Global.ascension_coins < cost_chain_reaction
 	else:
 		if Global.current_mining_mode == 2:
 			chain_reaction_btn.text = "Chain Reaction (Equipado)"
@@ -103,8 +103,8 @@ func update_ui() -> void:
 			chain_reaction_btn.disabled = false
 
 	if not Global.has_automatic:
-		automatic_btn.text = "Comprar Modo Automático (" + str(cost_automatic) + " moedas)"
-		automatic_btn.disabled = Global.money < cost_automatic
+		automatic_btn.text = "Comprar Modo Automático (" + str(cost_automatic) + " Ascensão)"
+		automatic_btn.disabled = Global.ascension_coins < cost_automatic
 	else:
 		if Global.current_mining_mode == 3:
 			automatic_btn.text = "Modo Automático (Equipado) [Lucro -50%]"
@@ -114,8 +114,8 @@ func update_ui() -> void:
 			automatic_btn.disabled = false
 
 	if not Global.has_alchemical:
-		alchemical_btn.text = "Comprar Transmutação (" + str(cost_alchemical) + " moedas)"
-		alchemical_btn.disabled = Global.money < cost_alchemical
+		alchemical_btn.text = "Comprar Transmutação (" + str(cost_alchemical) + " Ascensão)"
+		alchemical_btn.disabled = Global.ascension_coins < cost_alchemical
 	else:
 		if Global.current_mining_mode == 4:
 			alchemical_btn.text = "Transmutação Alquímica (Equipado)"
@@ -166,8 +166,8 @@ func _on_normal_pickaxe_pressed() -> void:
 
 func _on_shockwave_pressed() -> void:
 	if not Global.has_shockwave:
-		if Global.money >= cost_shockwave:
-			Global.add_money(-cost_shockwave)
+		if Global.ascension_coins >= cost_shockwave:
+			Global.add_ascension_coins(-cost_shockwave)
 			Global.has_shockwave = true
 			Global.current_mining_mode = 1
 			SaveManager.save_game()
@@ -179,8 +179,8 @@ func _on_shockwave_pressed() -> void:
 
 func _on_chain_reaction_pressed() -> void:
 	if not Global.has_chain_reaction:
-		if Global.money >= cost_chain_reaction:
-			Global.add_money(-cost_chain_reaction)
+		if Global.ascension_coins >= cost_chain_reaction:
+			Global.add_ascension_coins(-cost_chain_reaction)
 			Global.has_chain_reaction = true
 			Global.current_mining_mode = 2
 			SaveManager.save_game()
@@ -192,8 +192,8 @@ func _on_chain_reaction_pressed() -> void:
 
 func _on_automatic_pressed() -> void:
 	if not Global.has_automatic:
-		if Global.money >= cost_automatic:
-			Global.add_money(-cost_automatic)
+		if Global.ascension_coins >= cost_automatic:
+			Global.add_ascension_coins(-cost_automatic)
 			Global.has_automatic = true
 			Global.current_mining_mode = 3
 			SaveManager.save_game()
@@ -205,8 +205,8 @@ func _on_automatic_pressed() -> void:
 
 func _on_alchemical_pressed() -> void:
 	if not Global.has_alchemical:
-		if Global.money >= cost_alchemical:
-			Global.add_money(-cost_alchemical)
+		if Global.ascension_coins >= cost_alchemical:
+			Global.add_ascension_coins(-cost_alchemical)
 			Global.has_alchemical = true
 			Global.current_mining_mode = 4
 			SaveManager.save_game()
