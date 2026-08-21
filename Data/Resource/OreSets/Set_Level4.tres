@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://c5jenn1su10wu"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_47hg0"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_vywhy"]
+[ext_resource type="Resource" uid="uid://b4sk4e5j8gegt" path="res://Data/Resource/Ores/Silver.tres" id="3_dcy3e"]
+[ext_resource type="Resource" uid="uid://b2q4gloxhgckx" path="res://Data/Resource/Ores/Gold.tres" id="4_vplqw"]
+[ext_resource type="Resource" uid="uid://575wtmbspyam" path="res://Data/Resource/Ores/Amethyst.tres" id="5_ua71l"]
+[ext_resource type="Resource" uid="uid://cyae734t51hp8" path="res://Data/Resource/Ores/Ruby.tres" id="6_tn0gb"]
+[ext_resource type="Resource" uid="uid://ctsmwp0aka8g4" path="res://Data/Resource/Ores/Sapphire.tres" id="7_xns0n"]
+[ext_resource type="Resource" uid="uid://bvc3p40ouiopw" path="res://Data/Resource/Ores/Diamond.tres" id="8_50852"]
+
+[sub_resource type="Resource" id="Resource_jttd0"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("3_dcy3e")
+spawn_chance = 25.0
+
+[sub_resource type="Resource" id="Resource_28tle"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("4_vplqw")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_7bwkx"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("5_ua71l")
+spawn_chance = 20.0
+
+[sub_resource type="Resource" id="Resource_ssb6b"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("6_tn0gb")
+spawn_chance = 12.0
+
+[sub_resource type="Resource" id="Resource_0ur5h"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("7_xns0n")
+
+[sub_resource type="Resource" id="Resource_r0eq2"]
+script = ExtResource("2_vywhy")
+ore = ExtResource("8_50852")
+spawn_chance = 3.0
+
+[resource]
+script = ExtResource("1_47hg0")
+spawn_rules = Array[ExtResource("2_vywhy")]([SubResource("Resource_jttd0"), SubResource("Resource_28tle"), SubResource("Resource_7bwkx"), SubResource("Resource_ssb6b"), SubResource("Resource_0ur5h"), SubResource("Resource_r0eq2")])

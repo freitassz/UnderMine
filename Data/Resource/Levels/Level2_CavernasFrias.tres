@@ -1,49 +1,9 @@
-[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://bwkgjw3p4dod3"]
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://cxktm4kac4hvw"]
 
-[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="1_rule"]
-[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="2_set"]
-[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="3_floor"]
-[ext_resource type="Resource" path="res://Data/Resource/Stone.tres" id="4_stone"]
-[ext_resource type="Resource" path="res://Data/Resource/Iron.tres" id="5_iron"]
-[ext_resource type="Resource" path="res://Data/Resource/Silver.tres" id="6_silver"]
-[ext_resource type="Resource" path="res://Data/Resource/Gold.tres" id="7_gold"]
-[ext_resource type="Resource" path="res://Data/Resource/Amethyst.tres" id="8_amethyst"]
-[ext_resource type="Resource" path="res://Data/Resource/Sapphire.tres" id="9_sapphire"]
-
-[sub_resource type="Resource" id="Resource_rule1"]
-script = ExtResource("1_rule")
-ore = ExtResource("4_stone")
-spawn_chance = 30.0
-
-[sub_resource type="Resource" id="Resource_rule2"]
-script = ExtResource("1_rule")
-ore = ExtResource("5_iron")
-spawn_chance = 35.0
-
-[sub_resource type="Resource" id="Resource_rule3"]
-script = ExtResource("1_rule")
-ore = ExtResource("6_silver")
-spawn_chance = 20.0
-
-[sub_resource type="Resource" id="Resource_rule4"]
-script = ExtResource("1_rule")
-ore = ExtResource("7_gold")
-
-[sub_resource type="Resource" id="Resource_rule5"]
-script = ExtResource("1_rule")
-ore = ExtResource("8_amethyst")
-spawn_chance = 4.0
-
-[sub_resource type="Resource" id="Resource_rule6"]
-script = ExtResource("1_rule")
-ore = ExtResource("9_sapphire")
-spawn_chance = 1.0
-
-[sub_resource type="Resource" id="Resource_set"]
-script = ExtResource("2_set")
-spawn_rules = Array[ExtResource("1_rule")]([SubResource("Resource_rule1"), SubResource("Resource_rule2"), SubResource("Resource_rule3"), SubResource("Resource_rule4"), SubResource("Resource_rule5"), SubResource("Resource_rule6")])
+[ext_resource type="Resource" uid="uid://km0odx64htxm" path="res://Data/Resource/OreSets/Set_Level2.tres" id="1_8620f"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_foqkh"]
 
 [resource]
-script = ExtResource("3_floor")
+script = ExtResource("2_foqkh")
 floor_name = "Cavernas Frias"
-ore_set = SubResource("Resource_set")
+ore_set = ExtResource("1_8620f")

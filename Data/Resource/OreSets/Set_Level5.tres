@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://3vfjd8cr7614"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_vlso6"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_ssgx6"]
+[ext_resource type="Resource" uid="uid://575wtmbspyam" path="res://Data/Resource/Ores/Amethyst.tres" id="3_rswbl"]
+[ext_resource type="Resource" uid="uid://ctsmwp0aka8g4" path="res://Data/Resource/Ores/Sapphire.tres" id="4_xtvds"]
+[ext_resource type="Resource" uid="uid://cuchnumeii8pi" path="res://Data/Resource/Ores/Emerald.tres" id="5_dcp3k"]
+[ext_resource type="Resource" uid="uid://bvc3p40ouiopw" path="res://Data/Resource/Ores/Diamond.tres" id="6_mku0c"]
+[ext_resource type="Resource" uid="uid://cpc7dwu13v6lv" path="res://Data/Resource/Ores/Prism.tres" id="7_dwbq7"]
+
+[sub_resource type="Resource" id="Resource_3uoip"]
+script = ExtResource("2_ssgx6")
+ore = ExtResource("3_rswbl")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_7clcg"]
+script = ExtResource("2_ssgx6")
+ore = ExtResource("4_xtvds")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_cmsb0"]
+script = ExtResource("2_ssgx6")
+ore = ExtResource("5_dcp3k")
+spawn_chance = 25.0
+
+[sub_resource type="Resource" id="Resource_k4erc"]
+script = ExtResource("2_ssgx6")
+ore = ExtResource("6_mku0c")
+spawn_chance = 14.0
+
+[sub_resource type="Resource" id="Resource_aac76"]
+script = ExtResource("2_ssgx6")
+ore = ExtResource("7_dwbq7")
+spawn_chance = 1.0
+
+[resource]
+script = ExtResource("1_vlso6")
+spawn_rules = Array[ExtResource("2_ssgx6")]([SubResource("Resource_3uoip"), SubResource("Resource_7clcg"), SubResource("Resource_cmsb0"), SubResource("Resource_k4erc"), SubResource("Resource_aac76")])

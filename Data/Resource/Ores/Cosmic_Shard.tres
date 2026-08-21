@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://bs4rhenpmo2mi"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_vq0pb"]
+[ext_resource type="Texture2D" uid="uid://jtls3mdxjcw6" path="res://assets/ores/Cosmic_Shard.png" id="2_vq0pb"]
+
+[resource]
+script = ExtResource("1_vq0pb")
+name = "Cosmic Shard"
+texture = ExtResource("2_vq0pb")
+money_drop = 5000000
+max_hp = 40000
+extra_lives = 15

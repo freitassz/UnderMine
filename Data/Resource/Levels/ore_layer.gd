@@ -16,10 +16,21 @@ func generate_floor(floor_data: MineFloorData, ground_layer: TileMapLayer) -> vo
 		child.queue_free()
 		
 	var available_cells = ground_layer.get_used_cells()
+	available_cells.shuffle() # Embaralha as células para os spawns exatos serem aleatórios
 	var minérios_gerados = 0 # Contador de segurança
 	
+	# 1. Spawna primeiro os minérios de Quantidade Exata (Chefões/Únicos)
+	for rule in floor_data.ore_set.spawn_rules:
+		if rule.is_exact_amount:
+			for i in range(rule.exact_amount):
+				if available_cells.size() > 0 and minérios_gerados < max_ores:
+					var cell_pos = available_cells.pop_back()
+					if rule.ore != null:
+						_spawn_ore_at(cell_pos, rule.ore)
+						minérios_gerados += 1
+	
+	# 2. Continua com o Spawn Aleatório nas células que sobraram
 	for cell_pos in available_cells:
-		# TRAVA DE EMERGÊNCIA: Se atingiu o limite, interrompe o loop imediatamente!
 		if minérios_gerados >= max_ores:
 			print("Limite máximo de minérios atingido! Parando geração para evitar lag.")
 			break 

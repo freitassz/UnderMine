@@ -50,6 +50,12 @@ func _ready() -> void:
 		update_stats() # <-- Substitui a definição manual de wait_time
 		mining_timer.timeout.connect(_on_mining_timer_timeout)
 		
+	# Mover para o checkpoint salvo caso esteja na vila
+	var current_scene = get_tree().current_scene
+	if current_scene and current_scene.scene_file_path == "res://main_scene.tscn":
+		if Global.has_village_spawn:
+			global_position = Vector2(Global.village_spawn_pos_x, Global.village_spawn_pos_y)
+		
 	stair_arrow = Sprite2D.new()
 	var g_arrow = load("res://assets/Green_Arrow.png")
 	if g_arrow: stair_arrow.texture = g_arrow
@@ -146,12 +152,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Pega uma lista de tudo que estava embaixo do mouse
 		var results = space_state.intersect_point(query)
 		
-		# Se o clique acertou qualquer Area2D, paramos o código por aqui e deixamos
-		# a função _on_input_event da pedra assumir o controle!
+		# Se o clique acertou um Area2D INTERAGÍVEL, paramos o código por aqui e deixamos
+		# a função _on_input_event daquele objeto assumir o controle!
 		if results.size() > 0:
-			return
+			for res in results:
+				if res.collider is Interactable:
+					return
 			
-		# Se chegou aqui embaixo, significa que bateu no chão livre de verdade
+		# Se chegou aqui embaixo, significa que bateu no chão livre de verdade (ou num Checkpoint, etc)
 		walk_to_point(get_global_mouse_position())
 
 # --- FUNÇÕES DE DEFINIÇÃO DE ALVO ---

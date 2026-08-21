@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3]
+
+[ext_resource type="Resource" path="res://Data/Resource/OreSets/Set_Level6.tres" id="1_5nj75"]
+[ext_resource type="Script" path="res://Data/Script/MineFloorData.gd" id="2_xiwyb"]
+
+[resource]
+script = ExtResource("2_xiwyb")
+floor_name = "Manto Fantástico"
+ore_set = ExtResource("1_5nj75")

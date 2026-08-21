@@ -1,13 +1,11 @@
-[gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://b0fta5mnb0t4v"]
 
-[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/stone.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_wecve"]
+[ext_resource type="Texture2D" uid="uid://1j5xxl35h7dy" path="res://assets/ores/stone.png" id="2_wecve"]
 
 [resource]
-script = ExtResource("1_script")
+script = ExtResource("1_wecve")
 name = "Stone"
-texture = ExtResource("2_tex")
+texture = ExtResource("2_wecve")
 money_drop = 1
-hardness = 0.5
 max_hp = 1
-extra_lives = 0

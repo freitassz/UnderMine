@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://qe560jc5d8yi"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_pke8x"]
+[ext_resource type="Texture2D" uid="uid://betof0r38imjx" path="res://assets/ores/Infinity_Crystal.png" id="2_pke8x"]
+
+[resource]
+script = ExtResource("1_pke8x")
+name = "Infinity Crystal"
+texture = ExtResource("2_pke8x")
+money_drop = 20000000
+max_hp = 100000
+extra_lives = 20

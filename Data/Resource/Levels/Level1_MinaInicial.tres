@@ -1,42 +1,8 @@
-[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://ku5gbgdwu77j"]
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://bqeialh5c2bw6"]
 
-[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="1_rule"]
-[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="2_set"]
-[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="3_floor"]
-[ext_resource type="Resource" path="res://Data/Resource/Stone.tres" id="4_stone"]
-[ext_resource type="Resource" path="res://Data/Resource/Coal.tres" id="5_coal"]
-[ext_resource type="Resource" path="res://Data/Resource/Iron.tres" id="6_iron"]
-[ext_resource type="Resource" path="res://Data/Resource/Gold.tres" id="7_gold"]
-[ext_resource type="Resource" path="res://Data/Resource/Ruby.tres" id="8_ruby"]
-
-[sub_resource type="Resource" id="Resource_rule1"]
-script = ExtResource("1_rule")
-ore = ExtResource("4_stone")
-spawn_chance = 60.0
-
-[sub_resource type="Resource" id="Resource_rule2"]
-script = ExtResource("1_rule")
-ore = ExtResource("5_coal")
-spawn_chance = 25.0
-
-[sub_resource type="Resource" id="Resource_rule3"]
-script = ExtResource("1_rule")
-ore = ExtResource("6_iron")
-
-[sub_resource type="Resource" id="Resource_rule4"]
-script = ExtResource("1_rule")
-ore = ExtResource("7_gold")
-spawn_chance = 4.0
-
-[sub_resource type="Resource" id="Resource_rule5"]
-script = ExtResource("1_rule")
-ore = ExtResource("8_ruby")
-spawn_chance = 1.0
-
-[sub_resource type="Resource" id="Resource_set"]
-script = ExtResource("2_set")
-spawn_rules = Array[ExtResource("1_rule")]([SubResource("Resource_rule1"), SubResource("Resource_rule2"), SubResource("Resource_rule3"), SubResource("Resource_rule4"), SubResource("Resource_rule5")])
+[ext_resource type="Resource" uid="uid://j8m1e8sj83eu" path="res://Data/Resource/OreSets/Set_Level1.tres" id="1_2pphw"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_orpr6"]
 
 [resource]
-script = ExtResource("3_floor")
-ore_set = SubResource("Resource_set")
+script = ExtResource("2_orpr6")
+ore_set = ExtResource("1_2pphw")

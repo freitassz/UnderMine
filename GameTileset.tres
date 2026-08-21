@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dx4ym420h6qcb" path="res://assets/grass.png" id="4_s571x"]
 [ext_resource type="Texture2D" uid="uid://bw0f64kb56kit" path="res://assets/edge.png" id="6_176b7"]
 [ext_resource type="Texture2D" uid="uid://coqvsrlvrh52t" path="res://assets/water.png" id="7_ens4w"]
+[ext_resource type="Texture2D" uid="uid://i410b8hof6dv" path="res://assets/Ground.png" id="8_ens4w"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_s571x"]
 resource_name = "Stair"
@@ -72,6 +73,34 @@ texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_176b7")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ens4w"]
+vertices = PackedVector2Array(4, 4, -4, 4, -4, -4, 4, -4)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rb2m4"]
+texture = ExtResource("8_ens4w")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+2:0/0 = 0
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+0:1/0 = 0
+0:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+1:1/0 = 0
+1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+2:1/0 = 0
+2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+0:2/0 = 0
+0:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+1:2/0 = 0
+1:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+2:2/0 = 0
+2:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ens4w")
+
 [resource]
 tile_size = Vector2i(8, 8)
 physics_layer_0/collision_layer = 1
@@ -82,3 +111,4 @@ sources/0 = SubResource("TileSetScenesCollectionSource_s571x")
 sources/2 = SubResource("TileSetAtlasSource_176b7")
 sources/4 = SubResource("TileSetAtlasSource_8i4c6")
 sources/5 = SubResource("TileSetAtlasSource_jyxav")
+sources/6 = SubResource("TileSetAtlasSource_rb2m4")

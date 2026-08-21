@@ -19,6 +19,10 @@ func save_game() -> void:
 		"has_alchemical": Global.has_alchemical,
 		"unlocked_levels": Global.unlocked_levels,
 		
+		"village_spawn_pos_x": Global.village_spawn_pos_x,
+		"village_spawn_pos_y": Global.village_spawn_pos_y,
+		"has_village_spawn": Global.has_village_spawn,
+		
 		"mining_power": Global.mining_power,
 		"mining_speed_level": Global.mining_speed_level,
 		"ore_multiplier": Global.ore_multiplier,
@@ -58,6 +62,10 @@ func load_game() -> void:
 			if data.has("has_alchemical"): Global.has_alchemical = data["has_alchemical"]
 			if data.has("unlocked_levels"): Global.unlocked_levels = data["unlocked_levels"]
 			
+			if data.has("village_spawn_pos_x"): Global.village_spawn_pos_x = float(data["village_spawn_pos_x"])
+			if data.has("village_spawn_pos_y"): Global.village_spawn_pos_y = float(data["village_spawn_pos_y"])
+			if data.has("has_village_spawn"): Global.has_village_spawn = data["has_village_spawn"]
+			
 			if data.has("mining_power"): Global.mining_power = int(data["mining_power"])
 			if data.has("mining_speed_level"): Global.mining_speed_level = float(data["mining_speed_level"])
 			if data.has("ore_multiplier"): Global.ore_multiplier = float(data["ore_multiplier"])
@@ -85,6 +93,9 @@ func reset_save() -> void:
 	Global.has_automatic = false
 	Global.has_alchemical = false
 	Global.unlocked_levels.clear()
+	Global.has_village_spawn = false
+	Global.village_spawn_pos_x = 0.0
+	Global.village_spawn_pos_y = 0.0
 	
 	Global.mining_power = 1
 	Global.mining_speed_level = 1.0

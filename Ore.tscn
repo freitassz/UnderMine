@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dllu3a6gd40ow"]
 
 [ext_resource type="Script" uid="uid://bh61w744gmb5m" path="res://Ore.gd" id="1_8t7vj"]
-[ext_resource type="Resource" uid="uid://byytb0ktamykk" path="res://Data/Resource/Ores/Coal.tres" id="2_nt2li"]
-[ext_resource type="Texture2D" uid="uid://1j5xxl35h7dy" path="res://assets/stone.png" id="2_ui7ix"]
+[ext_resource type="Resource" uid="uid://by6s30ti1h422" path="res://Data/Resource/Ores/Coal.tres" id="2_nt2li"]
+[ext_resource type="Texture2D" uid="uid://1j5xxl35h7dy" path="res://assets/ores/stone.png" id="2_ui7ix"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmk2v"]
 size = Vector2(8, 8)

@@ -1,13 +1,11 @@
-[gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://575wtmbspyam"]
 
-[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/amethyst.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_d2lmd"]
+[ext_resource type="Texture2D" uid="uid://doaxge2gyq5bl" path="res://assets/ores/amethyst.png" id="2_d2lmd"]
 
 [resource]
-script = ExtResource("1_script")
+script = ExtResource("1_d2lmd")
 name = "Amethyst"
-texture = ExtResource("2_tex")
-money_drop = 100
-hardness = 1.5
-max_hp = 5
-extra_lives = 2
+texture = ExtResource("2_d2lmd")
+money_drop = 150
+max_hp = 20

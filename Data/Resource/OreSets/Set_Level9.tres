@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://brvxgakcu6psx"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_mb2eg"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_5lrtn"]
+[ext_resource type="Resource" uid="uid://2rk74boa424u" path="res://Data/Resource/Ores/Aetherium.tres" id="3_i8sl2"]
+[ext_resource type="Resource" uid="uid://kpfl868lc448" path="res://Data/Resource/Ores/Dark_Matter.tres" id="4_u7b20"]
+[ext_resource type="Resource" uid="uid://laqi6rkv2ib4" path="res://Data/Resource/Ores/Voidstone.tres" id="5_lujug"]
+[ext_resource type="Resource" uid="uid://bs4rhenpmo2mi" path="res://Data/Resource/Ores/Cosmic_Shard.tres" id="6_fmlrg"]
+
+[sub_resource type="Resource" id="Resource_2yyt3"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("3_i8sl2")
+spawn_chance = 35.0
+
+[sub_resource type="Resource" id="Resource_dlbx0"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("4_u7b20")
+spawn_chance = 45.0
+
+[sub_resource type="Resource" id="Resource_vwkby"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("5_lujug")
+spawn_chance = 15.0
+
+[sub_resource type="Resource" id="Resource_4ivl0"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("6_fmlrg")
+spawn_chance = 5.0
+
+[resource]
+script = ExtResource("1_mb2eg")
+spawn_rules = Array[ExtResource("2_5lrtn")]([SubResource("Resource_2yyt3"), SubResource("Resource_dlbx0"), SubResource("Resource_vwkby"), SubResource("Resource_4ivl0")])

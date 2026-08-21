@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://tm4e33n616dq"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_f5pmm"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_0a330"]
+[ext_resource type="Resource" uid="uid://yaguar6weiti" path="res://Data/Resource/Ores/Orichalcum.tres" id="3_tt08o"]
+[ext_resource type="Resource" uid="uid://8ne5uowtjq3y" path="res://Data/Resource/Ores/Starcrystal.tres" id="4_tbmsl"]
+[ext_resource type="Resource" uid="uid://2rk74boa424u" path="res://Data/Resource/Ores/Aetherium.tres" id="5_npvxm"]
+[ext_resource type="Resource" uid="uid://laqi6rkv2ib4" path="res://Data/Resource/Ores/Voidstone.tres" id="6_wsbx0"]
+
+[sub_resource type="Resource" id="Resource_8plp1"]
+script = ExtResource("2_0a330")
+ore = ExtResource("3_tt08o")
+spawn_chance = 20.0
+
+[sub_resource type="Resource" id="Resource_0jjim"]
+script = ExtResource("2_0a330")
+ore = ExtResource("4_tbmsl")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_lauob"]
+script = ExtResource("2_0a330")
+ore = ExtResource("5_npvxm")
+spawn_chance = 40.0
+
+[sub_resource type="Resource" id="Resource_yqqi4"]
+script = ExtResource("2_0a330")
+ore = ExtResource("6_wsbx0")
+spawn_chance = 9.0
+
+[sub_resource type="Resource" id="Resource_qllmf"]
+script = ExtResource("2_0a330")
+ore = ExtResource("6_wsbx0")
+is_exact_amount = true
+
+[resource]
+script = ExtResource("1_f5pmm")
+spawn_rules = Array[ExtResource("2_0a330")]([SubResource("Resource_8plp1"), SubResource("Resource_0jjim"), SubResource("Resource_lauob"), SubResource("Resource_yqqi4"), SubResource("Resource_qllmf")])

@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://yaguar6weiti"]
 
-[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/orichalcum.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_ew03r"]
+[ext_resource type="Texture2D" uid="uid://cspiv7d8fs04p" path="res://assets/ores/orichalcum.png" id="2_ew03r"]
 
 [resource]
-script = ExtResource("1_script")
+script = ExtResource("1_ew03r")
 name = "Orichalcum"
-texture = ExtResource("2_tex")
-money_drop = 100000
-hardness = 7.5
-max_hp = 20
-extra_lives = 8
+texture = ExtResource("2_ew03r")
+money_drop = 12000
+max_hp = 500
+extra_lives = 3

@@ -22,6 +22,10 @@ var has_automatic: bool = false
 var has_alchemical: bool = false
 var is_afk_active: bool = false
 
+var village_spawn_pos_x: float = 0.0
+var village_spawn_pos_y: float = 0.0
+var has_village_spawn: bool = false
+
 var unlocked_levels: Dictionary = {}
 
 # --- PLAYER STATS (Moved to Global for persistence) ---

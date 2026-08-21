@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://d1hqy7bhswnvv"]
 
-[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/mithril.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_3q6to"]
+[ext_resource type="Texture2D" uid="uid://us6ye6ktxocm" path="res://assets/ores/mithril.png" id="2_3q6to"]
 
 [resource]
-script = ExtResource("1_script")
+script = ExtResource("1_3q6to")
 name = "Mithril"
-texture = ExtResource("2_tex")
-money_drop = 5000
-hardness = 3.5
-max_hp = 10
-extra_lives = 4
+texture = ExtResource("2_3q6to")
+money_drop = 2500
+max_hp = 150
+extra_lives = 2

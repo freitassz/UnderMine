@@ -1,13 +1,11 @@
-[gd_resource type="Resource" script_class="OreData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://ctsmwp0aka8g4"]
 
-[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sapphire.png" id="2_tex"]
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_sf3ca"]
+[ext_resource type="Texture2D" uid="uid://weanmt6mguoc" path="res://assets/ores/sapphire.png" id="2_sf3ca"]
 
 [resource]
-script = ExtResource("1_script")
+script = ExtResource("1_sf3ca")
 name = "Sapphire"
-texture = ExtResource("2_tex")
+texture = ExtResource("2_sf3ca")
 money_drop = 300
-hardness = 1.8
-max_hp = 6
-extra_lives = 2
+max_hp = 30
