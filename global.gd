@@ -121,19 +121,19 @@ func _process(_delta: float) -> void:
 	if p_lvl == min_lvl and money >= power_cost:
 		add_money(-power_cost)
 		mining_power += 1
-		power_cost = int(power_cost * 1.5)
+		power_cost = int(power_cost * 1.1) + 5
 		bought_something = true
 		_trigger_player_levelup()
 	elif s_lvl == min_lvl and money >= speed_cost:
 		add_money(-speed_cost)
 		mining_speed_level += 1.0
-		speed_cost = int(speed_cost * 1.5)
+		speed_cost = int(speed_cost * 1.1) + 5
 		bought_something = true
 		_trigger_player_levelup()
 	elif m_lvl == min_lvl and money >= mult_cost:
 		add_money(-mult_cost)
 		ore_multiplier += 0.05
-		mult_cost = int(mult_cost * 1.5)
+		mult_cost = int(mult_cost * 1.1) + 5
 		bought_something = true
 		_trigger_player_levelup()
 

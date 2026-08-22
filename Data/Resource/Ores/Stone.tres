@@ -9,4 +9,4 @@ name = "Stone"
 texture = ExtResource("2_wecve")
 money_drop = 1
 max_hp = 1
-extra_lives = 20
+extra_lives = 3

@@ -7,5 +7,6 @@
 script = ExtResource("1_d5qkx")
 name = "Ruby"
 texture = ExtResource("2_d5qkx")
-money_drop = 50
-max_hp = 10
+money_drop = 40
+max_hp = 30
+extra_lives = 1

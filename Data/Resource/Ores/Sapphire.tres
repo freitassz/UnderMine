@@ -7,5 +7,6 @@
 script = ExtResource("1_sf3ca")
 name = "Sapphire"
 texture = ExtResource("2_sf3ca")
-money_drop = 300
-max_hp = 30
+money_drop = 1000
+max_hp = 2200
+extra_lives = 1

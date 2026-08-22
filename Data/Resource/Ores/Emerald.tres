@@ -7,6 +7,6 @@
 script = ExtResource("1_r8wd3")
 name = "Emerald"
 texture = ExtResource("2_r8wd3")
-money_drop = 1000
-max_hp = 80
+money_drop = 2500
+max_hp = 1600
 extra_lives = 1

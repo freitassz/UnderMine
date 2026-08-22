@@ -48,7 +48,7 @@ func _on_power_pressed() -> void:
 	if Global.money >= Global.power_cost:
 		Global.add_money(-Global.power_cost)
 		Global.mining_power += 1
-		Global.power_cost = int(Global.power_cost * 1.5)
+		Global.power_cost = int(Global.power_cost * 1.05) + 5
 		SaveManager.save_game()
 		Global._trigger_player_levelup()
 		update_ui()
@@ -57,7 +57,7 @@ func _on_speed_pressed() -> void:
 	if Global.money >= Global.speed_cost:
 		Global.add_money(-Global.speed_cost)
 		Global.mining_speed_level += 1.0
-		Global.speed_cost = int(Global.speed_cost * 1.5)
+		Global.speed_cost = int(Global.speed_cost * 1.05) + 5
 		SaveManager.save_game()
 		Global._trigger_player_levelup()
 		update_ui()
@@ -66,7 +66,7 @@ func _on_mult_pressed() -> void:
 	if Global.money >= Global.mult_cost:
 		Global.add_money(-Global.mult_cost)
 		Global.ore_multiplier += 0.05
-		Global.mult_cost = int(Global.mult_cost * 1.5)
+		Global.mult_cost = int(Global.mult_cost * 1.05) + 5
 		SaveManager.save_game()
 		Global._trigger_player_levelup()
 		update_ui()

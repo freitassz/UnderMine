@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="MineFloorData" format=3]
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://d2sf4itkgato6"]
 
-[ext_resource type="Resource" path="res://Data/Resource/OreSets/Set_Level9.tres" id="1_syl1f"]
-[ext_resource type="Script" path="res://Data/Script/MineFloorData.gd" id="2_sbted"]
+[ext_resource type="Resource" uid="uid://brvxgakcu6psx" path="res://Data/Resource/OreSets/Set_Level9.tres" id="1_syl1f"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_sbted"]
 
 [resource]
 script = ExtResource("2_sbted")

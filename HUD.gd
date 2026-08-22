@@ -62,6 +62,11 @@ func _ready() -> void:
 	add_child(settings_ui)
 	settings_btn.pressed.connect(settings_ui.open)
 	
+	# --- INÍCIO CÓDIGO DEBUG (Pode apagar no futuro) ---
+	var debug_screen = preload("res://debug_screen.gd").new()
+	add_child(debug_screen)
+	# --- FIM CÓDIGO DEBUG ---
+	
 	call_deferred("_connect_player")
 
 func _process(_delta: float) -> void:

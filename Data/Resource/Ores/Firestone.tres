@@ -7,6 +7,5 @@
 script = ExtResource("1_mt7wg")
 name = "Firestone"
 texture = ExtResource("2_mt7wg")
-money_drop = 500
-max_hp = 40
-extra_lives = 1
+money_drop = 50000
+max_hp = 20000

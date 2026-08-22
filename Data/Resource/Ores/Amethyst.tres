@@ -7,5 +7,6 @@
 script = ExtResource("1_d2lmd")
 name = "Amethyst"
 texture = ExtResource("2_d2lmd")
-money_drop = 150
-max_hp = 20
+money_drop = 500
+max_hp = 1200
+extra_lives = 4

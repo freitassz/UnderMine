@@ -7,6 +7,5 @@
 script = ExtResource("1_25wlf")
 name = "Diamond"
 texture = ExtResource("2_25wlf")
-money_drop = 1500
-max_hp = 100
-extra_lives = 2
+money_drop = 20000
+max_hp = 10000

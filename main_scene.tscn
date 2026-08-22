@@ -7,24 +7,25 @@
 [ext_resource type="PackedScene" uid="uid://b0oepe80tsa55" path="res://door.tscn" id="4_d5x1h"]
 [ext_resource type="Resource" uid="uid://cxktm4kac4hvw" path="res://Data/Resource/Levels/Level2_CavernasFrias.tres" id="5_7ycvg"]
 [ext_resource type="PackedScene" uid="uid://dj8ya2nd82nxm" path="res://Shop.tscn" id="9_shop"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level3_FendaVulcânica.tres" id="10_fv2he"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level4_ProfundezasPreciosas.tres" id="11_5smuj"]
+[ext_resource type="Resource" uid="uid://4uu2i4edstuy" path="res://Data/Resource/Levels/Level3_ProfundezasPreciosas.tres" id="11_5smuj"]
 [ext_resource type="Texture2D" uid="uid://c4iinnb8i6yph" path="res://assets/House.png" id="11_qwutr"]
+[ext_resource type="Resource" uid="uid://cmytfif25gvij" path="res://Data/Resource/Levels/Level4_FendaVulcânica.tres" id="11_y5ved"]
 [ext_resource type="TileSet" uid="uid://bp4c2b1ubsi8o" path="res://WallTile.tres" id="12_671wp"]
 [ext_resource type="PackedScene" uid="uid://cxabdef12121" path="res://ascension_npc.tscn" id="12_asc"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level5_OásisdeCristal.tres" id="12_y5ved"]
+[ext_resource type="Resource" uid="uid://cabeaxs1xsioa" path="res://Data/Resource/Levels/Level5_OásisdeCristal.tres" id="12_y5ved"]
 [ext_resource type="Resource" path="res://Data/Resource/Levels/Level6_MantoFantástico.tres" id="13_kv3aw"]
 [ext_resource type="Texture2D" uid="uid://csw3nnm0ja0mc" path="res://assets/Folliage1.png" id="14_2jcla"]
 [ext_resource type="PackedScene" uid="uid://cxabdega8765" path="res://level_shop.tscn" id="14_42l1d"]
 [ext_resource type="Resource" path="res://Data/Resource/Levels/Level7_VeiasdeMana.tres" id="14_o7u2a"]
 [ext_resource type="Texture2D" uid="uid://b6stqi7v5rd6a" path="res://assets/Folliage2.png" id="15_2jcla"]
 [ext_resource type="Resource" path="res://Data/Resource/Levels/Level8_ONúcleodoVazio.tres" id="15_ijoax"]
-[ext_resource type="Resource" path="res://Data/Resource/Levels/Level9_DimensãoEstilhaçada.tres" id="16_j8kkg"]
+[ext_resource type="Resource" uid="uid://d2sf4itkgato6" path="res://Data/Resource/Levels/Level9_DimensãoEstilhaçada.tres" id="16_j8kkg"]
 [ext_resource type="Texture2D" uid="uid://dassd16ewndc3" path="res://assets/Folliage3.png" id="16_m35m6"]
 [ext_resource type="Texture2D" uid="uid://cyoiywh7atctu" path="res://assets/Folliage4.png" id="17_u0ygc"]
 [ext_resource type="Resource" path="res://Data/Resource/Levels/Level10_OHorizonteFinal.tres" id="17_yh4yk"]
 [ext_resource type="Texture2D" uid="uid://dx16ewtcoyv15" path="res://assets/lIGHT.png" id="18_7th4q"]
 [ext_resource type="PackedScene" uid="uid://cycbef23a876" path="res://checkpoint.tscn" id="25_5smuj"]
+[ext_resource type="Texture2D" uid="uid://heuao7ur4rik" path="res://assets/molde1.png" id="26_y5ved"]
 
 [node name="MainScene" type="Node2D" unique_id=464339740]
 
@@ -80,13 +81,13 @@ blocking_door = NodePath("../Door2")
 [node name="Portal3" parent="Levels_&_Doors" unique_id=1796270136 instance=ExtResource("3_gyfs4")]
 z_index = -4
 position = Vector2(124, -16)
-portal_floor_data = ExtResource("10_fv2he")
+portal_floor_data = ExtResource("11_5smuj")
 blocking_door = NodePath("../Door3")
 
 [node name="Portal4" parent="Levels_&_Doors" unique_id=1977329676 instance=ExtResource("3_gyfs4")]
 z_index = -4
 position = Vector2(156, -16)
-portal_floor_data = ExtResource("11_5smuj")
+portal_floor_data = ExtResource("11_y5ved")
 blocking_door = NodePath("../Door4")
 
 [node name="Portal5" parent="Levels_&_Doors" unique_id=2043943460 instance=ExtResource("3_gyfs4")]
@@ -123,43 +124,43 @@ portal_floor_data = ExtResource("17_yh4yk")
 [node name="Door2" parent="Levels_&_Doors" unique_id=1612324493 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(92, -16)
-cost = 1000
+cost = 800
 is_level_door = true
 
 [node name="Door3" parent="Levels_&_Doors" unique_id=2084958621 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(124, -16)
-cost = 5000
+cost = 10000
 is_level_door = true
 
 [node name="Door4" parent="Levels_&_Doors" unique_id=233764819 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(156, -16)
-cost = 20000
+cost = 150000
 is_level_door = true
 
 [node name="Door5" parent="Levels_&_Doors" unique_id=490332976 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(188, -16)
-cost = 75000
+cost = 1000000
 is_level_door = true
 
 [node name="Door6" parent="Levels_&_Doors" unique_id=90532327 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(308, -16)
-cost = 200000
+cost = 50000000
 is_level_door = true
 
 [node name="Door7" parent="Levels_&_Doors" unique_id=1926885614 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(340, -16)
-cost = 1000000
+cost = 100000000
 is_level_door = true
 
 [node name="Door8" parent="Levels_&_Doors" unique_id=1933232884 instance=ExtResource("4_d5x1h")]
 z_index = -1
 position = Vector2(372, -16)
-cost = 5000000
+cost = 500000000
 is_level_door = true
 
 [node name="Door9" parent="Levels_&_Doors" unique_id=379180775 instance=ExtResource("4_d5x1h")]
@@ -460,6 +461,7 @@ texture = ExtResource("18_7th4q")
 
 [node name="AscensionNPC" parent="." unique_id=205047502 instance=ExtResource("12_asc")]
 position = Vector2(498, -35)
+cost = 500000
 
 [node name="PointLight2D2" type="PointLight2D" parent="." unique_id=2065201372]
 position = Vector2(1.0000001, 8)
@@ -483,6 +485,11 @@ position = Vector2(248, 4)
 
 [node name="Checkpoint3" parent="." unique_id=408294647 instance=ExtResource("25_5smuj")]
 position = Vector2(498, 2)
+
+[node name="Molde1" type="Sprite2D" parent="." unique_id=1169859737]
+z_index = -1
+position = Vector2(60, -21)
+texture = ExtResource("26_y5ved")
 
 [connection signal="body_entered" from="Levels_&_Doors/Portal" to="Levels_&_Doors/Portal" method="_on_body_entered"]
 [connection signal="body_entered" from="Levels_&_Doors/Portal2" to="Levels_&_Doors/Portal2" method="_on_body_entered"]

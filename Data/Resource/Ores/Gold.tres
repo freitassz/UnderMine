@@ -7,6 +7,6 @@
 script = ExtResource("1_js7jc")
 name = "Gold"
 texture = ExtResource("2_js7jc")
-money_drop = 80
-max_hp = 15
-extra_lives = 1
+money_drop = 100
+max_hp = 400
+extra_lives = 3

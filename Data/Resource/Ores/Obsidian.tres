@@ -7,6 +7,5 @@
 script = ExtResource("1_j8ejt")
 name = "Obsidian"
 texture = ExtResource("2_j8ejt")
-money_drop = 250
-max_hp = 50
-extra_lives = 2
+money_drop = 15000
+max_hp = 10000

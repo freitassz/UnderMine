@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://dewogihv3qe10"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_1crnx"]
+[ext_resource type="Texture2D" uid="uid://dpxa25nswb0ea" path="res://assets/ores/Ambar.png" id="2_04ysr"]
+
+[resource]
+script = ExtResource("1_1crnx")
+name = "Ambar"
+texture = ExtResource("2_04ysr")
+money_drop = 1250
+max_hp = 500
+extra_lives = 4
+metadata/_custom_type_script = "uid://7y24oediagu8"
