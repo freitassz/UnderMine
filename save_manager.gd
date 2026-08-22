@@ -92,8 +92,8 @@ func reset_save() -> void:
 			dir.remove("save_data.json")
 	
 	# Restaura valores padrões
-	Global.money = 0
-	Global.visual_money = 0
+	Global.money = 5000000
+	Global.visual_money = 5000000
 	Global.ascension_coins = 0
 	Global.has_stair_compass = false
 	Global.has_ore_compass = false

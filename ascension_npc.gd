@@ -33,7 +33,10 @@ func open_ui() -> void:
 
 func _on_yes_pressed() -> void:
 	if Global.money >= cost:
-		Global.add_money(-cost) # Tira o custo (ou reseta, mas tirar é melhor)
+		Global.money = 0
+		Global.visual_money = 0
+		Global.money_changed.emit(0)
+		
 		Global.add_ascension_coins(1)
 		
 		# Resetando os upgrades da pessoa:
@@ -50,6 +53,9 @@ func _on_yes_pressed() -> void:
 		Global.has_ore_compass = false
 		Global.has_mining_dash = false
 		Global.has_midas_luck = false
+		
+		# Bloquear as entradas de minas liberadas
+		Global.unlocked_levels.clear()
 		
 		SaveManager.save_game()
 		
