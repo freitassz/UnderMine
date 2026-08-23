@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://dx16ewtcoyv15" path="res://assets/lIGHT.png" id="18_7th4q"]
 [ext_resource type="PackedScene" uid="uid://cycbef23a876" path="res://checkpoint.tscn" id="25_5smuj"]
 [ext_resource type="Texture2D" uid="uid://heuao7ur4rik" path="res://assets/molde1.png" id="26_y5ved"]
+[ext_resource type="PackedScene" uid="uid://c6smachine123" path="res://slot_machine_world.tscn" id="27_kv3aw"]
 
 [node name="MainScene" type="Node2D" unique_id=464339740]
 
@@ -490,6 +491,9 @@ position = Vector2(498, 2)
 z_index = -1
 position = Vector2(60, -21)
 texture = ExtResource("26_y5ved")
+
+[node name="SlotMachineWorld" parent="." unique_id=728875989 instance=ExtResource("27_kv3aw")]
+position = Vector2(227, -30)
 
 [connection signal="body_entered" from="Levels_&_Doors/Portal" to="Levels_&_Doors/Portal" method="_on_body_entered"]
 [connection signal="body_entered" from="Levels_&_Doors/Portal2" to="Levels_&_Doors/Portal2" method="_on_body_entered"]

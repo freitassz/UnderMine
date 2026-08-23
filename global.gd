@@ -110,7 +110,7 @@ func _process(_delta: float) -> void:
 	# Calcula os leveis reais baseados nas variáveis de status
 	var p_lvl = mining_power
 	var s_lvl = int(mining_speed_level)
-	var m_lvl = int(round((ore_multiplier - 1.0) / 0.05)) + 1
+	var m_lvl = int(round((ore_multiplier - 1.0) / 0.015)) + 1
 	
 	# Descobre qual é o menor level
 	var min_lvl = min(p_lvl, min(s_lvl, m_lvl))
@@ -121,19 +121,19 @@ func _process(_delta: float) -> void:
 	if p_lvl == min_lvl and money >= power_cost:
 		add_money(-power_cost)
 		mining_power += 1
-		power_cost = int(power_cost * 1.1) + 5
+		power_cost = int(power_cost * 1.05) + 5
 		bought_something = true
 		_trigger_player_levelup()
 	elif s_lvl == min_lvl and money >= speed_cost:
 		add_money(-speed_cost)
 		mining_speed_level += 1.0
-		speed_cost = int(speed_cost * 1.1) + 5
+		speed_cost = int(speed_cost * 1.05) + 5
 		bought_something = true
 		_trigger_player_levelup()
 	elif m_lvl == min_lvl and money >= mult_cost:
 		add_money(-mult_cost)
-		ore_multiplier += 0.05
-		mult_cost = int(mult_cost * 1.1) + 5
+		ore_multiplier += 0.015
+		mult_cost = int(mult_cost * 1.05) + 5
 		bought_something = true
 		_trigger_player_levelup()
 

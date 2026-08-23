@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c6smachine123"]
+
+[ext_resource type="Script" uid="uid://c8iakynwenrgy" path="res://slot_machine_world.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://btuws0x3iad7k" path="res://assets/SlotMachineCase.png" id="2_sprite"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(12, 8)
+
+[node name="SlotMachineWorld" type="Area2D" unique_id=1666915132]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1838385280]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2034656243]
+shape = SubResource("RectangleShape2D_1")

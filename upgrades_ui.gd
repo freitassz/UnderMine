@@ -40,7 +40,7 @@ func update_ui() -> void:
 	speed_btn.text = "Comprar: " + Global.format_num(Global.speed_cost)
 	speed_btn.disabled = Global.money < Global.speed_cost
 	
-	mult_lbl.text = "Multiplicador de Dinheiro (x" + str(snapped(Global.ore_multiplier, 0.01)) + ")"
+	mult_lbl.text = "Multiplicador de Dinheiro (x" + str(snapped(Global.ore_multiplier, 0.001)) + ")"
 	mult_btn.text = "Comprar: " + Global.format_num(Global.mult_cost)
 	mult_btn.disabled = Global.money < Global.mult_cost
 
@@ -65,7 +65,7 @@ func _on_speed_pressed() -> void:
 func _on_mult_pressed() -> void:
 	if Global.money >= Global.mult_cost:
 		Global.add_money(-Global.mult_cost)
-		Global.ore_multiplier += 0.05
+		Global.ore_multiplier += 0.015
 		Global.mult_cost = int(Global.mult_cost * 1.05) + 5
 		SaveManager.save_game()
 		Global._trigger_player_levelup()
