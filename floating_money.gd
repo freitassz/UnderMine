@@ -61,6 +61,7 @@ func fly_to_hud() -> void:
 		var sfx = AudioStreamPlayer.new()
 		sfx.stream = preload("res://pickupCoin.wav")
 		if sfx.stream:
+			sfx.bus = "SFX"
 			sfx.volume_db = -10.0 # Abaixa o volume
 			sfx.pitch_scale = randf_range(0.9, 1.2)
 			var root = get_tree().current_scene

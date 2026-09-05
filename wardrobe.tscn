@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://wardr12345"]
+
+[ext_resource type="Script" uid="uid://bisdx3ncueled" path="res://wardrobe.gd" id="1_ward"]
+[ext_resource type="Texture2D" uid="uid://c0ty2hcgmtgji" path="res://assets/Armario.png" id="2_qahno"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ward"]
+size = Vector2(12, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ward"]
+bg_color = Color(0.4, 0.2, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="Wardrobe" type="Area2D" unique_id=975417100 groups=["wardrobes"]]
+script = ExtResource("1_ward")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2047323943]
+texture = ExtResource("2_qahno")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1375073279]
+shape = SubResource("RectangleShape2D_ward")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=536913231]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1330323475]
+shape = SubResource("RectangleShape2D_ward")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1750488498]
+layer = 10
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=288323437]
+custom_minimum_size = Vector2(300, 250)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -125.0
+offset_right = 150.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ward")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=847643310]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=187495684]
+layout_mode = 2
+text = "Armário de Skins"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Panel/VBoxContainer" unique_id=96534655]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SkinsList" type="VBoxContainer" parent="CanvasLayer/Panel/VBoxContainer/ScrollContainer" unique_id=2137514980]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CloseBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer" unique_id=2147237413]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Fechar"

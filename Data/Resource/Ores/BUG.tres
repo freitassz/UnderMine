@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://s5juv5vuh8jq"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_2pgfr"]
+[ext_resource type="Texture2D" uid="uid://bjyvuwnkjbkpg" path="res://assets/ores/Bug.png" id="2_383ac"]
+
+[resource]
+script = ExtResource("1_2pgfr")
+name = "BUG"
+texture = ExtResource("2_383ac")

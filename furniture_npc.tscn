@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://furnn12345"]
+
+[ext_resource type="Script" uid="uid://cqeh1h3160gtg" path="res://furniture_npc.gd" id="1_furn"]
+[ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_furn"]
+size = Vector2(8, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_furn"]
+bg_color = Color(0.1, 0.4, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.8, 0.4, 1)
+
+[node name="FurnitureNPC" type="Area2D" unique_id=1441905311]
+script = ExtResource("1_furn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=223094050]
+modulate = Color(0.2, 1, 0.4, 1)
+texture = ExtResource("2_tex")
+hframes = 2
+vframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1161933581]
+shape = SubResource("RectangleShape2D_furn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1682577749]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1349870276]
+shape = SubResource("RectangleShape2D_furn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1462303715]
+layer = 10
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1512285775]
+custom_minimum_size = Vector2(400, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_furn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1063158401]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=65594406]
+layout_mode = 2
+text = "Comprar Móveis"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Panel/VBoxContainer" unique_id=906862336]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FurnituresList" type="VBoxContainer" parent="CanvasLayer/Panel/VBoxContainer/ScrollContainer" unique_id=891198154]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CloseBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1226343463]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Fechar"

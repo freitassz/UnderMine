@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://5w74fnnwychh"]
+
+[ext_resource type="Texture2D" uid="uid://8jxvif8gahm0" path="res://assets/Tapete.png" id="1_08ub6"]
+
+[node name="Tapete" type="Sprite2D" unique_id=430628647]
+rotation = 1.5707964
+texture = ExtResource("1_08ub6")

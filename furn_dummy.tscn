@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bfyklean5dy61"]
+
+[ext_resource type="Script" uid="uid://bv1iojlp31dj" path="res://furn_dummy.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://bfai1feri82sn" path="res://assets/Dummy.png" id="2_0tmpr"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(12, 16)
+
+[node name="TrainingDummy" type="Area2D" unique_id=1088579863]
+script = ExtResource("1_f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1349528755]
+texture = ExtResource("2_0tmpr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=827320036]
+shape = SubResource("Rect_1")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://cdhmovilwnrxc"]
+
+[ext_resource type="PackedScene" uid="uid://c6smachine123" path="res://slot_machine_world.tscn" id="1_j0ntn"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_nsi67"]
+
+[resource]
+script = ExtResource("2_nsi67")
+furniture_name = "Slot Machine"
+scene = ExtResource("1_j0ntn")
+cost = 1500000
+spawn_position = Vector2(-37, -14)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://6xhf7q8c70oc"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_dcutc"]
+[ext_resource type="Texture2D" uid="uid://cwmdg0hmw50ub" path="res://assets/ores/Arco-ires.png" id="2_x55tj"]
+
+[resource]
+script = ExtResource("1_dcutc")
+name = "Arcoires"
+texture = ExtResource("2_x55tj")

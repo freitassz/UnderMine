@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://cismair3mecxo"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_rcw7h"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_7t82a"]
+[ext_resource type="Resource" uid="uid://qe560jc5d8yi" path="res://Data/Resource/Ores/Infinity_Crystal.tres" id="3_rcw7h"]
+[ext_resource type="Resource" uid="uid://bglb7fqre54tj" path="res://Data/Resource/Ores/Eternium.tres" id="5_5o5ha"]
+[ext_resource type="Resource" uid="uid://bwfyr13knbkha" path="res://Data/Resource/Ores/Time_Rupture.tres" id="6_7t82a"]
+[ext_resource type="Resource" uid="uid://bec215hhiins" path="res://Data/Resource/Ores/Chronos_Crystal.tres" id="6_gma1a"]
+
+[sub_resource type="Resource" id="Resource_8xnux"]
+script = ExtResource("2_7t82a")
+ore = ExtResource("3_rcw7h")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_qg10s"]
+script = ExtResource("2_7t82a")
+ore = ExtResource("5_5o5ha")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_5o5ha"]
+script = ExtResource("2_7t82a")
+ore = ExtResource("6_gma1a")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_gma1a"]
+script = ExtResource("2_7t82a")
+ore = ExtResource("6_7t82a")
+spawn_chance = 100.0
+
+[resource]
+script = ExtResource("1_rcw7h")
+spawn_rules = Array[ExtResource("2_7t82a")]([SubResource("Resource_8xnux"), SubResource("Resource_qg10s"), SubResource("Resource_5o5ha"), SubResource("Resource_gma1a")])

@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_txibi")
+name = "Magma"
 texture = ExtResource("2_iifxw")
 money_drop = 400
 max_hp = 250

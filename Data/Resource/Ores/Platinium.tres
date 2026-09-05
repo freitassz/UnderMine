@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="OreData" format=3]
+
+[ext_resource type="Script" path="res://Data/Script/OreData.gd" id="1_8t5nx"]
+
+[resource]
+script = ExtResource("1_8t5nx")
+name = "Platinium"

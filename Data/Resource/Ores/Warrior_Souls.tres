@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://bcim1bhdesdno"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_ry1sg"]
+[ext_resource type="Texture2D" uid="uid://dg2joc4l4o4i1" path="res://assets/ores/Warrior_Soul.png" id="2_h6v3x"]
+
+[resource]
+script = ExtResource("1_ry1sg")
+name = "Warrior Souls"
+texture = ExtResource("2_h6v3x")

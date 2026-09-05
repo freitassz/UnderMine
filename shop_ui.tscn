@@ -75,6 +75,34 @@ text = "Dash de Mineração"
 layout_mode = 2
 text = "Sorte de Midas"
 
+[node name="ExtraHitBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Hit Extra Duplo"
+
+[node name="FloorMultBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Multiplicador Subterrâneo"
+
+[node name="Boots1Btn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Botas Velozes"
+
+[node name="MomentumBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Momentum Automático"
+
+[node name="ExplosiveImpactBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Impacto Explosivo"
+
+[node name="SupremeDashBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Dash Supremo"
+
+[node name="JurosCompostosBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 1/VBoxContainer"]
+layout_mode = 2
+text = "Cofre Rendeiro (Juros Compostos)"
+
 [node name="Itens 2" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
@@ -106,7 +134,11 @@ text = "Ativar Automatic"
 layout_mode = 2
 text = "Ativar Alchemical"
 
-[node name="Itens 3" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+[node name="BoomerangBtn" type="Button" parent="VBoxContainer/TabContainer/Itens 2/VBoxContainer"]
+layout_mode = 2
+text = "Ativar Boomerang"
+
+[node name="Ascensao" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -114,12 +146,36 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Itens 3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Ascensao"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Itens 3/VBoxContainer"]
+[node name="Ticket1Btn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
 layout_mode = 2
-text = "Aba de Itens 3 Vazia"
+text = "Ticket Minas Lv1 (1 a 4)"
+
+[node name="Ticket2Btn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Ticket Minas Lv2 (5 a 9)"
+
+[node name="ToqueMagicoBtn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Toque Mágico (1%)"
+
+[node name="EchoStrikeBtn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Echo Strike"
+
+[node name="VoidGluttonyBtn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Gula do Abismo"
+
+[node name="CosmicSynergyBtn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Sintonia Cósmica"
+
+[node name="TimeWarpBtn" type="Button" parent="VBoxContainer/TabContainer/Ascensao/VBoxContainer"]
+layout_mode = 2
+text = "Distorção Temporal"
 
 [node name="Itens 4" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false

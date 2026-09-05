@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://ci488j45l0v5x"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_0fuoy"]
+[ext_resource type="Texture2D" uid="uid://w1abllv70py6" path="res://assets/ores/Cthulo fragment.png" id="2_qqtd0"]
+
+[resource]
+script = ExtResource("1_0fuoy")
+name = "CTHULU Fragment"
+texture = ExtResource("2_qqtd0")

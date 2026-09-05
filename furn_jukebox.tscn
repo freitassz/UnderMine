@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://furnjukebox"]
+
+[ext_resource type="Script" uid="uid://bfvucktiosmiw" path="res://furn_jukebox.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://dawi27ckh5kxn" path="res://assets/Junk_box.png" id="2_h55rt"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(18, 20)
+
+[node name="Jukebox" type="Area2D" unique_id=1802150925]
+script = ExtResource("1_f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=696136186]
+position = Vector2(0, -10)
+texture = ExtResource("2_h55rt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=120758633]
+position = Vector2(0, -10)
+shape = SubResource("Rect_1")

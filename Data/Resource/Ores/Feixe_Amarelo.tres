@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://clkejwf2b0sud"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_4fegx"]
+[ext_resource type="Texture2D" uid="uid://do4qibiarhb3h" path="res://assets/ores/Feixe_Amarelo.png" id="2_d4evj"]
+
+[resource]
+script = ExtResource("1_4fegx")
+name = "Feixe Amarelo"
+texture = ExtResource("2_d4evj")

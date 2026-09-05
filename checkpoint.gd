@@ -31,6 +31,7 @@ func activate_checkpoint() -> void:
 	# Efeitos visuais e sonoros
 	particles.emitting = true
 	if sfx.stream:
+		sfx.bus = "SFX"
 		sfx.play()
 		
 	# Salva a posição

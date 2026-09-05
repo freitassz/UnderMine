@@ -1,38 +1,37 @@
-[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://d2tydkquchjxd"]
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://c71y01xamtb3m"]
 
 [ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_o0pfq"]
 [ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_0qyno"]
+[ext_resource type="Resource" uid="uid://dipt1h7sr7fln" path="res://Data/Resource/Ores/Sol.tres" id="3_o0pfq"]
 [ext_resource type="Resource" uid="uid://kpfl868lc448" path="res://Data/Resource/Ores/Dark_Matter.tres" id="3_wdnow"]
 [ext_resource type="Resource" uid="uid://laqi6rkv2ib4" path="res://Data/Resource/Ores/Voidstone.tres" id="4_u7xpc"]
-[ext_resource type="Resource" uid="uid://bs4rhenpmo2mi" path="res://Data/Resource/Ores/Cosmic_Shard.tres" id="5_06wtr"]
-[ext_resource type="Resource" uid="uid://qe560jc5d8yi" path="res://Data/Resource/Ores/Infinity_Crystal.tres" id="6_txwtg"]
-[ext_resource type="Resource" uid="uid://dwa6am6ap4ei6" path="res://Data/Resource/Ores/Core_of_Genesis.tres" id="7_8l2vx"]
+[ext_resource type="Resource" uid="uid://ci488j45l0v5x" path="res://Data/Resource/Ores/CTHULU_Fragment.tres" id="5_0qyno"]
+[ext_resource type="Resource" uid="uid://dkmt8a0gnab3d" path="res://Data/Resource/Ores/CTHULU_Heart.tres" id="6_wdnow"]
+
+[sub_resource type="Resource" id="Resource_u7xpc"]
+script = ExtResource("2_0qyno")
+ore = ExtResource("3_o0pfq")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_06wtr"]
+script = ExtResource("2_0qyno")
+ore = ExtResource("4_u7xpc")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_txwtg"]
+script = ExtResource("2_0qyno")
+ore = ExtResource("5_0qyno")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_8l2vx"]
+script = ExtResource("2_0qyno")
+ore = ExtResource("6_wdnow")
+spawn_chance = 30.0
 
 [sub_resource type="Resource" id="Resource_2g22c"]
 script = ExtResource("2_0qyno")
 ore = ExtResource("3_wdnow")
-spawn_chance = 30.0
-
-[sub_resource type="Resource" id="Resource_6cvpj"]
-script = ExtResource("2_0qyno")
-ore = ExtResource("4_u7xpc")
-spawn_chance = 20.0
-
-[sub_resource type="Resource" id="Resource_avikf"]
-script = ExtResource("2_0qyno")
-ore = ExtResource("5_06wtr")
-spawn_chance = 40.0
-
-[sub_resource type="Resource" id="Resource_03ppq"]
-script = ExtResource("2_0qyno")
-ore = ExtResource("6_txwtg")
-spawn_chance = 9.0
-
-[sub_resource type="Resource" id="Resource_cu3uq"]
-script = ExtResource("2_0qyno")
-ore = ExtResource("7_8l2vx")
-is_exact_amount = true
 
 [resource]
 script = ExtResource("1_o0pfq")
-spawn_rules = Array[ExtResource("2_0qyno")]([SubResource("Resource_2g22c"), SubResource("Resource_6cvpj"), SubResource("Resource_avikf"), SubResource("Resource_03ppq"), SubResource("Resource_cu3uq")])
+spawn_rules = Array[ExtResource("2_0qyno")]([SubResource("Resource_u7xpc"), SubResource("Resource_06wtr"), SubResource("Resource_txwtg"), SubResource("Resource_8l2vx"), SubResource("Resource_2g22c")])

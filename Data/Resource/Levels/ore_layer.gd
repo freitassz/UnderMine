@@ -30,12 +30,15 @@ func generate_floor(floor_data: MineFloorData, ground_layer: TileMapLayer) -> vo
 						minérios_gerados += 1
 	
 	# 2. Continua com o Spawn Aleatório nas células que sobraram
+	# Pega o spread do level (0 a 100) e transforma em chance de spawn (0.0 a 1.0)
+	var dynamic_density = floor_data.spread / 100.0 if "spread" in floor_data else spawn_density
+	
 	for cell_pos in available_cells:
 		if minérios_gerados >= max_ores:
 			print("Limite máximo de minérios atingido! Parando geração para evitar lag.")
 			break 
 			
-		if randf() <= spawn_density:
+		if randf() <= dynamic_density:
 			var chosen_ore_data = _pick_random_ore(floor_data.ore_set)
 			
 			if chosen_ore_data != null:

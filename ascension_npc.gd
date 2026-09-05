@@ -38,9 +38,15 @@ func _on_yes_pressed() -> void:
 		Global.money_changed.emit(0)
 		
 		Global.add_ascension_coins(1)
+		Global.stat_total_ascensions += 1
 		
+		# GULA DO ABISMO (Mantém 10% da força)
+		var power_to_keep = 1
+		if Global.has_void_gluttony:
+			power_to_keep = max(1, int(Global.mining_power * 0.1))
+			
 		# Resetando os upgrades da pessoa:
-		Global.mining_power = 1
+		Global.mining_power = power_to_keep
 		Global.mining_speed_level = 1.0
 		Global.ore_multiplier = 1.0
 		Global.current_mining_mode = 0
@@ -53,9 +59,19 @@ func _on_yes_pressed() -> void:
 		Global.has_ore_compass = false
 		Global.has_mining_dash = false
 		Global.has_midas_luck = false
+		Global.has_extra_hit = false
+		Global.has_floor_multiplier = false
+		
+		Global.has_boots_1 = false
+		Global.is_boots_active = false
+		Global.has_auto_momentum = false
+		Global.has_explosive_impact = false
+		Global.has_supreme_dash = false
+		Global.has_juros_compostos = false
 		
 		# Bloquear as entradas de minas liberadas
 		Global.unlocked_levels.clear()
+		Global.apply_tickets()
 		
 		SaveManager.save_game()
 		

@@ -13,6 +13,8 @@ var settings_btn: Button
 
 var mult_label: Label
 var active_ability_btn: Button
+var time_warp_btn: Button
+var time_warp_cooldown: float = 0.0
 
 func _ready() -> void:
 	# Atualiza o texto logo que o jogo começa com o valor inicial
@@ -39,6 +41,11 @@ func _ready() -> void:
 	active_ability_btn.position = Vector2(0, 120)
 	active_ability_btn.pressed.connect(_on_active_ability_pressed)
 	add_child(active_ability_btn)
+	
+	time_warp_btn = Button.new()
+	time_warp_btn.position = Vector2(0, 160)
+	time_warp_btn.pressed.connect(_on_time_warp_pressed)
+	add_child(time_warp_btn)
 	
 	# Instancia a interface de Melhorias
 	upgrades_ui = upgrades_ui_scene.instantiate()
@@ -84,6 +91,63 @@ func _process(_delta: float) -> void:
 		active_ability_btn.modulate = Color(1, 0.5, 1)
 	else:
 		active_ability_btn.hide()
+		
+	if Global.has_time_warp:
+		time_warp_btn.show()
+		if time_warp_cooldown > 0:
+			time_warp_cooldown -= _delta
+			time_warp_btn.text = "Time Warp (" + str(int(time_warp_cooldown)) + "s)"
+			time_warp_btn.disabled = true
+		else:
+			time_warp_btn.text = "Ativar Time Warp (5min AFK)"
+			time_warp_btn.disabled = false
+	else:
+		time_warp_btn.hide()
+
+func _on_time_warp_pressed() -> void:
+	if time_warp_cooldown > 0: return
+	time_warp_cooldown = 300.0 # 5 minutes
+	
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() == 0: return
+	var p = players[0]
+	
+	var ores = get_tree().get_nodes_in_group("ores")
+	var nearest_ore = null
+	var min_dist = 999999.0
+	for o in ores:
+		var d = p.global_position.distance_to(o.global_position)
+		if d < min_dist:
+			min_dist = d
+			nearest_ore = o
+			
+	if nearest_ore and nearest_ore.my_data:
+		var spd = Global.mining_speed_level
+		# 60 segundos * 5 minutos = 300 segundos
+		# Batidas por segundo = 1.0 / (BASE_MINE_TIME / spd) = spd
+		var total_hits = 300.0 * spd
+		
+		# Ganho total (ignorando vidas porque no endgame a pedra tem muitas vidas, 
+		# vamos simplificar simulando o ganho bruto que ele faria batendo nela)
+		var money_per_hit = nearest_ore.my_data.money_drop * Global.get_effective_mult()
+		# Reduz em 50% igual o AFK
+		var total_money = int(total_hits * money_per_hit * 0.5)
+		
+		if Global.has_midas_luck:
+			total_money = int(total_money * 1.15) # +15% na media
+			
+		Global.add_money(total_money)
+		Global.apply_visual_money(total_money)
+		
+		var flash = ColorRect.new()
+		flash.color = Color(0.5, 0.5, 1.0, 0.5) # Azul
+		flash.set_anchors_preset(Control.PRESET_FULL_RECT)
+		flash.custom_minimum_size = Vector2(10000, 10000)
+		flash.position = -Vector2(5000, 5000)
+		get_tree().root.add_child(flash)
+		var tween = create_tween()
+		tween.tween_property(flash, "modulate:a", 0.0, 1.0)
+		tween.tween_callback(flash.queue_free)
 
 func _on_active_ability_pressed() -> void:
 	if Global.current_mining_mode == 3: # AUTOMATIC

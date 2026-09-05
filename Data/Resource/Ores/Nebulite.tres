@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://x5ptwr8yvcvq"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_a553k"]
+[ext_resource type="Texture2D" uid="uid://b4uobk73m3lan" path="res://assets/ores/Nebulite.png" id="2_65668"]
+
+[resource]
+script = ExtResource("1_a553k")
+name = "Nebulite"
+texture = ExtResource("2_65668")
+money_drop = 300000000
+max_hp = 600000
+extra_lives = 30

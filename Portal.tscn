@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://bwtj0mp7o1v6s" path="res://assets/dOOR.png" id="2_bagdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i210l"]
-size = Vector2(8, 16)
+size = Vector2(18, 22)
 
 [node name="Portal" type="Area2D" unique_id=754405333]
 script = ExtResource("1_bagdj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=396242941]
+position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_i210l")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1922350586]

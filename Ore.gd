@@ -36,6 +36,7 @@ func take_damage(damage: int, multiplier: float, is_main_target: bool = true) ->
 	var hit_sfx = AudioStreamPlayer2D.new()
 	hit_sfx.stream = preload("res://stonehit.wav")
 	if hit_sfx.stream:
+		hit_sfx.bus = "SFX"
 		hit_sfx.volume_db = -12.0 # Abaixa o volume
 		hit_sfx.pitch_scale = randf_range(0.8, 1.2)
 		hit_sfx.global_position = global_position
@@ -47,19 +48,40 @@ func take_damage(damage: int, multiplier: float, is_main_target: bool = true) ->
 			hit_sfx.play()
 			hit_sfx.finished.connect(hit_sfx.queue_free)
 		
-	current_hp -= damage
-	if is_main_target:
-		Global.ore_damaged.emit(current_hp, current_lives) # <-- Atualiza a barra de vida apenas do alvo principal
+	# Calcula se o dano atravessa múltiplas vidas
+	var total_hp_available = current_hp + (current_lives * my_data.max_hp)
+	var damage_dealt = min(damage, total_hp_available)
+	var lives_broken = 0
+	
+	current_hp -= damage_dealt
+	
+	while current_hp <= 0:
+		lives_broken += 1
+		if current_lives > 0:
+			current_lives -= 1
+			current_hp += my_data.max_hp
+		else:
+			break # Não tem mais vidas
 	
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(0.8, 0.8), 0.1)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 	
-	if current_hp <= 0:
-		_quebrar(multiplier, is_main_target)
+	if lives_broken > 0:
+		_quebrar_multiplas_vidas(lives_broken, multiplier, is_main_target)
+	else:
+		# Se não quebrou nenhuma vida, só atualiza a barra da HUD
+		if is_main_target:
+			Global.ore_damaged.emit(current_hp, current_lives)
 
-func _quebrar(multiplier: float, is_main_target: bool) -> void:
-	var total_money: int = int(my_data.money_drop * multiplier)
+func insta_mine(multiplier: float) -> void:
+	if my_data == null: return
+	current_hp = 0
+	_quebrar_multiplas_vidas(current_lives + 1, multiplier, true)
+
+func _quebrar_multiplas_vidas(lives_broken: int, multiplier: float, is_main_target: bool) -> void:
+	# Multiplica o dinheiro ganho pelo número de vidas estouradas de uma vez
+	var total_money: int = int(my_data.money_drop * multiplier) * lives_broken
 	
 	var is_crit = false
 	if Global.has_midas_luck and randf() <= 0.15:
@@ -69,31 +91,29 @@ func _quebrar(multiplier: float, is_main_target: bool) -> void:
 	Global.add_money(total_money)
 	_spawn_floating_text(total_money, is_crit)
 	
-	if current_lives > 0:
-		current_lives -= 1
-		current_hp = my_data.max_hp
+	if current_hp > 0:
+		# A pedra sobreviveu (ainda tem vidas), só atualiza a HUD
 		if is_main_target:
-			Global.ore_damaged.emit(current_hp, current_lives) # <-- Atualiza barra apenas do principal
+			Global.ore_damaged.emit(current_hp, current_lives)
 	else:
+		# A pedra foi totalmente aniquilada
 		if is_main_target:
 			Global.ore_deselected.emit()
+			
 		var ground_layer = get_tree().get_first_node_in_group("ground_layer")
 		var ore_layer = get_tree().get_first_node_in_group("ore_layer")
 		
 		if ground_layer and ore_layer:
 			var tile_coords = ground_layer.local_to_map(global_position)
-			
-			# NOVO: Remove da lista de buracos bloqueados
 			ore_layer.active_ore_cells.erase(tile_coords) 
-			
-			# Isso força o chão a recriar o polígono de navegação onde estava a pedra
 			ground_layer.notify_runtime_tile_data_update()
 			
-		# Som de pedra totalmente minerada (sem vidas restantes)
+		# Som de pedra totalmente minerada
 		var mined_sfx = AudioStreamPlayer2D.new()
 		mined_sfx.stream = preload("res://stonemined.wav")
 		if mined_sfx.stream:
-			mined_sfx.volume_db = -10.0 # Abaixa o volume
+			mined_sfx.bus = "SFX"
+			mined_sfx.volume_db = -10.0
 			mined_sfx.global_position = global_position
 			var tree = get_tree()
 			if tree:
@@ -104,7 +124,6 @@ func _quebrar(multiplier: float, is_main_target: bool) -> void:
 				mined_sfx.finished.connect(mined_sfx.queue_free)
 			
 		_create_shatter_effect()
-		# Sem Respawn: O minério some da tela
 		queue_free()
 
 func _create_shatter_effect() -> void:

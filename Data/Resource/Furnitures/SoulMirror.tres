@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://dxuh8i41bt2mw"]
+
+[ext_resource type="PackedScene" uid="uid://dp4quh5tbidb2" path="res://furn_mirror.tscn" id="1_tr5g0"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_ygwqp"]
+
+[resource]
+script = ExtResource("2_ygwqp")
+furniture_name = "SoulMirror"
+scene = ExtResource("1_tr5g0")
+cost = 1000000
+spawn_position = Vector2(20, -28)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://dipt1h7sr7fln"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_xnead"]
+[ext_resource type="Texture2D" uid="uid://dnp86ua8aya86" path="res://assets/ores/Sol.png" id="2_23l67"]
+
+[resource]
+script = ExtResource("1_xnead")
+name = "Sol"
+texture = ExtResource("2_23l67")

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://cyropq2r37a7r"]
+
+[ext_resource type="Resource" uid="uid://dd2lr7v0nju44" path="res://Data/Resource/OreSets/Set_Level5.tres" id="1_5nj75"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_xiwyb"]
+
+[resource]
+script = ExtResource("2_xiwyb")
+floor_name = "Fenda Vulcânica"
+ore_set = ExtResource("1_5nj75")

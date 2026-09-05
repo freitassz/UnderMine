@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://dkrsx0644k437"]
+
+[ext_resource type="PackedScene" uid="uid://furnpetrock" path="res://furn_petrock.tscn" id="1_1333a"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_36xk3"]
+
+[resource]
+script = ExtResource("2_36xk3")
+furniture_name = "PetRock"
+scene = ExtResource("1_1333a")
+cost = 1000000
+spawn_position = Vector2(82, -14)

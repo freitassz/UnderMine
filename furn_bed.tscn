@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://furnbed"]
+
+[ext_resource type="Script" uid="uid://bbu44xajrjh8h" path="res://furn_bed.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://bdk4divu40bcl" path="res://assets/bed.png" id="2_eerv3"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(19.999996, 33)
+
+[node name="Bed" type="Area2D" unique_id=576406408]
+script = ExtResource("1_f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1950297083]
+position = Vector2(0, 11)
+texture = ExtResource("2_eerv3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1858387442]
+position = Vector2(-1.9073486e-06, 7.499999)
+shape = SubResource("Rect_1")

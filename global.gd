@@ -17,21 +17,77 @@ var has_stair_compass: bool = false
 var has_ore_compass: bool = false
 var has_mining_dash: bool = false
 var has_midas_luck: bool = false
+var has_extra_hit: bool = false
+var has_floor_multiplier: bool = false
 var has_shockwave: bool = false
 var has_chain_reaction: bool = false
+
+var has_boots_1: bool = false
+var is_boots_active: bool = false
+var has_auto_momentum: bool = false
+var has_explosive_impact: bool = false
+var has_supreme_dash: bool = false
+
 var has_automatic: bool = false
 var has_alchemical: bool = false
+var has_ticket_minas_lv1: bool = false
+var has_ticket_minas_lv2: bool = false
+var has_toque_magico: bool = false
+
+var has_juros_compostos: bool = false
+var has_echo_strike: bool = false
+var has_void_gluttony: bool = false
+var has_cosmic_synergy: bool = false
+var has_boomerang: bool = false
+var has_time_warp: bool = false
+
+var stored_echo_damage: int = 0
 var is_afk_active: bool = false
+
+var unlocked_levels: Dictionary = {}
+var unlocked_furnitures: Dictionary = {}
+var equipped_skin_index: int = -1
+
+var skin_1_unlocked: bool = false
+var skin_2_unlocked: bool = false
+var skin_3_unlocked: bool = false
+var skin_4_unlocked: bool = false
+var skin_5_unlocked: bool = false
+var skin_6_unlocked: bool = false
+var skin_7_unlocked: bool = false
+var skin_8_unlocked: bool = false
+var skin_9_unlocked: bool = false
+var skin_10_unlocked: bool = false
+
+var last_daily_reward_time: int = 0
+var pet_rock_broken: bool = false
+var bed_buff_time_left: float = 0.0
+
 var is_auto_upgrade_active: bool = false
 
 var village_spawn_pos_x: float = 0.0
 var village_spawn_pos_y: float = 0.0
 var has_village_spawn: bool = false
 
+var stat_total_ascensions: int = 0
+var stat_total_money_earned: int = 0
+var stat_total_clicks: int = 0
+
 var music_volume: float = 0.5
 var sfx_volume: float = 0.5
 
-var unlocked_levels: Dictionary = {}
+func apply_tickets() -> void:
+	if has_ticket_minas_lv1:
+		unlocked_levels["Door"] = true
+		unlocked_levels["Door2"] = true
+		unlocked_levels["Door3"] = true
+		unlocked_levels["Door4"] = true
+	if has_ticket_minas_lv2:
+		unlocked_levels["Door5"] = true
+		unlocked_levels["Door6"] = true
+		unlocked_levels["Door7"] = true
+		unlocked_levels["Door8"] = true
+		unlocked_levels["Door9"] = true
 
 var bgm_player: AudioStreamPlayer
 
@@ -67,6 +123,25 @@ var power_cost: int = 10
 var speed_cost: int = 10
 var mult_cost: int = 10
 
+func get_effective_power() -> int:
+	var p = mining_power
+	if has_cosmic_synergy:
+		var m_lvl = int(round((ore_multiplier - 1.0) / 0.05))
+		p += int(m_lvl / 10)
+	return p
+
+func get_effective_mult() -> float:
+	var m = ore_multiplier
+	if has_cosmic_synergy:
+		m += int(mining_power / 10) * 0.1
+	return m
+
+func get_effective_speed_level() -> float:
+	var s = mining_speed_level
+	if bed_buff_time_left > 0:
+		s *= 2.0
+	return s
+
 # Usar uma função ajuda a organizar e disparar o sinal automaticamente
 func format_num(value: int) -> String:
 	if value < 1000:
@@ -94,6 +169,7 @@ func add_money(amount: int) -> void:
 		visual_money += amount
 		money_changed.emit(visual_money)
 	else:
+		stat_total_money_earned += amount
 		# O dinheiro interno já subiu, mas a HUD só vai atualizar
 		# quando o número voador chegar nela, chamando a função abaixo!
 		pass
@@ -104,7 +180,31 @@ func apply_visual_money(amount: int) -> void:
 		visual_money = money
 	money_changed.emit(visual_money)
 
-func _process(_delta: float) -> void:
+var juros_timer: float = 0.0
+
+func _process(delta: float) -> void:
+	if bed_buff_time_left > 0:
+		bed_buff_time_left -= delta
+		if bed_buff_time_left <= 0:
+			bed_buff_time_left = 0
+			var tree = get_tree()
+			if tree:
+				var players = tree.get_nodes_in_group("player")
+				if players.size() > 0: 
+					if players[0].has_method("update_stats"):
+						players[0].update_stats()
+	
+	if has_juros_compostos:
+		juros_timer += delta
+		if juros_timer >= 5.0:
+			juros_timer -= 5.0
+			if money > 0:
+				var interest = int(money * 0.01)
+				if interest > 0:
+					money += interest
+					visual_money += interest
+					money_changed.emit(visual_money)
+					
 	if not is_auto_upgrade_active: return
 	
 	# Calcula os leveis reais baseados nas variáveis de status

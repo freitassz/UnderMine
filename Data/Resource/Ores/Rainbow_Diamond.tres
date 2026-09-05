@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://8x0iu6sn4qwu"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_0i1rb"]
+[ext_resource type="Texture2D" uid="uid://mefrondt54s5" path="res://assets/ores/Rainbow_Diamante.png" id="2_i6y71"]
+
+[resource]
+script = ExtResource("1_0i1rb")
+name = "Rainbow Diamond"
+texture = ExtResource("2_i6y71")

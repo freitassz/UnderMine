@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://bitnbmr8y2goq"]
+
+[ext_resource type="Resource" uid="uid://c1dw5n3ws2tfp" path="res://Data/Resource/OreSets/Set_Level12.tres" id="1_4leg5"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_u7ljh"]
+
+[resource]
+script = ExtResource("2_u7ljh")
+floor_name = "Aether"
+ore_set = ExtResource("1_4leg5")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://ho2av7061xn7"]
+
+[ext_resource type="PackedScene" uid="uid://b0dr4gi7e3evs" path="res://furn_piggy.tscn" id="1_6x1ed"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_k8n8f"]
+
+[resource]
+script = ExtResource("2_k8n8f")
+furniture_name = "PiggyBank"
+scene = ExtResource("1_6x1ed")
+cost = 50000
+spawn_position = Vector2(-17, -14)

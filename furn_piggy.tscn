@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b0dr4gi7e3evs"]
+
+[ext_resource type="Script" uid="uid://dlvc0kj60px4j" path="res://furn_piggy.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://bsc5xlug263ip" path="res://assets/ores/Pig.png" id="2_wbofs"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(10, 10)
+
+[node name="PiggyBank" type="Area2D" unique_id=1909343370]
+script = ExtResource("1_f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1728056971]
+texture = ExtResource("2_wbofs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1350314159]
+shape = SubResource("Rect_1")

@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dp4quh5tbidb2"]
+
+[ext_resource type="Script" uid="uid://cltmn4enmivs4" path="res://furn_mirror.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://c6wo0ds7neagm" path="res://assets/Espelho.png" id="2_4rrjl"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(16, 20)
+
+[sub_resource type="StyleBoxFlat" id="Style_1"]
+bg_color = Color(0.1, 0.1, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.8, 0.9, 1)
+
+[node name="SoulMirror" type="Area2D" unique_id=1996795865]
+script = ExtResource("1_f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1745309322]
+texture = ExtResource("2_4rrjl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=477386289]
+shape = SubResource("Rect_1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1190370155]
+layer = 10
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=196125551]
+custom_minimum_size = Vector2(300, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=802417985]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=416151693]
+layout_mode = 2
+text = "Espelho das Almas"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1522237496]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Estatísticas..."
+horizontal_alignment = 1
+
+[node name="CloseBtn" type="Button" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1938701928]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Fechar"

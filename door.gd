@@ -88,6 +88,7 @@ func play_unlock_animation() -> void:
 		# Som de voar/explodir quando sai do chão seguro
 		var sfx2 = AudioStreamPlayer2D.new()
 		sfx2.stream = preload("res://assets/explosion (1).wav")
+		sfx2.bus = "SFX"
 		sfx2.global_position = global_position
 		var root = get_tree().current_scene
 		if not root: root = get_tree().root
@@ -118,6 +119,7 @@ func _start_shake_and_particles() -> void:
 	# Som de tremor (explosion) seguro para não ser cortado
 	var sfx = AudioStreamPlayer2D.new()
 	sfx.stream = preload("res://assets/explosion.wav")
+	sfx.bus = "SFX"
 	sfx.global_position = global_position
 	var root = get_tree().current_scene
 	if not root: root = get_tree().root

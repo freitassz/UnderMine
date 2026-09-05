@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://cxktm4kac4hvw"]
 
-[ext_resource type="Resource" uid="uid://km0odx64htxm" path="res://Data/Resource/OreSets/Set_Level2.tres" id="1_8620f"]
+[ext_resource type="Resource" uid="uid://dcp48fxdqlyfq" path="res://Data/Resource/OreSets/Set_Level2.tres" id="1_8620f"]
 [ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_foqkh"]
 
 [resource]

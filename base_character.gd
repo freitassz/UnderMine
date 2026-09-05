@@ -4,9 +4,11 @@ extends CharacterBody2D
 enum State { IDLE, MOVING, MOVING_TO_INTERACT, MINING, LEAPING }
 var current_state: State = State.IDLE
 
-enum MiningMode { ORIGINAL, SHOCKWAVE, CHAIN_REACTION, AUTOMATIC, ALCHEMICAL }
+enum MiningMode { ORIGINAL, SHOCKWAVE, CHAIN_REACTION, AUTOMATIC, ALCHEMICAL, BOOMERANG }
 @export var shockwave_radius: float = 20.0
 @export var chain_reaction_radius: float = 12.0
+
+@export var skins: Array[Texture2D] = []
 
 signal multiplier_changed(mult: float)
 
@@ -41,9 +43,24 @@ var ore_arrow: Sprite2D
 var target_stair: Node2D
 var target_ore: Node2D
 
+var last_hit_target: Node2D = null
+
+@onready var main_sprite: Sprite2D = $Sprite2D
+var default_texture: Texture2D
+
 func _ready() -> void:
+	if main_sprite:
+		default_texture = main_sprite.texture
 	nav_agent.path_desired_distance = 10.0
 	nav_agent.target_desired_distance = 10.0
+	
+	apply_speed_upgrades()
+	
+	# Aplica skin equipada ao nascer
+	if Global.equipped_skin_index != -1 and Global.equipped_skin_index < skins.size():
+		apply_skin(skins[Global.equipped_skin_index])
+	else:
+		apply_skin(null)
 	
 	if mining_timer:
 		mining_timer.one_shot = true
@@ -73,6 +90,19 @@ func _ready() -> void:
 	change_state(State.IDLE)
 
 
+
+func apply_skin(tex: Texture2D) -> void:
+	if not main_sprite: return
+	if tex == null:
+		main_sprite.texture = default_texture
+	else:
+		main_sprite.texture = tex
+
+func apply_speed_upgrades() -> void:
+	var base_spd = 70.0
+	if Global.is_boots_active:
+		base_spd *= 1.5
+	speed = base_spd
 
 func _process(_delta: float) -> void:
 	if "has_stair_compass" in Global and Global.has_stair_compass:
@@ -134,7 +164,8 @@ func _find_nearest_ore_and_mine() -> void:
 
 func update_stats() -> void:
 	# Fórmula: Tempo Base dividido pelo Nível de Velocidade e pelo multiplicador de clique manual
-	var new_wait_time = (BASE_MINE_TIME / Global.mining_speed_level) / click_multiplier
+	var effective_spd = Global.get_effective_speed_level()
+	var new_wait_time = (BASE_MINE_TIME / effective_spd) / click_multiplier
 	
 	# max() garante que a velocidade nunca seja menor que o limite (0.1s), evitando quebrar o jogo
 	mining_timer.wait_time = max(MIN_MINE_TIME, new_wait_time)
@@ -162,7 +193,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Se chegou aqui embaixo, significa que bateu no chão livre de verdade (ou num Checkpoint, etc)
 		walk_to_point(get_global_mouse_position())
 
-# --- FUNÇÕES DE DEFINIÇÃO DE ALVO ---
 func walk_to_point(target_point: Vector2) -> void:
 	Global.ore_deselected.emit() # <-- Esconde o HUD pois clicou no chão
 	
@@ -179,6 +209,7 @@ func walk_to_point(target_point: Vector2) -> void:
 		mining_timer.stop()
 
 func walk_to_interact(target_node: Node2D) -> void: 
+	Global.stat_total_clicks += 1
 	if interact_target == target_node and current_state == State.MINING:
 		# Aumenta o multiplicador de velocidade com base no clique, até o limite
 		click_multiplier = min(click_multiplier + CLICK_MULTIPLIER_STEP, MAX_CLICK_MULTIPLIER)
@@ -207,7 +238,9 @@ func walk_to_interact(target_node: Node2D) -> void:
 		
 	# CHECAGEM DE ONE-HIT DASH (Apenas se o player comprou a habilidade)
 	var will_destroy = false
-	if Global.has_mining_dash and "my_data" in target_node and target_node.my_data != null:
+	if Global.has_supreme_dash:
+		will_destroy = true
+	elif Global.has_mining_dash and "my_data" in target_node and target_node.my_data != null:
 		if Global.mining_power >= target_node.my_data.max_hp:
 			will_destroy = true
 			
@@ -338,7 +371,7 @@ func use_alchemical() -> void:
 							tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.3)
 
 # --- CHAIN REACTION LOGIC ---
-func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
+func _process_chain_reaction(start_ore: Node2D, multiplier: float, actual_power: int) -> void:
 	if not is_instance_valid(start_ore): return
 	
 	var tree = get_tree()
@@ -357,8 +390,8 @@ func _process_chain_reaction(start_ore: Node2D, multiplier: float) -> void:
 				# Checa se estão muito próximos (chain_reaction_radius)
 				if current.global_position.distance_to(other.global_position) <= chain_reaction_radius:
 					if other.has_method("take_damage"):
-						# Causa o dano normal da picareta, espalhando pela veia inteira!
-						other.take_damage(Global.mining_power, multiplier, false)
+						# Causa o dano atual da picareta (podendo ser 10x do Impacto Explosivo)
+						other.take_damage(actual_power, multiplier, false)
 						to_process.append(other)
 						
 						# Efeito visual da Corrente (Cria um rastro de sprites)
@@ -437,6 +470,10 @@ func play_level_up_effect() -> void:
 func _on_mining_timer_timeout() -> void:
 	last_hit_time = Time.get_ticks_msec()
 	
+	if Global.has_auto_momentum:
+		click_multiplier = min(click_multiplier + CLICK_MULTIPLIER_STEP, MAX_CLICK_MULTIPLIER)
+		multiplier_changed.emit(click_multiplier)
+		
 	# Restaura o tempo normal do timer caso tenha sido alterado pelo tempo restante (remaining)
 	update_stats()
 	
@@ -447,66 +484,26 @@ func _on_mining_timer_timeout() -> void:
 		var target_node = interact_target
 		
 		var final_multiplier = Global.ore_multiplier
+		
+		# MULTIPLICADOR DE ANDAR
+		if Global.has_floor_multiplier and "current_floor_index" in Global:
+			final_multiplier += (Global.current_floor_index - 1) * 0.5
+			
 		if Global.current_mining_mode == MiningMode.AUTOMATIC and Global.is_afk_active:
 			final_multiplier *= 0.5
 		
-		# Bate no alvo principal (ORIGINAL behavior)
-		target_node.take_damage(Global.mining_power, final_multiplier, true)
+		# Executa o hit principal
+		_execute_full_hit(target_node, final_multiplier)
 		
-		# Comportamento SHOCKWAVE
-		if Global.current_mining_mode == MiningMode.SHOCKWAVE:
+		# CHANCE DE HIT EXTRA (se ativado)
+		if Global.has_extra_hit and randf() <= 0.10: # 10% chance
 			var tree = get_tree()
 			if tree:
-				var ores = tree.get_nodes_in_group("ores")
-				
-				# Toca a animação do Shockwave
-				if powers_anim and shockwave_sprite:
-					shockwave_sprite.show()
-					powers_anim.stop()
-					powers_anim.play("ShockWave")
-					# Opcional: Esconder no final da animação pode ser feito via Tween ou AnimationPlayer, 
-					# mas vamos garantir que ele apague pelo script se a animação não o fizer:
-					var hide_tween = create_tween()
-					hide_tween.tween_interval(0.6) # Tempo da animação
-					hide_tween.tween_callback(shockwave_sprite.hide)
-				
-				for ore in ores:
-					# Evitar bater no alvo principal novamente e garantir que ele é válido
-					if is_instance_valid(ore) and ore != target_node:
-						if global_position.distance_to(ore.global_position) <= shockwave_radius:
-							if ore.has_method("take_damage"):
-								# Causamos dano no minério dentro do raio
-								ore.take_damage(Global.mining_power, final_multiplier, false)
-								
-		# Comportamento CHAIN REACTION
-		if Global.current_mining_mode == MiningMode.CHAIN_REACTION:
-			var tree = get_tree()
-			if tree and is_instance_valid(target_node):
-				# Efeito do player até a primeira pedra
-				if chain_sprite_base:
-					var new_chain = chain_sprite_base.duplicate()
-					var root = tree.current_scene
-					if not root: root = tree.root
-					root.add_child(new_chain)
-					new_chain.show()
-					new_chain.global_position = global_position.lerp(target_node.global_position, 0.5)
-					new_chain.rotation = global_position.direction_to(target_node.global_position).angle()
-					var chain_tween = new_chain.create_tween()
-					chain_tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
-					chain_tween.tween_callback(new_chain.queue_free)
-					
-				_process_chain_reaction(target_node, final_multiplier)
-		
-		# Reinicia a animação para dar feedback visual do hit manual/automático
-		if animated_player and current_state == State.MINING:
-			animated_player.stop()
-			
-			# Sincroniza a velocidade da animação com o cooldown atual!
-			if animated_player.has_animation("MINING"):
-				var anim_length = animated_player.get_animation("MINING").length
-				animated_player.speed_scale = anim_length / mining_timer.wait_time
-			
-			animated_player.play("MINING")
+				var extra_timer = tree.create_timer(0.15)
+				extra_timer.timeout.connect(func():
+					if is_instance_valid(target_node) and target_node.has_method("take_damage"):
+						_execute_full_hit(target_node, final_multiplier)
+				)
 			
 		# Reinicia o timer manualmente (já que agora é one_shot = true)
 		if mining_timer:
@@ -515,6 +512,150 @@ func _on_mining_timer_timeout() -> void:
 		if mining_timer:
 			mining_timer.stop()
 		change_state(State.IDLE)
+
+func _execute_full_hit(target_node: Node2D, final_multiplier: float) -> void:
+	if not is_instance_valid(target_node) or not target_node.has_method("take_damage"): return
+	
+	# Usando o Poder Efetivo (com bônus da Sintonia Cósmica)
+	var actual_power = Global.get_effective_power()
+	
+	# Impacto Explosivo 10x
+	if Global.has_explosive_impact and target_node != last_hit_target:
+		actual_power *= 10
+		
+	# Eco Strike (Descarrega o dano acumulado no primeiro hit)
+	if Global.has_echo_strike and target_node != last_hit_target:
+		actual_power += Global.stored_echo_damage
+		Global.stored_echo_damage = 0
+		
+	last_hit_target = target_node
+	
+	# Acumula metade do dano batido para o próximo Eco Strike
+	if Global.has_echo_strike:
+		Global.stored_echo_damage += int(actual_power * 0.5)
+	
+	# TOQUE MÁGICO (Insta-kill em minérios intocados)
+	if Global.has_toque_magico and "my_data" in target_node and "current_hp" in target_node and "current_lives" in target_node:
+		if target_node.current_hp == target_node.my_data.max_hp and target_node.current_lives == target_node.my_data.extra_lives:
+			if randf() <= 0.01: # 1% chance
+				if target_node.has_method("insta_mine"):
+					target_node.insta_mine(final_multiplier)
+					return # Termina aqui pois a pedra foi deletada!
+	
+	# Bate no alvo principal (ORIGINAL behavior)
+	target_node.take_damage(actual_power, final_multiplier, true)
+	
+	# Comportamento SHOCKWAVE
+	if Global.current_mining_mode == MiningMode.SHOCKWAVE:
+		var tree = get_tree()
+		if tree:
+			var ores = tree.get_nodes_in_group("ores")
+			
+			# Toca a animação do Shockwave
+			if powers_anim and shockwave_sprite:
+				shockwave_sprite.show()
+				powers_anim.stop()
+				powers_anim.play("ShockWave")
+				var hide_tween = create_tween()
+				hide_tween.tween_interval(0.6)
+				hide_tween.tween_callback(shockwave_sprite.hide)
+			
+			for ore in ores:
+				if is_instance_valid(ore) and ore != target_node:
+					if global_position.distance_to(ore.global_position) <= shockwave_radius:
+						if ore.has_method("take_damage"):
+							ore.take_damage(actual_power, final_multiplier, false)
+							
+	# Comportamento CHAIN REACTION
+	if Global.current_mining_mode == MiningMode.CHAIN_REACTION:
+		var tree = get_tree()
+		if tree and is_instance_valid(target_node):
+			if chain_sprite_base:
+				var new_chain = chain_sprite_base.duplicate()
+				var root = tree.current_scene
+				if not root: root = tree.root
+				root.add_child(new_chain)
+				new_chain.show()
+				new_chain.global_position = global_position.lerp(target_node.global_position, 0.5)
+				new_chain.rotation = global_position.direction_to(target_node.global_position).angle()
+				var chain_tween = new_chain.create_tween()
+				chain_tween.tween_property(new_chain, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_LINEAR)
+				chain_tween.tween_callback(new_chain.queue_free)
+				
+			_process_chain_reaction(target_node, final_multiplier, actual_power)
+
+	# Comportamento BOOMERANG
+	if Global.current_mining_mode == MiningMode.BOOMERANG:
+		_shoot_boomerang(target_node, actual_power, final_multiplier)
+			
+	# Reinicia a animação para dar feedback visual do hit manual/automático
+	if animated_player and current_state == State.MINING:
+		animated_player.stop()
+		if animated_player.has_animation("MINING"):
+			var anim_length = animated_player.get_animation("MINING").length
+			if mining_timer and mining_timer.wait_time > 0:
+				animated_player.speed_scale = anim_length / mining_timer.wait_time
+		animated_player.play("MINING")
+
+# --- BOOMERANG LOGIC ---
+func _shoot_boomerang(target_node: Node2D, power: int, mult: float) -> void:
+	if not is_instance_valid(target_node): return
+	
+	var tree = get_tree()
+	if not tree: return
+	
+	var proj = Area2D.new()
+	var col = CollisionShape2D.new()
+	var rect = RectangleShape2D.new()
+	rect.size = Vector2(16, 16)
+	col.shape = rect
+	proj.add_child(col)
+	
+	# Usamos a sprite da corrente como placeholder (gira)
+	if chain_sprite_base:
+		var spr = chain_sprite_base.duplicate()
+		spr.show()
+		proj.add_child(spr)
+		
+	var root = tree.current_scene
+	if not root: root = tree.root
+	root.add_child(proj)
+	
+	proj.global_position = global_position
+	
+	var dir = global_position.direction_to(target_node.global_position)
+	var end_pos = global_position + dir * 70.0
+	
+	var tw = proj.create_tween()
+	# Ida
+	tw.tween_property(proj, "global_position", end_pos, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# Volta
+	tw.tween_property(proj, "global_position", global_position, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tw.tween_callback(proj.queue_free)
+	
+	# Rotação contínua e colisão
+	var hit_ores = []
+	var collision_timer = Timer.new()
+	collision_timer.wait_time = 0.05
+	collision_timer.autostart = true
+	proj.add_child(collision_timer)
+	collision_timer.timeout.connect(func():
+		if is_instance_valid(proj) and proj.has_node("Sprite2D"):
+			proj.get_node("Sprite2D").rotation += 0.5
+		
+		# Outra checagem de árvore para segurança na rotina do timer
+		var t2 = proj.get_tree()
+		if not t2: return
+			
+		if is_instance_valid(proj):
+			var ores = t2.get_nodes_in_group("ores")
+			for o in ores:
+				if is_instance_valid(o) and o != target_node and not hit_ores.has(o):
+					if proj.global_position.distance_to(o.global_position) <= 20.0:
+						if o.has_method("take_damage"):
+							hit_ores.append(o)
+							o.take_damage(power, mult, false)
+	)
 
 # --- GERENCIADOR DE ESTADOS E ANIMAÇÕES ---
 func change_state(new_state: State) -> void:

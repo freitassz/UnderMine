@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://lbqaduwgxelj"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_bs7nd"]
+[ext_resource type="Texture2D" uid="uid://c4fa2m1beqas4" path="res://assets/ores/Sand_Castle.png" id="2_gkr0c"]
+
+[resource]
+script = ExtResource("1_bs7nd")
+name = "Castelinho de Areia"
+texture = ExtResource("2_gkr0c")

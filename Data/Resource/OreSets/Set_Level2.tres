@@ -1,43 +1,37 @@
-[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://km0odx64htxm"]
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://dcp48fxdqlyfq"]
 
 [ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_7cycd"]
 [ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_1jroi"]
-[ext_resource type="Resource" uid="uid://b0fta5mnb0t4v" path="res://Data/Resource/Ores/Stone.tres" id="3_hff3e"]
 [ext_resource type="Resource" uid="uid://1p4wddt6kgut" path="res://Data/Resource/Ores/Iron.tres" id="4_njiq2"]
 [ext_resource type="Resource" uid="uid://b4sk4e5j8gegt" path="res://Data/Resource/Ores/Silver.tres" id="5_vhp5p"]
 [ext_resource type="Resource" uid="uid://b2q4gloxhgckx" path="res://Data/Resource/Ores/Gold.tres" id="6_2oopi"]
-[ext_resource type="Resource" uid="uid://575wtmbspyam" path="res://Data/Resource/Ores/Amethyst.tres" id="7_4u3x5"]
-[ext_resource type="Resource" uid="uid://ctsmwp0aka8g4" path="res://Data/Resource/Ores/Sapphire.tres" id="8_rautl"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Platinium.tres" id="6_dlt4l"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Gold_Chest.tres" id="7_7cycd"]
 
-[sub_resource type="Resource" id="Resource_oous5"]
-script = ExtResource("2_1jroi")
-ore = ExtResource("3_hff3e")
-spawn_chance = 30.0
-
-[sub_resource type="Resource" id="Resource_uth06"]
+[sub_resource type="Resource" id="Resource_1jroi"]
 script = ExtResource("2_1jroi")
 ore = ExtResource("4_njiq2")
-spawn_chance = 35.0
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_s7w7w"]
+[sub_resource type="Resource" id="Resource_hff3e"]
 script = ExtResource("2_1jroi")
 ore = ExtResource("5_vhp5p")
-spawn_chance = 20.0
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_cb183"]
+[sub_resource type="Resource" id="Resource_njiq2"]
 script = ExtResource("2_1jroi")
 ore = ExtResource("6_2oopi")
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_nj3sh"]
+[sub_resource type="Resource" id="Resource_vhp5p"]
 script = ExtResource("2_1jroi")
-ore = ExtResource("7_4u3x5")
-spawn_chance = 4.0
+ore = ExtResource("6_dlt4l")
+spawn_chance = 30.0
 
-[sub_resource type="Resource" id="Resource_vqto1"]
+[sub_resource type="Resource" id="Resource_2oopi"]
 script = ExtResource("2_1jroi")
-ore = ExtResource("8_rautl")
-spawn_chance = 1.0
+ore = ExtResource("7_7cycd")
 
 [resource]
 script = ExtResource("1_7cycd")
-spawn_rules = Array[ExtResource("2_1jroi")]([SubResource("Resource_oous5"), SubResource("Resource_uth06"), SubResource("Resource_s7w7w"), SubResource("Resource_cb183"), SubResource("Resource_nj3sh"), SubResource("Resource_vqto1")])
+spawn_rules = Array[ExtResource("2_1jroi")]([SubResource("Resource_1jroi"), SubResource("Resource_hff3e"), SubResource("Resource_njiq2"), SubResource("Resource_vhp5p"), SubResource("Resource_2oopi")])

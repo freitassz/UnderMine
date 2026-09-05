@@ -1,32 +1,55 @@
-[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://brvxgakcu6psx"]
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://corc5gvgtplr8"]
 
 [ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_mb2eg"]
 [ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_5lrtn"]
-[ext_resource type="Resource" uid="uid://2rk74boa424u" path="res://Data/Resource/Ores/Aetherium.tres" id="3_i8sl2"]
-[ext_resource type="Resource" uid="uid://kpfl868lc448" path="res://Data/Resource/Ores/Dark_Matter.tres" id="4_u7b20"]
-[ext_resource type="Resource" uid="uid://laqi6rkv2ib4" path="res://Data/Resource/Ores/Voidstone.tres" id="5_lujug"]
-[ext_resource type="Resource" uid="uid://bs4rhenpmo2mi" path="res://Data/Resource/Ores/Cosmic_Shard.tres" id="6_fmlrg"]
+[ext_resource type="Resource" uid="uid://cvsjow4u1c0t7" path="res://Data/Resource/Ores/Mercurio.tres" id="4_2yyt3"]
+[ext_resource type="Resource" uid="uid://bpxnkhbbktfl1" path="res://Data/Resource/Ores/Venus.tres" id="5_dlbx0"]
+[ext_resource type="Resource" uid="uid://c255n4hwwuls0" path="res://Data/Resource/Ores/Saturno.tres" id="6_vwkby"]
+[ext_resource type="Resource" uid="uid://c86mohro1ctpf" path="res://Data/Resource/Ores/Netuno.tres" id="7_4ivl0"]
+[ext_resource type="Resource" uid="uid://cm0miwnjvg81u" path="res://Data/Resource/Ores/Urano.tres" id="8_0ulcv"]
+[ext_resource type="Resource" uid="uid://dipt1h7sr7fln" path="res://Data/Resource/Ores/Sol.tres" id="9_edbgq"]
+[ext_resource type="Resource" uid="uid://3lu8ar8aeiyc" path="res://Data/Resource/Ores/Jupiter.tres" id="10_6gh22"]
+[ext_resource type="Resource" uid="uid://wvvlhd7xkaom" path="res://Data/Resource/Ores/Terra.tres" id="11_b36l8"]
 
-[sub_resource type="Resource" id="Resource_2yyt3"]
+[sub_resource type="Resource" id="Resource_fvqw8"]
 script = ExtResource("2_5lrtn")
-ore = ExtResource("3_i8sl2")
-spawn_chance = 35.0
+ore = ExtResource("4_2yyt3")
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_dlbx0"]
+[sub_resource type="Resource" id="Resource_hynhj"]
 script = ExtResource("2_5lrtn")
-ore = ExtResource("4_u7b20")
-spawn_chance = 45.0
+ore = ExtResource("5_dlbx0")
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_vwkby"]
+[sub_resource type="Resource" id="Resource_bg8ve"]
 script = ExtResource("2_5lrtn")
-ore = ExtResource("5_lujug")
-spawn_chance = 15.0
+ore = ExtResource("6_vwkby")
+spawn_chance = 100.0
 
-[sub_resource type="Resource" id="Resource_4ivl0"]
+[sub_resource type="Resource" id="Resource_vn7sv"]
 script = ExtResource("2_5lrtn")
-ore = ExtResource("6_fmlrg")
-spawn_chance = 5.0
+ore = ExtResource("7_4ivl0")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_v6oyp"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("8_0ulcv")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_wsebr"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("9_edbgq")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_7tevf"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("10_6gh22")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_itydv"]
+script = ExtResource("2_5lrtn")
+ore = ExtResource("11_b36l8")
 
 [resource]
 script = ExtResource("1_mb2eg")
-spawn_rules = Array[ExtResource("2_5lrtn")]([SubResource("Resource_2yyt3"), SubResource("Resource_dlbx0"), SubResource("Resource_vwkby"), SubResource("Resource_4ivl0")])
+spawn_rules = Array[ExtResource("2_5lrtn")]([SubResource("Resource_fvqw8"), SubResource("Resource_hynhj"), SubResource("Resource_bg8ve"), SubResource("Resource_vn7sv"), SubResource("Resource_v6oyp"), SubResource("Resource_wsebr"), SubResource("Resource_7tevf"), SubResource("Resource_itydv")])

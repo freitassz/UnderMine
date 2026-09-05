@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://cxjics861acg1"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_q0rkh"]
+[ext_resource type="Texture2D" uid="uid://c2568a18xtjt2" path="res://assets/ores/Cristal do Atlantico.png" id="2_k1thj"]
+
+[resource]
+script = ExtResource("1_q0rkh")
+name = "Cristal Atlantico"
+texture = ExtResource("2_k1thj")

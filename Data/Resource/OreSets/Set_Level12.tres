@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://c1dw5n3ws2tfp"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_jf733"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_3lmgj"]
+[ext_resource type="Resource" uid="uid://2rk74boa424u" path="res://Data/Resource/Ores/Aetherium.tres" id="3_m7pl1"]
+[ext_resource type="Resource" uid="uid://b247w7etq4ku0" path="res://Data/Resource/Ores/Ambrosium.tres" id="4_gpt7i"]
+[ext_resource type="Resource" uid="uid://bcim1bhdesdno" path="res://Data/Resource/Ores/Warrior_Souls.tres" id="5_282qe"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Golden_Apple.tres" id="6_2bi7h"]
+[ext_resource type="Resource" uid="uid://rhfwdr7xx5wt" path="res://Data/Resource/Ores/God_Particle.tres" id="7_s8tn8"]
+[ext_resource type="Resource" uid="uid://dwa6am6ap4ei6" path="res://Data/Resource/Ores/Core_of_Genesis.tres" id="8_bvm5j"]
+
+[sub_resource type="Resource" id="Resource_rdxnb"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("3_m7pl1")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_vu0w5"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("4_gpt7i")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_h6tf8"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("5_282qe")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_h5vuo"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("6_2bi7h")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_st1m3"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("7_s8tn8")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_vo3tw"]
+script = ExtResource("2_3lmgj")
+ore = ExtResource("8_bvm5j")
+
+[resource]
+script = ExtResource("1_jf733")
+spawn_rules = Array[ExtResource("2_3lmgj")]([SubResource("Resource_rdxnb"), SubResource("Resource_vu0w5"), SubResource("Resource_h6tf8"), SubResource("Resource_h5vuo"), SubResource("Resource_st1m3"), SubResource("Resource_vo3tw")])

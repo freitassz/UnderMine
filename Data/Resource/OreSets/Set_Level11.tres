@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://doek7llpt4v25"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_bwgp0"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_moqfa"]
+[ext_resource type="Resource" uid="uid://bs4rhenpmo2mi" path="res://Data/Resource/Ores/Cosmic_Shard.tres" id="3_lqbh5"]
+[ext_resource type="Resource" uid="uid://laqi6rkv2ib4" path="res://Data/Resource/Ores/Voidstone.tres" id="3_orr08"]
+[ext_resource type="Resource" uid="uid://qe560jc5d8yi" path="res://Data/Resource/Ores/Infinity_Crystal.tres" id="4_orr08"]
+[ext_resource type="Resource" uid="uid://b0g2x226lduow" path="res://Data/Resource/Ores/Stardust.tres" id="5_vkc8n"]
+[ext_resource type="Resource" uid="uid://8ne5uowtjq3y" path="res://Data/Resource/Ores/Starcrystal.tres" id="6_vkc8n"]
+[ext_resource type="Resource" uid="uid://x5ptwr8yvcvq" path="res://Data/Resource/Ores/Nebulite.tres" id="6_xsdt6"]
+
+[sub_resource type="Resource" id="Resource_xsdt6"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("3_orr08")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_rvv3w"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("5_vkc8n")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_pwfym"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("6_xsdt6")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_tmn5r"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("6_vkc8n")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_rn07r"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("3_lqbh5")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_qr21w"]
+script = ExtResource("2_moqfa")
+ore = ExtResource("4_orr08")
+spawn_chance = 30.0
+
+[resource]
+script = ExtResource("1_bwgp0")
+spawn_rules = Array[ExtResource("2_moqfa")]([SubResource("Resource_xsdt6"), SubResource("Resource_rvv3w"), SubResource("Resource_pwfym"), SubResource("Resource_tmn5r"), SubResource("Resource_rn07r"), SubResource("Resource_qr21w")])

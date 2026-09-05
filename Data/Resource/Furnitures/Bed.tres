@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://bopqaoouq068x"]
+
+[ext_resource type="PackedScene" uid="uid://furnbed" path="res://furn_bed.tscn" id="1_33ett"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_7kqjg"]
+
+[resource]
+script = ExtResource("2_7kqjg")
+furniture_name = "Bed"
+scene = ExtResource("1_33ett")
+cost = 2000000
+spawn_position = Vector2(102, -16)

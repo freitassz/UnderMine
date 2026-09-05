@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://furnpetrock"]
+
+[ext_resource type="Script" uid="uid://d0uwi5b587315" path="res://furn_petrock.gd" id="1_f"]
+[ext_resource type="Texture2D" uid="uid://bvmddkbuob666" path="res://assets/ores/Stonepet.png" id="2_p04rs"]
+[ext_resource type="Texture2D" uid="uid://cklaecccj1nwi" path="res://assets/ores/CAMINHADAPEDRA.png" id="2_q34kt"]
+
+[sub_resource type="RectangleShape2D" id="Rect_1"]
+size = Vector2(10, 10)
+
+[node name="PetRock" type="Area2D" unique_id=316951190]
+script = ExtResource("1_f")
+
+[node name="Caminhadapedra" type="Sprite2D" parent="." unique_id=441892448]
+position = Vector2(0, 1)
+texture = ExtResource("2_q34kt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1356498810]
+texture = ExtResource("2_p04rs")
+hframes = 2
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2030621484]
+shape = SubResource("Rect_1")

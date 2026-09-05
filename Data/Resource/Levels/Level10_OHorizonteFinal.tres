@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="MineFloorData" format=3]
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://c2nejlmwrbela"]
 
-[ext_resource type="Resource" path="res://Data/Resource/OreSets/Set_Level10.tres" id="1_f053l"]
-[ext_resource type="Script" path="res://Data/Script/MineFloorData.gd" id="2_tbqp1"]
+[ext_resource type="Resource" uid="uid://c71y01xamtb3m" path="res://Data/Resource/OreSets/Set_Level10.tres" id="1_f053l"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_tbqp1"]
 
 [resource]
 script = ExtResource("2_tbqp1")
-floor_name = "O Horizonte Final"
+floor_name = "O Núcleo do Vazio"
 ore_set = ExtResource("1_f053l")

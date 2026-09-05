@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://8cwohw8ey4br"]
+
+[ext_resource type="PackedScene" uid="uid://furnjukebox" path="res://furn_jukebox.tscn" id="1_ra4f3"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_y5cf1"]
+
+[resource]
+script = ExtResource("2_y5cf1")
+furniture_name = "Jukebox"
+scene = ExtResource("1_ra4f3")
+cost = 500000
+spawn_position = Vector2(38, -10)

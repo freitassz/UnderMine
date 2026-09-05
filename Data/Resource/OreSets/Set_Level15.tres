@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="OreSetData" format=3 uid="uid://dvq5540fbn8vh"]
+
+[ext_resource type="Script" uid="uid://btr3q8d58dnye" path="res://Data/Script/OreSetData.gd" id="1_blcxs"]
+[ext_resource type="Script" uid="uid://oyfwa2pgd5bn" path="res://Data/Script/OreSpawnRule.gd" id="2_nmks7"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Nothing.tres" id="3_0s01w"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/Singularity.tres" id="5_blcxs"]
+[ext_resource type="Resource" path="res://Data/Resource/Ores/God.tres" id="6_nmks7"]
+[ext_resource type="Resource" uid="uid://882xmnl64j8a" path="res://Data/Resource/Ores/Heart_of_the_Universe.tres" id="7_vg5ue"]
+
+[sub_resource type="Resource" id="Resource_q2rx1"]
+script = ExtResource("2_nmks7")
+ore = ExtResource("3_0s01w")
+spawn_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_g1ga4"]
+script = ExtResource("2_nmks7")
+ore = ExtResource("7_vg5ue")
+spawn_chance = 30.0
+
+[sub_resource type="Resource" id="Resource_ygo44"]
+script = ExtResource("2_nmks7")
+ore = ExtResource("5_blcxs")
+
+[sub_resource type="Resource" id="Resource_hg5hh"]
+script = ExtResource("2_nmks7")
+ore = ExtResource("6_nmks7")
+spawn_chance = 1.0
+
+[resource]
+script = ExtResource("1_blcxs")
+spawn_rules = Array[ExtResource("2_nmks7")]([SubResource("Resource_q2rx1"), SubResource("Resource_g1ga4"), SubResource("Resource_ygo44"), SubResource("Resource_hg5hh")])

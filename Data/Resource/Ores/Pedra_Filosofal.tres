@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://uhyncodwsfnx"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_dc1li"]
+[ext_resource type="Texture2D" uid="uid://bl0rwo41xojyp" path="res://assets/ores/Pedra_filosofal.png" id="2_ka8vt"]
+
+[resource]
+script = ExtResource("1_dc1li")
+name = "Pedra Filosofal"
+texture = ExtResource("2_ka8vt")

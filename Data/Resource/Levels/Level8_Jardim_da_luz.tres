@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://dxg7oghj1mgvj"]
+
+[ext_resource type="Resource" uid="uid://dp8eutuqah1r4" path="res://Data/Resource/OreSets/Set_Level8.tres" id="1_l3xvs"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_7wlp7"]
+
+[resource]
+script = ExtResource("2_7wlp7")
+floor_name = "Oásis de Cristal"
+ore_set = ExtResource("1_l3xvs")

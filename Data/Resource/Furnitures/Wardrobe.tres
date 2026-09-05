@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FurnitureData" format=3 uid="uid://cf4wg00dhr7id"]
+
+[ext_resource type="PackedScene" uid="uid://wardr12345" path="res://wardrobe.tscn" id="1_0pek2"]
+[ext_resource type="Script" uid="uid://dg40tecdhgwr5" path="res://Data/Script/FurnitureData.gd" id="2_t766c"]
+
+[resource]
+script = ExtResource("2_t766c")
+furniture_name = "Armário de Skins"
+scene = ExtResource("1_0pek2")
+cost = 500000
+spawn_position = Vector2(-32, 36)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MineFloorData" format=3 uid="uid://civ21ouconer7"]
+
+[ext_resource type="Resource" uid="uid://cismair3mecxo" path="res://Data/Resource/OreSets/Set_Level13.tres" id="1_mny46"]
+[ext_resource type="Script" uid="uid://b7k8mmmb20esy" path="res://Data/Script/MineFloorData.gd" id="2_xblb1"]
+
+[resource]
+script = ExtResource("2_xblb1")
+floor_name = "Corredores do Tempo"
+ore_set = ExtResource("1_mny46")

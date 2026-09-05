@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://c6mtsn86f6vl6"]
 
 [ext_resource type="Script" uid="uid://cqr0myk3802n4" path="res://base_character.gd" id="1_75idt"]
+[ext_resource type="Texture2D" uid="uid://cmd7y340el1ib" path="res://assets/Character_skin1.png" id="2_g6ngq"]
 [ext_resource type="Texture2D" uid="uid://tjkypybi43o1" path="res://assets/Oclusion.png" id="2_m4khw"]
 [ext_resource type="Texture2D" uid="uid://cs8k6n0c8wqnp" path="res://assets/Character.png" id="2_tm8wl"]
 [ext_resource type="Script" uid="uid://c1iq8xhifk40p" path="res://HUD.gd" id="3_itnm7"]
+[ext_resource type="Texture2D" uid="uid://bcbv0a7msatfi" path="res://assets/Character_skin2.png" id="3_qponb"]
+[ext_resource type="Texture2D" uid="uid://b2ergsrpal3g7" path="res://assets/Character_skin3.png" id="4_8m1ow"]
 [ext_resource type="Texture2D" uid="uid://dpew45lrtilrx" path="res://assets/ShockWave.png" id="4_gdbp2"]
 [ext_resource type="Script" uid="uid://cbnld7ip51je2" path="res://ore_life.gd" id="4_ubrwk"]
+[ext_resource type="Texture2D" uid="uid://dhekodfyoxyi1" path="res://assets/Character_skin4.png" id="5_xd2pg"]
 [ext_resource type="Texture2D" uid="uid://bk6du5tyr00ka" path="res://assets/Chain.png" id="5_ym6p8"]
+[ext_resource type="Texture2D" uid="uid://bkc5b4i0mgw56" path="res://assets/Character_skin5.png" id="6_fub0n"]
+[ext_resource type="Texture2D" uid="uid://bdnbj6vkpgxw2" path="res://assets/Character_skin6.png" id="7_manw0"]
+[ext_resource type="Texture2D" uid="uid://bn23knlmp52r8" path="res://assets/Character_skin7.png" id="8_50t13"]
+[ext_resource type="Texture2D" uid="uid://cx8sxdfbgjebe" path="res://assets/Character_skin8.png" id="9_omvnx"]
+[ext_resource type="Texture2D" uid="uid://ec8j7syg0c2y" path="res://assets/Character_skin9.png" id="10_n2dth"]
+[ext_resource type="Texture2D" uid="uid://bta7llyj641iw" path="res://assets/Character_skin10.png" id="11_dn4td"]
 
 [sub_resource type="Animation" id="Animation_itnm7"]
 resource_name = "IDLE"
@@ -131,6 +141,7 @@ bg_color = Color(0.99601907, 0, 0.16720009, 1)
 
 [node name="BaseCharacter" type="CharacterBody2D" unique_id=741796805 node_paths=PackedStringArray("animated_player") groups=["player"]]
 script = ExtResource("1_75idt")
+skins = Array[Texture2D]([ExtResource("2_g6ngq"), ExtResource("3_qponb"), ExtResource("4_8m1ow"), ExtResource("5_xd2pg"), ExtResource("6_fub0n"), ExtResource("7_manw0"), ExtResource("8_50t13"), ExtResource("9_omvnx"), ExtResource("10_n2dth"), ExtResource("11_dn4td")])
 speed = 100.0
 animated_player = NodePath("AnimationPlayer")
 

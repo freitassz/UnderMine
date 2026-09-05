@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OreData" format=3 uid="uid://c86mohro1ctpf"]
+
+[ext_resource type="Script" uid="uid://7y24oediagu8" path="res://Data/Script/OreData.gd" id="1_vcxvh"]
+[ext_resource type="Texture2D" uid="uid://d2y1qmdeg4iyb" path="res://assets/ores/Netuno.png" id="2_fmsrj"]
+
+[resource]
+script = ExtResource("1_vcxvh")
+name = "Netuno"
+texture = ExtResource("2_fmsrj")
